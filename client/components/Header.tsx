@@ -14,13 +14,18 @@ const navLinks = [
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const underlineRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 18);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 18);
+      const heroThreshold = window.innerHeight * 0.8;
+      setPastHero(window.scrollY > heroThreshold);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -135,9 +140,11 @@ export const Header = () => {
       <header
         className={cn(
           "header-wrap sticky top-0 z-50 transition-all duration-500",
-          scrolled
-            ? "glass-effect shadow-2xl shadow-primary/20 border-b border-white/5"
-            : "bg-primary shadow-lg",
+          pastHero
+            ? "bg-background border-b border-border shadow-md"
+            : scrolled
+              ? "glass-effect shadow-2xl shadow-primary/20 border-b border-white/5"
+              : "bg-primary shadow-lg",
         )}
       >
         {/* Animated accent lines */}
@@ -183,9 +190,11 @@ export const Header = () => {
                 <p
                   className={cn(
                     "font-bold leading-tight transition-all duration-300",
-                    scrolled
-                      ? "text-white group-hover:text-white"
-                      : "text-accent name-glow group-hover:text-accent",
+                    pastHero
+                      ? "text-foreground"
+                      : scrolled
+                        ? "text-white group-hover:text-white"
+                        : "text-accent name-glow group-hover:text-accent",
                     scrolled ? "text-sm" : "text-base",
                   )}
                 >
@@ -194,9 +203,11 @@ export const Header = () => {
                 <p
                   className={cn(
                     "transition-all duration-300",
-                    scrolled
-                      ? "text-white/70 group-hover:text-white/90"
-                      : "text-white/80 group-hover:text-white",
+                    pastHero
+                      ? "text-muted-foreground"
+                      : scrolled
+                        ? "text-white/70 group-hover:text-white/90"
+                        : "text-white/80 group-hover:text-white",
                     scrolled ? "text-[10px]" : "text-xs",
                   )}
                 >
@@ -229,9 +240,11 @@ export const Header = () => {
                       "hover:text-accent hover:bg-white/10 hover:scale-105",
                       active
                         ? "text-accent bg-white/15 shadow-lg shadow-accent/10"
-                        : scrolled
-                          ? "text-white/85 hover:text-accent"
-                          : "text-white hover:text-accent",
+                        : pastHero
+                          ? "text-foreground hover:text-accent"
+                          : scrolled
+                            ? "text-white/85 hover:text-accent"
+                            : "text-white hover:text-accent",
                     )}
                     style={{ animationDelay: `${i * 60 + 100}ms` }}
                     onMouseEnter={(e) => moveUnderline(e.currentTarget)}
@@ -270,7 +283,8 @@ export const Header = () => {
               className={cn(
                 "md:hidden relative w-11 h-11 flex items-center justify-center rounded-xl",
                 "transition-all duration-300 hover:bg-white/10 active:scale-95",
-                isOpen ? "bg-white/10" : "",
+                pastHero ? "hover:bg-black/10" : "hover:bg-white/10",
+                isOpen ? (pastHero ? "bg-black/10" : "bg-white/10") : "",
               )}
               onClick={() => {
                 setIsOpen(!isOpen);
@@ -282,26 +296,30 @@ export const Header = () => {
                 {/* Animated hamburger/close icon */}
                 <span
                   className={cn(
-                    "menu-line absolute left-0.5 top-1 h-0.5 w-5 bg-white rounded-full",
+                    "menu-line absolute left-0.5 top-1 h-0.5 w-5 rounded-full",
+                    pastHero ? "bg-foreground" : "bg-white",
                     isOpen ? "rotate-45 top-2.5" : "",
                   )}
                 />
                 <span
                   className={cn(
-                    "menu-line absolute left-0.5 top-2.5 h-0.5 w-5 bg-white rounded-full transition-all duration-300",
+                    "menu-line absolute left-0.5 top-2.5 h-0.5 w-5 rounded-full transition-all duration-300",
+                    pastHero ? "bg-foreground" : "bg-white",
                     isOpen ? "opacity-0 scale-0" : "",
                   )}
                 />
                 <span
                   className={cn(
-                    "menu-line absolute left-0.5 top-2.5 h-0.5 w-5 bg-white rounded-full",
+                    "menu-line absolute left-0.5 top-2.5 h-0.5 w-5 rounded-full",
+                    pastHero ? "bg-foreground" : "bg-white",
                     isOpen ? "-rotate-45 top-2.5" : "",
                   )}
                 />
                 <span
                   className={cn(
-                    "menu-line absolute left-0.5 top-4 h-0.5 w-3.5 bg-white rounded-full",
-                    isOpen ? "w-5" : "",
+                    "menu-line absolute left-0.5 top-4 h-0.5 rounded-full transition-all duration-300",
+                    pastHero ? "bg-foreground" : "bg-white",
+                    isOpen ? "w-0 opacity-0" : "w-3.5",
                   )}
                 />
               </div>
@@ -317,9 +335,19 @@ export const Header = () => {
                 : "max-h-0 opacity-0",
             )}
           >
-            <div className="pt-3 border-t border-white/10">
+            <div
+              className={cn(
+                "pt-3 border-t transition-all duration-300",
+                pastHero ? "border-border" : "border-white/10",
+              )}
+            >
               {/* Animated separator */}
-              <div className="h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent mb-4 scale-in" />
+              <div
+                className={cn(
+                  "h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent mb-4 scale-in",
+                  pastHero ? "opacity-50" : "",
+                )}
+              />
 
               <div className="space-y-1">
                 {navLinks.map((link, i) => {
@@ -334,17 +362,25 @@ export const Header = () => {
                       }}
                       className={cn(
                         "mobile-nav-enter flex items-center gap-3 py-3.5 px-4 rounded-xl text-sm font-medium",
-                        "transition-all duration-200 hover:bg-white/10 hover:text-accent hover:translate-x-2",
+                        "transition-all duration-200 hover:text-accent hover:translate-x-2",
+                        pastHero
+                          ? "hover:bg-black/5 text-foreground"
+                          : "hover:bg-white/10 text-primary-foreground/85",
                         active
                           ? "text-accent bg-white/15 shadow-lg shadow-accent/10"
-                          : "text-primary-foreground/85",
+                          : "",
                       )}
                       style={{ animationDelay: `${i * 50}ms` }}
                     >
                       {active ? (
                         <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0 shadow-lg shadow-accent/50" />
                       ) : (
-                        <span className="w-2 h-2 rounded-full bg-white/20 flex-shrink-0" />
+                        <span
+                          className={cn(
+                            "w-2 h-2 rounded-full flex-shrink-0",
+                            pastHero ? "bg-black/20" : "bg-white/20",
+                          )}
+                        />
                       )}
                       {link.label}
                       {active && (
