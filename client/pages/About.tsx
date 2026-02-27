@@ -1,77 +1,83 @@
 import { Layout } from "@/components/Layout";
-import { GraduationCap, ChevronLeft, ChevronRight } from "lucide-react";
+import { GraduationCap, ChevronLeft, ChevronRight, Newspaper } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 // ── Newspaper Slider ──────────────────────────────────────────────────────────
 const newspaperImages = Array.from({ length: 23 }, (_, i) => ({
-  src: `/newspaper/article-${i + 1}.jpg`,
+  src: `/newspaper/article-${i + 1}.jpeg`,
   caption: `Article ${i + 1}`,
 }));
+
+function NewspaperCard({ img, isCenter }: { img: { src: string; caption: string }; isCenter: boolean }) {
+  const [errored, setErrored] = useState(false);
+  return (
+    <div
+      className={`relative flex-shrink-0 rounded-xl overflow-hidden border-2 shadow-lg transition-all duration-500 ${
+        isCenter ? "border-accent ring-4 ring-accent/25 scale-100 z-10 opacity-100" : "border-transparent scale-90 opacity-40"
+      }`}
+      style={{ width: isCenter ? 280 : 170, height: isCenter ? 380 : 240 }}
+    >
+      {errored ? (
+        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-accent/10 p-4">
+          <Newspaper className="w-10 h-10 text-accent/50 mb-3" />
+          <p className="text-xs font-bold text-primary text-center">{img.caption}</p>
+        </div>
+      ) : (
+        <img
+          src={img.src}
+          alt={img.caption}
+          className="w-full h-full object-contain bg-gray-50"
+          onError={() => setErrored(true)}
+        />
+      )}
+      {isCenter && !errored && (
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-3">
+          <p className="text-white text-xs font-semibold text-center">{img.caption}</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function NewspaperSlider() {
   const [current, setCurrent] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const total = newspaperImages.length;
 
+  const resetTimer = (next: number) => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 4000);
+    setCurrent(next);
+  };
+
   useEffect(() => {
     timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 4000);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, []);
 
-  const go = (dir: number) => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 4000);
-    setCurrent(c => (c + dir + total) % total);
-  };
-
+  const prev = () => resetTimer((current - 1 + total) % total);
+  const next = () => resetTimer((current + 1) % total);
   const visible = [(current - 1 + total) % total, current, (current + 1) % total];
 
   return (
     <div className="w-full select-none">
       <div className="flex items-center justify-center gap-3 md:gap-6">
-        <button onClick={() => go(-1)} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
+        <button onClick={prev} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
           <ChevronLeft className="w-5 h-5" />
         </button>
-
         <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-3xl">
-          {visible.map((imgIdx, pos) => {
-            const img = newspaperImages[imgIdx];
-            const isCenter = pos === 1;
-            return (
-              <div key={imgIdx}
-                className={`relative flex-shrink-0 rounded-xl overflow-hidden border-2 shadow-lg transition-all duration-500 ${
-                  isCenter ? "border-accent ring-4 ring-accent/25 scale-100 z-10 opacity-100" : "border-transparent scale-90 opacity-40"
-                }`}
-                style={{ width: isCenter ? 280 : 170, height: isCenter ? 380 : 240 }}>
-                <img
-                  src={img.src}
-                  alt={img.caption}
-                  className="w-full h-full object-contain bg-gray-50"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                    const p = e.currentTarget.parentElement;
-                    if (p) p.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-accent/10 p-4"><svg xmlns='http://www.w3.org/2000/svg' class='w-10 h-10 text-accent/50 mb-3' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z'/></svg><p class='text-xs font-bold text-primary text-center'>${img.caption}</p></div>`;
-                  }}
-                />
-                {isCenter && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-3">
-                    <p className="text-white text-xs font-semibold text-center">{img.caption}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {visible.map((imgIdx, pos) => (
+            <NewspaperCard key={imgIdx} img={newspaperImages[imgIdx]} isCenter={pos === 1} />
+          ))}
         </div>
-
-        <button onClick={() => go(1)} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
+        <button onClick={next} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
           <ChevronRight className="w-5 h-5" />
         </button>
       </div>
-
       <p className="text-center text-sm text-muted-foreground mt-4 font-medium">{current + 1} / {total}</p>
       <div className="flex justify-center gap-1.5 mt-2 flex-wrap px-4">
         {newspaperImages.map((_, i) => (
-          <button key={i} onClick={() => { if (timerRef.current) clearInterval(timerRef.current); setCurrent(i); timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 4000); }}
+          <button key={i} onClick={() => resetTimer(i)}
             className={`rounded-full transition-all duration-300 ${i === current ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-accent/25 hover:bg-accent/50"}`} />
         ))}
       </div>
@@ -79,7 +85,7 @@ function NewspaperSlider() {
   );
 }
 
-// ── Journey Path (Work Experience) ───────────────────────────────────────────
+// ── Journey Path ──────────────────────────────────────────────────────────────
 const experienceStops = [
   {
     role: "Senior Resident",
@@ -193,7 +199,6 @@ function JourneyPath() {
           style={{ strokeDasharray: pathLength, strokeDashoffset: dashOffset, transition: "stroke-dashoffset 0.05s linear" }} />
         <path d={pathD} stroke="#0055FF" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity={pathProgress}
           style={{ strokeDasharray: pathLength, strokeDashoffset: dashOffset, filter: "blur(2px)" }} />
-
         {iconPositions.map((pos, i) => (
           <g key={i}>
             {activeIdx >= i && (
@@ -211,7 +216,6 @@ function JourneyPath() {
           </g>
         ))}
       </svg>
-
       {iconPositions.map((pos, i) => {
         const stop = experienceStops[i];
         const isLeft = pos.labelSide === "left";
@@ -242,7 +246,7 @@ function JourneyPath() {
   );
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
+// ── Static data ───────────────────────────────────────────────────────────────
 const education = [
   { degree: "M.B.B.S", institution: "Navodaya Medical College", year: "2010" },
   { degree: "M.D (General Medicine)", institution: "Navodaya Medical College", year: "2013" },
@@ -269,6 +273,7 @@ const community = [
   "Mentors young medical professionals in internal medicine",
 ];
 
+// ── Page ──────────────────────────────────────────────────────────────────────
 export default function About() {
   return (
     <Layout>
@@ -320,27 +325,17 @@ export default function About() {
             <h2>Work Experience</h2>
             <p className="text-muted-foreground mt-2 max-w-xl">A journey through Bangalore's most prestigious medical institutions.</p>
           </div>
-
-          {/* Desktop */}
-          <div className="hidden md:block">
-            <JourneyPath />
-          </div>
-
-          {/* Mobile fallback */}
+          <div className="hidden md:block"><JourneyPath /></div>
           <div className="md:hidden space-y-5">
             {experienceStops.map((stop, idx) => (
               <div key={idx} className="flex gap-4 animate-slide-up" style={{ animationDelay: `${idx * 100}ms` }}>
                 <div className="flex flex-col items-center">
-                  <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 shadow-md border border-white" style={{ background: stop.bg }}>
-                    {stop.icon}
-                  </div>
+                  <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 shadow-md border border-white" style={{ background: stop.bg }}>{stop.icon}</div>
                   {idx < experienceStops.length - 1 && <div className="w-0.5 flex-1 mt-2" style={{ background: "#BCE5FF" }} />}
                 </div>
                 <div className="pb-6 flex-1">
                   <div className="bg-white rounded-2xl shadow-sm p-5 border border-gray-100 hover:border-accent/40 hover:shadow-md transition-all duration-300">
-                    <span className="text-xs font-bold px-2 py-0.5 rounded-full inline-block mb-2" style={{ background: stop.bg, color: stop.color }}>
-                      {stop.role}
-                    </span>
+                    <span className="text-xs font-bold px-2 py-0.5 rounded-full inline-block mb-2" style={{ background: stop.bg, color: stop.color }}>{stop.role}</span>
                     <h3 className="text-base font-bold text-primary">{stop.hospital}</h3>
                     <p className="text-sm text-muted-foreground">{stop.location}</p>
                     <p className="text-sm text-muted-foreground/80 italic mt-1">{stop.note}</p>
@@ -382,7 +377,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Newspaper Articles */}
+      {/* Newspaper Slider */}
       <section className="section-padding bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/8 rounded-full blur-3xl" />
         <div className="container-max relative z-10">
