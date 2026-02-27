@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
-import { useState, useEffect } from "react";
-import { Play, Instagram, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Play, Instagram } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { VideoModal } from "@/components/VideoModal";
 
@@ -22,72 +22,13 @@ interface Video {
   views: string;
 }
 
-function VideoThumbnail({
-  src,
-  alt,
-  category,
-}: {
-  src: string;
-  alt: string;
-  category: string;
-}) {
-  const [failed, setFailed] = useState(false);
-  const gradient = categoryGradients[category] || categoryGradients.all;
-
-  if (failed || !src) {
-    return (
-      <div
-        className={`w-full h-full bg-gradient-to-br ${gradient} flex flex-col items-center justify-center gap-2`}
-      >
-        <Instagram className="w-10 h-10 text-white/80" />
-        <span className="text-white/70 text-xs font-medium">
-          Instagram Reel
-        </span>
-      </div>
-    );
-  }
-
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-      onError={() => setFailed(true)}
-      crossOrigin="anonymous"
-    />
-  );
-}
-
-function getInstagramThumbnailUrl(postUrl: string): string {
-  const postId = postUrl.split("/reel/")[1]?.split("/")[0];
-  if (postId) {
-    return `https://graph.facebook.com/v18.0/${postId}/thumbnail?access_token=ignited`;
-  }
-  return "";
-}
-
-async function fetchInstagramThumbnail(postUrl: string): Promise<string> {
-  try {
-    const postId = postUrl.split("/reel/")[1]?.split("/")[0];
-    if (!postId) return "";
-
-    const oembedUrl = `https://api.instagram.com/oembed/?url=https://www.instagram.com/reel/${postId}/`;
-    const response = await fetch(oembedUrl);
-    const data = await response.json();
-    return data.thumbnail_url || "";
-  } catch {
-    return "";
-  }
-}
-
 export default function Videos() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedVideo, setSelectedVideo] = useState<{
     url: string;
     title: string;
+    thumbnail: string;
   } | null>(null);
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const categories = [
     { id: "all", label: "All Videos" },
@@ -98,12 +39,14 @@ export default function Videos() {
     { id: "media", label: "Media Features" },
   ];
 
-  const videoUrls = [
+  const videos: Video[] = [
     {
       id: 1,
       title: "Diabetes Management Tips",
       category: "diabetes",
       url: "https://www.instagram.com/reel/DVAbDs0CRsz/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DVAbDs0CRsz/DVAbDs0CRsz-cover.jpg",
       views: "2.5K",
     },
     {
@@ -111,6 +54,8 @@ export default function Videos() {
       title: "Respiratory Health in Monsoons",
       category: "respiratory",
       url: "https://www.instagram.com/reel/DUkiQLrEjOG/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DUkiQLrEjOG/DUkiQLrEjOG-cover.jpg",
       views: "1.8K",
     },
     {
@@ -118,6 +63,8 @@ export default function Videos() {
       title: "Lifestyle Changes for Better Health",
       category: "lifestyle",
       url: "https://www.instagram.com/reel/DSjdSVOkUcM/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DSjdSVOkUcM/DSjdSVOkUcM-cover.jpg",
       views: "3.2K",
     },
     {
@@ -125,6 +72,8 @@ export default function Videos() {
       title: "Asthma Management Guide",
       category: "health-tips",
       url: "https://www.instagram.com/reel/DSZwnNAEtHN/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DSZwnNAEtHN/DSZwnNAEtHN-cover.jpg",
       views: "2.1K",
     },
     {
@@ -132,6 +81,8 @@ export default function Videos() {
       title: "Media Interview - Health Talk",
       category: "media",
       url: "https://www.instagram.com/reel/DR4VCpvkvUw/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DR4VCpvkvUw/DR4VCpvkvUw-cover.jpg",
       views: "4.5K",
     },
     {
@@ -139,6 +90,8 @@ export default function Videos() {
       title: "Preventive Healthcare Tips",
       category: "health-tips",
       url: "https://www.instagram.com/reel/DQJkpikEfDC/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DQJkpikEfDC/DQJkpikEfDC-cover.jpg",
       views: "2.9K",
     },
     {
@@ -146,6 +99,8 @@ export default function Videos() {
       title: "Diabetes Prevention Programs",
       category: "diabetes",
       url: "https://www.instagram.com/reel/DM9wI_XJ-A-/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DM9wI_XJ-A-/DM9wI_XJ-A--cover.jpg",
       views: "3.4K",
     },
     {
@@ -153,6 +108,8 @@ export default function Videos() {
       title: "Respiratory Care During Viral Season",
       category: "respiratory",
       url: "https://www.instagram.com/reel/DMziY45RBcp/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DMziY45RBcp/DMziY45RBcp-cover.jpg",
       views: "2.7K",
     },
     {
@@ -160,23 +117,11 @@ export default function Videos() {
       title: "Healthy Lifestyle Q&A",
       category: "lifestyle",
       url: "https://www.instagram.com/reel/DMkoRzEyNrz/",
+      thumbnail:
+        "https://inst-1.cdn.yoo-ai.com/cdn-cgi/image/width=540,height=960,fit=cover/reel/DMkoRzEyNrz/DMkoRzEyNrz-cover.jpg",
       views: "1.9K",
     },
   ];
-
-  useEffect(() => {
-    async function loadThumbnails() {
-      const videosWithThumbnails = await Promise.all(
-        videoUrls.map(async (v) => ({
-          ...v,
-          thumbnail: await fetchInstagramThumbnail(v.url),
-        })),
-      );
-      setVideos(videosWithThumbnails);
-      setLoading(false);
-    }
-    loadThumbnails();
-  }, []);
 
   const filteredVideos =
     activeCategory === "all"
@@ -224,60 +169,65 @@ export default function Videos() {
       {/* Videos Grid */}
       <section className="section-padding bg-gray-50">
         <div className="container-max">
-          {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-accent" />
-              <span className="ml-3 text-muted-foreground">
-                Loading videos...
-              </span>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredVideos.map((video, idx) => (
-                <div
-                  key={video.id}
-                  className="group cursor-pointer animate-slide-up"
-                  onClick={() =>
-                    setSelectedVideo({ url: video.url, title: video.title })
-                  }
-                  style={{ animationDelay: `${idx * 100}ms` }}
-                >
-                  <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div className="relative overflow-hidden bg-gray-200 aspect-[9/16] sm:aspect-video">
-                      <VideoThumbnail
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredVideos.map((video, idx) => (
+              <div
+                key={video.id}
+                className="group cursor-pointer animate-slide-up"
+                onClick={() =>
+                  setSelectedVideo({
+                    url: video.url,
+                    title: video.title,
+                    thumbnail: video.thumbnail,
+                  })
+                }
+                style={{ animationDelay: `${idx * 100}ms` }}
+              >
+                <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                  <div className="relative overflow-hidden bg-gray-200 aspect-[9/16]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600" />
+                    {video.thumbnail ? (
+                      <img
                         src={video.thumbnail}
                         alt={video.title}
-                        category={video.category}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 absolute inset-0"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                        }}
                       />
-                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center">
-                        <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 shadow-lg">
-                          <Play className="w-7 h-7 text-primary group-hover:text-white fill-primary group-hover:fill-white" />
-                        </div>
+                    ) : null}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <Play className="w-7 h-7 text-primary group-hover:text-white fill-primary group-hover:fill-white" />
                       </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-bold text-primary group-hover:text-accent transition-colors mb-2 line-clamp-2">
-                        {video.title}
-                      </h3>
-                      <div className="flex items-center justify-between">
-                        <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-semibold">
-                          {
-                            categories.find((c) => c.id === video.category)
-                              ?.label
-                          }
-                        </span>
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Instagram className="w-3 h-3" /> {video.views} views
-                        </span>
-                      </div>
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <span className="inline-flex items-center gap-1 bg-black/50 text-white text-xs px-2 py-1 rounded">
+                        <Instagram className="w-3 h-3" /> Watch Reel
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-primary group-hover:text-accent transition-colors mb-2 line-clamp-2">
+                      {video.title}
+                    </h3>
+                    <div className="flex items-center justify-between">
+                      <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-semibold">
+                        {categories.find((c) => c.id === video.category)?.label}
+                      </span>
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        {video.views} views
+                      </span>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
 
-          {filteredVideos.length === 0 && !loading && (
+          {filteredVideos.length === 0 && (
             <div className="text-center py-16 animate-fade-in">
               <p className="text-muted-foreground text-lg">
                 No videos found in this category. Check back soon!
@@ -316,6 +266,7 @@ export default function Videos() {
         isOpen={!!selectedVideo}
         videoUrl={selectedVideo?.url || ""}
         videoTitle={selectedVideo?.title || ""}
+        thumbnail={selectedVideo?.thumbnail}
         onClose={() => setSelectedVideo(null)}
       />
     </Layout>
