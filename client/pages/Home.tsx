@@ -314,8 +314,8 @@ function AwardSlider() {
 // ── Static data ───────────────────────────────────────────────────────────────
 const stats = [
   { label: "Years of Experience", value: "16+", icon: Stethoscope },
+  { label: "Specialty Experience", value: "13+", icon: Heart },
   { label: "OPD Patients Treated", value: "2L+", icon: Users },
-  { label: "ICU & IP Patients", value: "Thousands", icon: Heart },
   { label: "Specialisations", value: "6+", icon: Wind },
 ];
 
@@ -407,7 +407,7 @@ export default function Home() {
               <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/40 text-accent px-5 py-2 rounded-full text-sm font-semibold mb-6 backdrop-blur-sm">
                 <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
                 <span className="tracking-wider">
-                  FICP | MD | DNB | Fellowship in Diabetes | DAA
+                  MBBS | MD | DNB | FICP | DAA | FID
                 </span>
               </div>
               <h1
