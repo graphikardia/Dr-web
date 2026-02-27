@@ -272,7 +272,7 @@ const experienceStops = [
     role: "Senior Resident",
     hospital: "St. John's Medical College & Hospital",
     location: "Bangalore",
-    note: "Prestigious academic centre — residency in Internal Medicine",
+    note: "Prestigious academic centre — residency in Chest Medicine",
     color: "#0055FF",
     bg: "#BCE5FF",
     icon: (
@@ -625,16 +625,16 @@ function JourneyPath() {
 
 // ── Static data ───────────────────────────────────────────────────────────────
 const education = [
-  { degree: "M.B.B.S", institution: "Navodaya Medical College", year: "2010" },
+  { degree: "M.B.B.S", institution: "Navodaya Medical College", year: "2004" },
   {
     degree: "M.D (General Medicine)",
     institution: "Navodaya Medical College",
-    year: "2013",
+    year: "2010",
   },
   {
     degree: "D.N.B (General Medicine)",
     institution: "National Board of Examinations",
-    year: "2013",
+    year: "2015",
   },
   {
     degree: "Fellowship in Diabetes",
@@ -644,7 +644,7 @@ const education = [
   {
     degree: "Diploma in Allergy & Asthma (DAA)",
     institution: "C.M.C, Vellore",
-    year: "2016",
+    year: "2015",
   },
   {
     degree: "FICP — Fellow of Indian College of Physicians",
@@ -657,7 +657,7 @@ const affiliations = [
   "Executive Committee Member — API (2023–2026)",
   "Current Executive Committee Member — API (2025–26)",
   "Internal Audit Committee Member — API (2025–26)",
-  "Life Member — Respiratory Society of South India (RSSDI)",
+  "Life Member — Research Society for the Study of Diabetes in India(RSSDI)",
   "Life Member — Indian Medical Association (IMA)",
   "Life Member — European Respiratory Society (ERS)",
   "Life Member — Indian Association of Endocrinologists (IAE)",
