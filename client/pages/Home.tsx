@@ -1,99 +1,107 @@
 import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { Users, Stethoscope, Heart, Wind, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, Stethoscope, Heart, Wind, ChevronLeft, ChevronRight, Image } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 const awardImages = [
-  { src: "/awards-speech/award-1.jpg",  caption: "Award Ceremony" },
-  { src: "/awards-speech/award-2.jpg",  caption: "Medical Conference" },
-  { src: "/awards-speech/award-3.jpg",  caption: "FICP Felicitation" },
-  { src: "/awards-speech/award-4.jpg",  caption: "Guest Lecture" },
-  { src: "/awards-speech/award-5.jpg",  caption: "CME Programme" },
-  { src: "/awards-speech/award-6.jpg",  caption: "Panel Discussion" },
-  { src: "/awards-speech/award-7.jpg",  caption: "Community Camp" },
-  { src: "/awards-speech/award-8.jpg",  caption: "Award Night" },
-  { src: "/awards-speech/award-9.jpg",  caption: "Academic Talk" },
-  { src: "/awards-speech/award-10.jpg", caption: "Recognition" },
-  { src: "/awards-speech/award-11.jpg", caption: "Keynote Address" },
-  { src: "/awards-speech/award-12.jpg", caption: "Medical Summit" },
+  { src: "/awards-speech/award-1.jpeg",  caption: "Award Ceremony" },
+  { src: "/awards-speech/award-2.jpeg",  caption: "Medical Conference" },
+  { src: "/awards-speech/award-3.jpeg",  caption: "FICP Felicitation" },
+  { src: "/awards-speech/award-4.jpeg",  caption: "Guest Lecture" },
+  { src: "/awards-speech/award-5.jpeg",  caption: "CME Programme" },
+  { src: "/awards-speech/award-6.jpeg",  caption: "Panel Discussion" },
+  { src: "/awards-speech/award-7.jpeg",  caption: "Community Camp" },
+  { src: "/awards-speech/award-8.jpeg",  caption: "Award Night" },
+  { src: "/awards-speech/award-9.jpeg",  caption: "Academic Talk" },
+  { src: "/awards-speech/award-10.jpeg", caption: "Recognition" },
+  { src: "/awards-speech/award-11.jpeg", caption: "Keynote Address" },
+  { src: "/awards-speech/award-12.jpeg", caption: "Medical Summit" },
 ];
+
+function SlideCard({ img, isCenter, onClick }: { img: { src: string; caption: string }; isCenter: boolean; onClick?: () => void }) {
+  const [errored, setErrored] = useState(false);
+  return (
+    <div
+      onClick={onClick}
+      className={`relative flex-shrink-0 rounded-2xl overflow-hidden shadow-lg border-2 transition-all duration-500 cursor-pointer ${
+        isCenter ? "border-accent ring-4 ring-accent/25 scale-100 z-10" : "border-transparent scale-90 opacity-40"
+      }`}
+      style={{ width: isCenter ? 310 : 180, height: isCenter ? 280 : 200 }}
+    >
+      {errored ? (
+        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 p-4">
+          <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center mb-3">
+            <Image className="w-7 h-7 text-accent" />
+          </div>
+          <p className="text-sm font-bold text-primary text-center">{img.caption}</p>
+        </div>
+      ) : (
+        <img
+          src={img.src}
+          alt={img.caption}
+          className="w-full h-full object-cover"
+          onError={() => setErrored(true)}
+        />
+      )}
+      {isCenter && !errored && (
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4">
+          <p className="text-white text-sm font-semibold text-center">{img.caption}</p>
+        </div>
+      )}
+      {!isCenter && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors">
+          {onClick && <ChevronRight className="w-6 h-6 text-white/70" />}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function AwardSlider() {
   const [current, setCurrent] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const total = awardImages.length;
 
+  const resetTimer = (next: number) => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3500);
+    setCurrent(next);
+  };
+
   useEffect(() => {
     timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3500);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, []);
 
-  const go = (dir: number) => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3500);
-    setCurrent(c => (c + dir + total) % total);
-  };
-
+  const prev = () => resetTimer((current - 1 + total) % total);
+  const next = () => resetTimer((current + 1) % total);
   const visible = [(current - 1 + total) % total, current, (current + 1) % total];
 
   return (
     <div className="w-full select-none">
       <div className="flex items-center justify-center gap-3 md:gap-6">
-        <button onClick={() => go(-1)} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
+        <button onClick={prev} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
           <ChevronLeft className="w-5 h-5" />
         </button>
-
         <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-3xl">
-          {visible.map((imgIdx, pos) => {
-            const img = awardImages[imgIdx];
-            const isCenter = pos === 1;
-            return (
-              <div
-                key={imgIdx}
-                onClick={() => !isCenter && go(pos === 0 ? -1 : 1)}
-                className={`relative flex-shrink-0 rounded-2xl overflow-hidden shadow-lg border-2 transition-all duration-500 cursor-pointer ${
-                  isCenter ? "border-accent ring-4 ring-accent/25 scale-100 z-10" : "border-transparent scale-90 opacity-40"
-                }`}
-                style={{ width: isCenter ? 310 : 180, height: isCenter ? 280 : 200 }}
-              >
-                <img
-                  src={img.src}
-                  alt={img.caption}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                    const p = e.currentTarget.parentElement;
-                    if (p) p.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 p-4"><div class="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center mb-3"><svg xmlns='http://www.w3.org/2000/svg' class='w-7 h-7 text-accent' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'/></svg></div><p class='text-sm font-bold text-primary text-center'>${img.caption}</p></div>`;
-                  }}
-                />
-                {isCenter && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4">
-                    <p className="text-white text-sm font-semibold text-center">{img.caption}</p>
-                  </div>
-                )}
-                {!isCenter && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors">
-                    {pos === 0 ? <ChevronLeft className="w-6 h-6 text-white/70" /> : <ChevronRight className="w-6 h-6 text-white/70" />}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {visible.map((imgIdx, pos) => (
+            <SlideCard
+              key={imgIdx}
+              img={awardImages[imgIdx]}
+              isCenter={pos === 1}
+              onClick={pos !== 1 ? (pos === 0 ? prev : next) : undefined}
+            />
+          ))}
         </div>
-
-        <button onClick={() => go(1)} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
+        <button onClick={next} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
           <ChevronRight className="w-5 h-5" />
         </button>
       </div>
-
       <p className="text-center text-sm text-muted-foreground mt-4 font-medium">{current + 1} / {total}</p>
       <div className="flex justify-center gap-1.5 mt-2 flex-wrap">
         {awardImages.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => { if (timerRef.current) clearInterval(timerRef.current); setCurrent(i); timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3500); }}
-            className={`rounded-full transition-all duration-300 ${i === current ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-accent/25 hover:bg-accent/50"}`}
-          />
+          <button key={i} onClick={() => resetTimer(i)}
+            className={`rounded-full transition-all duration-300 ${i === current ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-accent/25 hover:bg-accent/50"}`} />
         ))}
       </div>
     </div>
@@ -136,7 +144,6 @@ export default function Home() {
           <div key={i} className="absolute w-2 h-2 bg-accent/40 rounded-full animate-bounce-soft"
             style={{ top: `${15 + i * 13}%`, left: `${5 + i * 15}%`, animationDelay: `${i * 0.4}s`, animationDuration: `${2 + i * 0.5}s` }} />
         ))}
-
         <div className="container-max relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="animate-slide-in-left">
@@ -153,15 +160,10 @@ export default function Home() {
                 16 years of dedicated excellence in internal medicine, diabetes management, and respiratory care — serving over 2 lakh OPD patients across Bangalore's leading hospitals.
               </p>
               <div className="flex gap-4 flex-wrap animate-slide-up" style={{ animationDelay: "400ms" }}>
-                <Link to="/contact" className="btn-accent hover:scale-105 hover:shadow-2xl transition-all duration-300 animate-pulse-glow">
-                  Book Appointment
-                </Link>
-                <Link to="/about" className="bg-transparent border-2 border-accent/70 text-accent hover:bg-accent hover:text-accent-foreground px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
-                  Learn More
-                </Link>
+                <Link to="/contact" className="btn-accent hover:scale-105 hover:shadow-2xl transition-all duration-300 animate-pulse-glow">Book Appointment</Link>
+                <Link to="/about" className="bg-transparent border-2 border-accent/70 text-accent hover:bg-accent hover:text-accent-foreground px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">Learn More</Link>
               </div>
             </div>
-
             <div className="flex justify-center animate-slide-in-right">
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-r from-accent/30 via-accent/10 to-accent/30 rounded-3xl blur-2xl opacity-70 animate-pulse" />
@@ -240,11 +242,8 @@ export default function Home() {
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 With advanced certifications including MD, DNB, Fellowship in Diabetes, and a Diploma in Allergy &amp; Asthma from CMC Vellore, she brings unmatched expertise to complex medical conditions.
               </p>
-              <Link to="/about" className="inline-block btn-primary hover:scale-105 hover:shadow-xl transition-all duration-300">
-                View Full Profile
-              </Link>
+              <Link to="/about" className="inline-block btn-primary hover:scale-105 hover:shadow-xl transition-all duration-300">View Full Profile</Link>
             </div>
-
             <div className="bg-gradient-to-br from-accent/10 to-accent/5 p-8 rounded-2xl border border-accent/20 hover:shadow-xl transition-all duration-300 animate-slide-in-right transform hover:scale-105">
               <h4 className="font-bold text-primary mb-5 text-lg">Career Highlights</h4>
               <div className="space-y-4">
@@ -271,9 +270,7 @@ export default function Home() {
           <div className="text-center mb-12 animate-slide-up">
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">Milestones & Moments</span>
             <h2>Awards & Conferences</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Award ceremonies, medical conferences, keynote addresses, and community health programmes.
-            </p>
+            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">Award ceremonies, medical conferences, keynote addresses, and community health programmes.</p>
           </div>
           <AwardSlider />
         </div>
