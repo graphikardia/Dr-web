@@ -1068,117 +1068,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section-padding bg-gradient-to-r from-primary to-primary/85 text-primary-foreground relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full -mr-48 blur-3xl animate-pulse pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/10 rounded-full -ml-40 blur-3xl animate-bounce-soft pointer-events-none" />
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-accent rounded-full animate-ping"
-            style={{
-              top: `${20 + i * 15}%`,
-              left: `${10 + i * 18}%`,
-              animationDelay: `${i * 0.6}s`,
-            }}
-          />
-        ))}
-        <div className="container-max text-center relative z-10">
-          <h2 className="text-white mb-6 animate-slide-up">
-            Ready for Your Consultation?
-          </h2>
-          <p
-            className="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-slide-up"
-            style={{ animationDelay: "100ms" }}
-          >
-            Book your appointment with Dr. Darshana Reddy for personalised,
-            expert medical care delivered with compassion.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-block bg-accent text-accent-foreground hover:opacity-90 px-10 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-110 hover:shadow-2xl animate-slide-up animate-pulse-glow"
-            style={{ animationDelay: "200ms" }}
-          >
-            Book Your Appointment Now
-          </Link>
-        </div>
-      </section>
-
-      {/* FAQ & Help Form - Side by Side */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-max">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* FAQ */}
-            <div>
-              <div className="text-center mb-8 animate-slide-up lg:text-left">
-                <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-                  <MessageCircle className="w-4 h-4 inline-block mr-1" />
-                  FAQ
-                </span>
-                <h2 className="lg:text-left">Frequently Asked Questions</h2>
-                <p className="text-muted-foreground mt-3 max-w-xl mx-auto lg:mx-0">
-                  Find answers to common questions about our services and
-                  consultations.
-                </p>
-              </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm">
-                {faqs.map((faq, idx) => (
-                  <FAQItem
-                    key={idx}
-                    question={faq.question}
-                    answer={faq.answer}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* We're Here to Help Form */}
-            <div>
-              <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-                Get in Touch
-              </span>
-              <h2 className="mb-4">Have More Questions?</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Whether you need to schedule an appointment or have questions
-                about our services, we're here to help. Fill out the form and
-                our team will get back to you within 24 hours.
-              </p>
-              <div className="flex flex-col gap-4 mb-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-primary">Phone</p>
-                    <a
-                      href="tel:+918882799799"
-                      className="text-muted-foreground hover:text-accent"
-                    >
-                      +91 8882 799 799
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <Mail className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-primary">Email</p>
-                    <a
-                      href="mailto:info@altiushospital.com"
-                      className="text-muted-foreground hover:text-accent"
-                    >
-                      info@altiushospital.com
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <HelpForm />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Special Check-ups & Timing */}
       <section className="section-padding bg-white">
         <div className="container-max">
@@ -1301,6 +1190,81 @@ export default function Home() {
               For appointments call:{" "}
               <strong className="text-accent">+91 8882 799 799</strong>
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ & Help Form - Side by Side */}
+      <section className="section-padding bg-gray-50">
+        <div className="container-max">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* FAQ */}
+            <div>
+              <div className="text-center mb-8 animate-slide-up lg:text-left">
+                <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                  <MessageCircle className="w-4 h-4 inline-block mr-1" />
+                  FAQ
+                </span>
+                <h2 className="lg:text-left">Frequently Asked Questions</h2>
+                <p className="text-muted-foreground mt-3 max-w-xl mx-auto lg:mx-0">
+                  Find answers to common questions about our services and
+                  consultations.
+                </p>
+              </div>
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                {faqs.map((faq, idx) => (
+                  <FAQItem
+                    key={idx}
+                    question={faq.question}
+                    answer={faq.answer}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* We're Here to Help Form */}
+            <div>
+              <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                Get in Touch
+              </span>
+              <h2 className="mb-4">Have More Questions?</h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Whether you need to schedule an appointment or have questions
+                about our services, we're here to help. Fill out the form and
+                our team will get back to you within 24 hours.
+              </p>
+              <div className="flex flex-col gap-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                    <Phone className="w-5 h-5 text-accent" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-primary">Phone</p>
+                    <a
+                      href="tel:+918882799799"
+                      className="text-muted-foreground hover:text-accent"
+                    >
+                      +91 8882 799 799
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-accent" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-primary">Email</p>
+                    <a
+                      href="mailto:info@altiushospital.com"
+                      className="text-muted-foreground hover:text-accent"
+                    >
+                      info@altiushospital.com
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <HelpForm />
+            </div>
           </div>
         </div>
       </section>
