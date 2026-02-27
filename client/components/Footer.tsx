@@ -81,11 +81,11 @@ export const Footer = () => {
               </div>
               <div className="flex gap-2 items-start">
                 <MapPin size={16} className="flex-shrink-0 mt-0.5 text-accent" />
-                <p>Altius Hospital, HBR Layout, Bangalore</p>
+                <p>HBR Layout, Bangalore</p>
               </div>
               <div className="flex gap-2 items-start">
                 <Mail size={16} className="flex-shrink-0 mt-0.5 text-accent" />
-                <p>info@altiushospital.com</p>
+                <p>dr.darshana@gmail.com</p>
               </div>
             </div>
           </div>
@@ -94,12 +94,12 @@ export const Footer = () => {
         <div className="border-t border-primary-foreground/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm opacity-80">
-              © 2024 Dr. Darshana Reddy. All rights reserved.
+              © 2026 graphikardia. All rights reserved.
             </p>
             <div className="flex items-center gap-2 mt-4 md:mt-0 text-sm">
               <span>Made with</span>
               <Heart size={16} className="text-accent fill-accent" />
-              <span>by Altius Hospital</span>
+              <span>by Graphikardia</span>
             </div>
           </div>
         </div>
