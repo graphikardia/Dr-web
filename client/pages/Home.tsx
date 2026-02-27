@@ -43,6 +43,7 @@ function Lightbox({ images, startIdx, onClose }: {
       className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{ background: "rgba(0,0,0,0.92)" }}
       onClick={onClose}
+      onMouseLeave={onClose}
     >
       {/* Close */}
       <button onClick={onClose}
@@ -104,15 +105,19 @@ function Lightbox({ images, startIdx, onClose }: {
 }
 
 // ── Slide Card ────────────────────────────────────────────────────────────────
-function SlideCard({ img, isCenter, onClick }: {
+function SlideCard({ img, isCenter, onClick, onMouseEnter, onMouseLeave }: {
   img: { src: string; caption: string };
   isCenter: boolean;
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }) {
   const [errored, setErrored] = useState(false);
   return (
     <div
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       className={`relative flex-shrink-0 rounded-2xl overflow-hidden shadow-lg border-2 transition-all duration-500 group
         ${isCenter
           ? "border-accent ring-4 ring-accent/25 scale-100 z-10 cursor-zoom-in"
@@ -194,7 +199,7 @@ function AwardSlider() {
       <div className="w-full select-none">
         {/* Hint */}
         <p className="text-center text-xs text-accent font-semibold mb-4 flex items-center justify-center gap-1.5">
-          <ZoomIn className="w-3.5 h-3.5" /> Click the centre image to view full screen
+          <ZoomIn className="w-3.5 h-3.5" /> Hover or click the centre image to view full screen
         </p>
 
         <div className="flex items-center justify-center gap-3 md:gap-6">
@@ -214,6 +219,8 @@ function AwardSlider() {
                   : pos === 0 ? prev
                   : next
                 }
+                onMouseEnter={pos === 1 ? () => setLightbox(true)  : undefined}
+                onMouseLeave={pos === 1 ? () => setLightbox(false) : undefined}
               />
             ))}
           </div>
