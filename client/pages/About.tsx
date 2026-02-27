@@ -6,8 +6,19 @@ import {
   Newspaper,
   X,
   ZoomIn,
+  Award,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+
+const awardImages = [
+  { src: "/awards-speech/award-1.jpeg", caption: "Award Ceremony" },
+  { src: "/awards-speech/award-2.jpeg", caption: "Medical Conference" },
+  { src: "/awards-speech/award-3.jpeg", caption: "FICP Felicitation" },
+  { src: "/awards-speech/award-4.jpeg", caption: "Guest Lecture" },
+  { src: "/awards-speech/award-5.jpeg", caption: "CME Programme" },
+  { src: "/awards-speech/award-6.jpeg", caption: "Panel Discussion" },
+  { src: "/awards-speech/award-7.jpeg", caption: "Award Recognition" },
+];
 
 // ── Lightbox ──────────────────────────────────────────────────────────────────
 function Lightbox({
@@ -254,6 +265,166 @@ function NewspaperSlider() {
         </p>
         <div className="flex justify-center gap-1.5 mt-2 flex-wrap px-4">
           {newspaperImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => resetTimer(i)}
+              className={`rounded-full transition-all duration-300 ${i === current ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-accent/25 hover:bg-accent/50"}`}
+            />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── Award Slider (for Milestones) ─────────────────────────────────────────────
+function AwardSlideCard({
+  img,
+  isCenter,
+  onClick,
+}: {
+  img: { src: string; caption: string };
+  isCenter: boolean;
+  onClick?: () => void;
+}) {
+  const [errored, setErrored] = useState(false);
+  return (
+    <div
+      onClick={onClick}
+      className={`relative flex-shrink-0 rounded-2xl overflow-hidden shadow-lg border-2 transition-all duration-500 group
+        ${
+          isCenter
+            ? "border-accent ring-4 ring-accent/25 scale-100 z-10 cursor-zoom-in"
+            : "border-transparent scale-90 opacity-40 cursor-pointer"
+        }`}
+      style={{ width: isCenter ? 310 : 180, height: isCenter ? 280 : 200 }}
+    >
+      {errored ? (
+        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 p-4">
+          <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center mb-3">
+            <Award className="w-7 h-7 text-accent" />
+          </div>
+          <p className="text-sm font-bold text-primary text-center">
+            {img.caption}
+          </p>
+        </div>
+      ) : (
+        <img
+          src={img.src}
+          alt={img.caption}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          onError={() => setErrored(true)}
+        />
+      )}
+
+      {isCenter && !errored && (
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-2.5 shadow-lg">
+            <ZoomIn className="w-6 h-6 text-primary" />
+          </div>
+        </div>
+      )}
+
+      {!isCenter && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors">
+          <ChevronRight className="w-6 h-6 text-white/70" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AwardSlider() {
+  const [current, setCurrent] = useState(0);
+  const [lightbox, setLightbox] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const total = awardImages.length;
+
+  const resetTimer = (next: number) => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(
+      () => setCurrent((c) => (c + 1) % total),
+      3500,
+    );
+    setCurrent(next);
+  };
+
+  useEffect(() => {
+    timerRef.current = setInterval(
+      () => setCurrent((c) => (c + 1) % total),
+      3500,
+    );
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
+
+  const prev = () => resetTimer((current - 1 + total) % total);
+  const next = () => resetTimer((current + 1) % total);
+  const visible = [
+    (current - 1 + total) % total,
+    current,
+    (current + 1) % total,
+  ];
+
+  return (
+    <>
+      {lightbox && (
+        <Lightbox
+          images={awardImages}
+          startIdx={current}
+          onClose={() => {
+            setLightbox(false);
+          }}
+        />
+      )}
+
+      <div className="w-full select-none">
+        <p className="text-center text-xs text-accent font-semibold mb-4 flex items-center justify-center gap-1.5">
+          <ZoomIn className="w-3.5 h-3.5" /> Click the centre image to view full
+          screen
+        </p>
+
+        <div className="flex items-center justify-center gap-3 md:gap-6">
+          <button
+            onClick={prev}
+            className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-3xl">
+            {visible.map((imgIdx, pos) => (
+              <AwardSlideCard
+                key={imgIdx}
+                img={awardImages[imgIdx]}
+                isCenter={pos === 1}
+                onClick={
+                  pos === 1
+                    ? () => {
+                        setLightbox(true);
+                      }
+                    : pos === 0
+                      ? prev
+                      : next
+                }
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={next}
+            className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        <p className="text-center text-sm text-muted-foreground mt-4 font-medium">
+          {current + 1} / {total}
+        </p>
+        <div className="flex justify-center gap-1.5 mt-2 flex-wrap">
+          {awardImages.map((_, i) => (
             <button
               key={i}
               onClick={() => resetTimer(i)}
@@ -889,6 +1060,25 @@ export default function About() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Milestones & Moments - Awards & Conferences */}
+      <section className="section-padding bg-gradient-to-br from-primary/5 via-white to-accent/5 relative overflow-hidden">
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/8 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="container-max relative z-10">
+          <div className="text-center mb-12 animate-slide-up">
+            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+              Milestones & Moments
+            </span>
+            <h2>Awards & Conferences</h2>
+            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
+              Award ceremonies, medical conferences, keynote addresses, and
+              community health programmes.
+            </p>
+          </div>
+          <AwardSlider />
         </div>
       </section>
 
