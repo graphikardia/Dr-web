@@ -33,6 +33,7 @@ function Lightbox({ images, startIdx, onClose }: {
       className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{ background: "rgba(0,0,0,0.92)" }}
       onClick={onClose}
+      onMouseLeave={onClose}
     >
       {/* Close */}
       <button onClick={onClose}
@@ -93,15 +94,19 @@ const newspaperImages = Array.from({ length: 23 }, (_, i) => ({
   caption: `Article ${i + 1}`,
 }));
 
-function NewspaperCard({ img, isCenter, onOpen }: {
+function NewspaperCard({ img, isCenter, onOpen, onMouseEnter, onMouseLeave }: {
   img: { src: string; caption: string };
   isCenter: boolean;
   onOpen: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }) {
   const [errored, setErrored] = useState(false);
   return (
     <div
       onClick={isCenter ? onOpen : undefined}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       className={`relative flex-shrink-0 rounded-xl overflow-hidden border-2 shadow-lg transition-all duration-500 group
         ${isCenter
           ? "border-accent ring-4 ring-accent/25 scale-100 z-10 opacity-100 cursor-zoom-in"
@@ -164,7 +169,7 @@ function NewspaperSlider() {
 
       <div className="w-full select-none">
         <p className="text-center text-xs text-accent font-semibold mb-4 flex items-center justify-center gap-1.5">
-          <ZoomIn className="w-3.5 h-3.5" /> Click the centre article to view full screen
+          <ZoomIn className="w-3.5 h-3.5" /> Hover or click the centre article to view full screen
         </p>
 
         <div className="flex items-center justify-center gap-3 md:gap-6">
@@ -175,8 +180,14 @@ function NewspaperSlider() {
 
           <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-3xl">
             {visible.map((imgIdx, pos) => (
-              <NewspaperCard key={imgIdx} img={newspaperImages[imgIdx]}
-                isCenter={pos === 1} onOpen={() => setLightbox(true)} />
+              <NewspaperCard
+                key={imgIdx}
+                img={newspaperImages[imgIdx]}
+                isCenter={pos === 1}
+                onOpen={() => setLightbox(true)}
+                onMouseEnter={pos === 1 ? () => setLightbox(true)  : undefined}
+                onMouseLeave={pos === 1 ? () => setLightbox(false) : undefined}
+              />
             ))}
           </div>
 
@@ -210,7 +221,7 @@ const experienceStops = [
     role: "Consultant", hospital: "Apollo Hospitals",
     location: "Bangalore", note: "Consultant physician at one of India's premier hospital chains",
     color: "#0055FF", bg: "#E5EBF2",
-    icon: (<svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M30.618 20.449c3.091 1.234 5.19 4.145 5.387 7.468l.08 1.28c.057.975-.717 1.796-1.694 1.796H21.211c-.976 0-1.75-.821-1.693-1.796l.076-1.28c.197-3.323 2.296-6.233 5.387-7.467l2.819-1.126 2.818 1.125z" fill="white" stroke="#333" strokeWidth="1.2"/><path d="M15.02 20.449c3.091 1.234 5.19 4.145 5.387 7.468l.076 1.28c.057.975-.717 1.796-1.693 1.796H5.613c-.976 0-1.75-.821-1.693-1.796l.076-1.28c.197-3.323 2.296-6.233 5.387-7.467l2.818-1.126 2.819 1.125z" fill="white" stroke="#333" strokeWidth="1.2"/><ellipse cx="27.798" cy="16.834" rx="4.658" ry="4.658" fill="white" stroke="#333" strokeWidth="1.2"/><ellipse cx="12.201" cy="16.834" rx="4.658" ry="4.658" fill="white" stroke="#333" strokeWidth="1.2"/><path d="M24.47 18.594c3.091 1.234 5.19 4.145 5.387 7.468l.185 3.122c.057.974-.718 1.796-1.694 1.796H11.686c-.976 0-1.75-.822-1.693-1.796l.185-3.122c.197-3.323 2.296-6.234 5.387-7.468l4.453-1.778 4.453 1.778z" fill="white" stroke="#333" strokeWidth="1.2"/><ellipse cx="20.016" cy="13.965" rx="5.557" ry="5.557" fill="white" stroke="#333" strokeWidth="1.2"/></svg>),
+    icon: (<svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M30.618 20.449c3.091 1.234 5.19 4.145 5.387 7.468l.08 1.28c.057.975-.717 1.796-1.694 1.796H21.211c-.976 0-1.75-.821-1.693-1.796l.076-1.28c.197-3.323 2.296-6.233 5.387-7.467l2.819-1.126 2.818 1.125z" fill="white" stroke="#333" strokeWidth="1.2"/><path d="M15.02 20.449c3.091 1.234 5.19 4.145 5.387 7.468l.076 1.28c.057.975-.717 1.796-1.693 1.796H5.613c-.976 0-1.75-.821-1.796l.076-1.28c.197-3.323 2.296-6.233 5.387-7.467l2.818-1.126 2.819 1.125z" fill="white" stroke="#333" strokeWidth="1.2"/><ellipse cx="27.798" cy="16.834" rx="4.658" ry="4.658" fill="white" stroke="#333" strokeWidth="1.2"/><ellipse cx="12.201" cy="16.834" rx="4.658" ry="4.658" fill="white" stroke="#333" strokeWidth="1.2"/><path d="M24.47 18.594c3.091 1.234 5.19 4.145 5.387 7.468l.185 3.122c.057.974-.718 1.796-1.694 1.796H11.686c-.976 0-1.75-.822-1.693-1.796l.185-3.122c.197-3.323 2.296-6.234 5.387-7.468l4.453-1.778 4.453 1.778z" fill="white" stroke="#333" strokeWidth="1.2"/><ellipse cx="20.016" cy="13.965" rx="5.557" ry="5.557" fill="white" stroke="#333" strokeWidth="1.2"/></svg>),
   },
   {
     role: "Consultant", hospital: "K C Raju Multispeciality Hospital",
