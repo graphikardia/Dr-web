@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { Users, Stethoscope, Heart, Wind, ChevronLeft, ChevronRight, Image } from "lucide-react";
+import { Users, Stethoscope, Heart, Wind, ChevronLeft, ChevronRight, Image, X, ZoomIn } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 const awardImages = [
@@ -10,22 +10,113 @@ const awardImages = [
   { src: "/awards-speech/award-4.jpeg",  caption: "Guest Lecture" },
   { src: "/awards-speech/award-5.jpeg",  caption: "CME Programme" },
   { src: "/awards-speech/award-6.jpeg",  caption: "Panel Discussion" },
-  { src: "/awards-speech/award-7.jpeg",  caption: "Community Camp" },
-  { src: "/awards-speech/award-8.jpeg",  caption: "Award Night" },
-  { src: "/awards-speech/award-9.jpeg",  caption: "Academic Talk" },
-  { src: "/awards-speech/award-10.jpeg", caption: "Recognition" },
-  { src: "/awards-speech/award-11.jpeg", caption: "Keynote Address" },
-  { src: "/awards-speech/award-12.jpeg", caption: "Medical Summit" },
 ];
 
-function SlideCard({ img, isCenter, onClick }: { img: { src: string; caption: string }; isCenter: boolean; onClick?: () => void }) {
+// ── Lightbox ──────────────────────────────────────────────────────────────────
+function Lightbox({ images, startIdx, onClose }: {
+  images: { src: string; caption: string }[];
+  startIdx: number;
+  onClose: () => void;
+}) {
+  const [idx, setIdx] = useState(startIdx);
+  const total = images.length;
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape")     onClose();
+      if (e.key === "ArrowRight") setIdx((i) => (i + 1) % total);
+      if (e.key === "ArrowLeft")  setIdx((i) => (i - 1 + total) % total);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose, total]);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const img = images[idx];
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      style={{ background: "rgba(0,0,0,0.92)" }}
+      onClick={onClose}
+    >
+      {/* Close */}
+      <button onClick={onClose}
+        className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center transition-colors">
+        <X className="w-6 h-6 text-white" />
+      </button>
+
+      {/* Counter */}
+      <div className="absolute top-5 left-1/2 -translate-x-1/2 text-white/60 text-sm font-medium tabular-nums">
+        {idx + 1} / {total}
+      </div>
+
+      {/* Prev */}
+      <button
+        onClick={(e) => { e.stopPropagation(); setIdx((i) => (i - 1 + total) % total); }}
+        className="absolute left-4 md:left-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center transition-colors z-10">
+        <ChevronLeft className="w-7 h-7 text-white" />
+      </button>
+
+      {/* Image */}
+      <div
+        className="relative flex flex-col items-center justify-center px-20 w-full h-full"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          key={img.src}
+          src={img.src}
+          alt={img.caption}
+          className="max-h-[85vh] max-w-[85vw] object-contain rounded-xl shadow-2xl"
+          style={{ animation: "lbFadeIn 0.2s ease" }}
+        />
+        <p className="text-white/70 text-sm mt-4 font-medium">{img.caption}</p>
+      </div>
+
+      {/* Next */}
+      <button
+        onClick={(e) => { e.stopPropagation(); setIdx((i) => (i + 1) % total); }}
+        className="absolute right-4 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center transition-colors z-10">
+        <ChevronRight className="w-7 h-7 text-white" />
+      </button>
+
+      {/* Dot strip */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 flex-wrap justify-center px-4 max-w-lg">
+        {images.map((_, i) => (
+          <button key={i}
+            onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+            className={`rounded-full transition-all duration-300 ${i === idx ? "w-5 h-2 bg-white" : "w-2 h-2 bg-white/30 hover:bg-white/60"}`} />
+        ))}
+      </div>
+
+      <style>{`
+        @keyframes lbFadeIn {
+          from { opacity:0; transform:scale(0.96); }
+          to   { opacity:1; transform:scale(1); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// ── Slide Card ────────────────────────────────────────────────────────────────
+function SlideCard({ img, isCenter, onClick }: {
+  img: { src: string; caption: string };
+  isCenter: boolean;
+  onClick?: () => void;
+}) {
   const [errored, setErrored] = useState(false);
   return (
     <div
       onClick={onClick}
-      className={`relative flex-shrink-0 rounded-2xl overflow-hidden shadow-lg border-2 transition-all duration-500 cursor-pointer ${
-        isCenter ? "border-accent ring-4 ring-accent/25 scale-100 z-10" : "border-transparent scale-90 opacity-40"
-      }`}
+      className={`relative flex-shrink-0 rounded-2xl overflow-hidden shadow-lg border-2 transition-all duration-500 group
+        ${isCenter
+          ? "border-accent ring-4 ring-accent/25 scale-100 z-10 cursor-zoom-in"
+          : "border-transparent scale-90 opacity-40 cursor-pointer"}`}
       style={{ width: isCenter ? 310 : 180, height: isCenter ? 280 : 200 }}
     >
       {errored ? (
@@ -39,37 +130,50 @@ function SlideCard({ img, isCenter, onClick }: { img: { src: string; caption: st
         <img
           src={img.src}
           alt={img.caption}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           onError={() => setErrored(true)}
         />
       )}
+
+      {/* Zoom hint — centre card only */}
+      {isCenter && !errored && (
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-2.5 shadow-lg">
+            <ZoomIn className="w-6 h-6 text-primary" />
+          </div>
+        </div>
+      )}
+
       {isCenter && !errored && (
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4">
           <p className="text-white text-sm font-semibold text-center">{img.caption}</p>
         </div>
       )}
+
       {!isCenter && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors">
-          {onClick && <ChevronRight className="w-6 h-6 text-white/70" />}
+          <ChevronRight className="w-6 h-6 text-white/70" />
         </div>
       )}
     </div>
   );
 }
 
+// ── Award Slider ──────────────────────────────────────────────────────────────
 function AwardSlider() {
-  const [current, setCurrent] = useState(0);
+  const [current,  setCurrent]  = useState(0);
+  const [lightbox, setLightbox] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const total = awardImages.length;
 
   const resetTimer = (next: number) => {
     if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3500);
+    timerRef.current = setInterval(() => setCurrent((c) => (c + 1) % total), 3500);
     setCurrent(next);
   };
 
   useEffect(() => {
-    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3500);
+    timerRef.current = setInterval(() => setCurrent((c) => (c + 1) % total), 3500);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, []);
 
@@ -78,60 +182,86 @@ function AwardSlider() {
   const visible = [(current - 1 + total) % total, current, (current + 1) % total];
 
   return (
-    <div className="w-full select-none">
-      <div className="flex items-center justify-center gap-3 md:gap-6">
-        <button onClick={prev} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-3xl">
-          {visible.map((imgIdx, pos) => (
-            <SlideCard
-              key={imgIdx}
-              img={awardImages[imgIdx]}
-              isCenter={pos === 1}
-              onClick={pos !== 1 ? (pos === 0 ? prev : next) : undefined}
-            />
+    <>
+      {lightbox && (
+        <Lightbox
+          images={awardImages}
+          startIdx={current}
+          onClose={() => setLightbox(false)}
+        />
+      )}
+
+      <div className="w-full select-none">
+        {/* Hint */}
+        <p className="text-center text-xs text-accent font-semibold mb-4 flex items-center justify-center gap-1.5">
+          <ZoomIn className="w-3.5 h-3.5" /> Click the centre image to view full screen
+        </p>
+
+        <div className="flex items-center justify-center gap-3 md:gap-6">
+          <button onClick={prev}
+            className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-3xl">
+            {visible.map((imgIdx, pos) => (
+              <SlideCard
+                key={imgIdx}
+                img={awardImages[imgIdx]}
+                isCenter={pos === 1}
+                onClick={
+                  pos === 1 ? () => setLightbox(true)
+                  : pos === 0 ? prev
+                  : next
+                }
+              />
+            ))}
+          </div>
+
+          <button onClick={next}
+            className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        <p className="text-center text-sm text-muted-foreground mt-4 font-medium">{current + 1} / {total}</p>
+        <div className="flex justify-center gap-1.5 mt-2 flex-wrap">
+          {awardImages.map((_, i) => (
+            <button key={i} onClick={() => resetTimer(i)}
+              className={`rounded-full transition-all duration-300 ${i === current ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-accent/25 hover:bg-accent/50"}`} />
           ))}
         </div>
-        <button onClick={next} className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110">
-          <ChevronRight className="w-5 h-5" />
-        </button>
       </div>
-      <p className="text-center text-sm text-muted-foreground mt-4 font-medium">{current + 1} / {total}</p>
-      <div className="flex justify-center gap-1.5 mt-2 flex-wrap">
-        {awardImages.map((_, i) => (
-          <button key={i} onClick={() => resetTimer(i)}
-            className={`rounded-full transition-all duration-300 ${i === current ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-accent/25 hover:bg-accent/50"}`} />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }
 
+// ── Static data ───────────────────────────────────────────────────────────────
 const stats = [
-  { label: "Years of Experience", value: "16+", icon: Stethoscope },
-  { label: "OPD Patients Treated", value: "2L+", icon: Users },
-  { label: "ICU & IP Patients", value: "Thousands", icon: Heart },
-  { label: "Specialisations", value: "6+", icon: Wind },
+  { label: "Years of Experience",  value: "16+",       icon: Stethoscope },
+  { label: "OPD Patients Treated", value: "2L+",       icon: Users },
+  { label: "ICU & IP Patients",    value: "Thousands", icon: Heart },
+  { label: "Specialisations",      value: "6+",        icon: Wind },
 ];
 
 const expertise = [
-  { title: "General Medicine", description: "Comprehensive internal medicine care for complex conditions" },
-  { title: "Diabetology", description: "Specialized diabetes management & long-term treatment planning" },
-  { title: "Respiratory Care", description: "Advanced diagnosis and treatment of respiratory diseases" },
-  { title: "Allergy & Asthma", description: "Precise allergy identification and evidence-based management" },
-  { title: "Endocrinology", description: "Expert hormonal & metabolic disorder management" },
-  { title: "Pulmonology", description: "Comprehensive lung disease specialization & care" },
+  { title: "General Medicine",  description: "Comprehensive internal medicine care for complex conditions" },
+  { title: "Diabetology",       description: "Specialized diabetes management & long-term treatment planning" },
+  { title: "Respiratory Care",  description: "Advanced diagnosis and treatment of respiratory diseases" },
+  { title: "Allergy & Asthma",  description: "Precise allergy identification and evidence-based management" },
+  { title: "Endocrinology",     description: "Expert hormonal & metabolic disorder management" },
+  { title: "Pulmonology",       description: "Comprehensive lung disease specialization & care" },
 ];
 
 const careerHighlights = [
-  { title: "Senior Resident", subtitle: "St. John's Medical College & Hospital, Bangalore" },
-  { title: "Consultant", subtitle: "Apollo Hospitals" },
-  { title: "Consultant", subtitle: "K C Raju Multispeciality Hospital" },
+  { title: "Senior Resident",   subtitle: "St. John's Medical College & Hospital, Bangalore" },
+  { title: "Consultant",        subtitle: "Apollo Hospitals" },
+  { title: "Consultant",        subtitle: "K C Raju Multispeciality Hospital" },
   { title: "Senior Consultant", subtitle: "Altius Hospital" },
-  { title: "FICP", subtitle: "Fellow of Indian College of Physicians" },
+  { title: "FICP",              subtitle: "Fellow of Indian College of Physicians" },
 ];
 
+// ── Page ──────────────────────────────────────────────────────────────────────
 export default function Home() {
   return (
     <Layout>
@@ -262,7 +392,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Awards & Speech Slider */}
+      {/* Milestones & Moments — Award Slider with Lightbox */}
       <section className="section-padding bg-gradient-to-br from-primary/5 via-white to-accent/5 relative overflow-hidden">
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/8 rounded-full blur-3xl" />
         <div className="absolute top-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
