@@ -1021,24 +1021,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="section-padding bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/8 rounded-full blur-3xl" />
-        <div className="container-max relative z-10">
-          <div className="text-center mb-12 animate-slide-up">
-            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Media Coverage
-            </span>
-            <h2>Newspaper Articles</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Regularly featured in Times of India, Bangalore Mirror, and Deccan
-              Herald for expertise and community contributions.
-            </p>
-          </div>
-          <NewspaperSlider />
-        </div>
-      </section>
-
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-gray-50">
         <div className="container-max">
           <div className="mb-12 animate-slide-up">
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
@@ -1060,25 +1043,6 @@ export default function About() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Milestones & Moments - Awards & Conferences */}
-      <section className="section-padding bg-gradient-to-br from-primary/5 via-white to-accent/5 relative overflow-hidden">
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/8 rounded-full blur-3xl" />
-        <div className="absolute top-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
-        <div className="container-max relative z-10">
-          <div className="text-center mb-12 animate-slide-up">
-            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Milestones & Moments
-            </span>
-            <h2>Awards & Conferences</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Award ceremonies, medical conferences, keynote addresses, and
-              community health programmes.
-            </p>
-          </div>
-          <AwardSlider />
         </div>
       </section>
 
@@ -1106,6 +1070,42 @@ export default function About() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/8 rounded-full blur-3xl" />
+        <div className="container-max relative z-10">
+          <div className="text-center mb-12 animate-slide-up">
+            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+              Media Coverage
+            </span>
+            <h2>Newspaper Articles</h2>
+            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
+              Regularly featured in Times of India, Bangalore Mirror, and Deccan
+              Herald for expertise and community contributions.
+            </p>
+          </div>
+          <NewspaperSlider />
+        </div>
+      </section>
+
+      {/* Milestones & Moments - Awards & Conferences */}
+      <section className="section-padding bg-gradient-to-br from-primary/5 via-white to-accent/5 relative overflow-hidden">
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/8 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="container-max relative z-10">
+          <div className="text-center mb-12 animate-slide-up">
+            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+              Milestones & Moments
+            </span>
+            <h2>Awards & Conferences</h2>
+            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
+              Award ceremonies, medical conferences, keynote addresses, and
+              community health programmes.
+            </p>
+          </div>
+          <AwardSlider />
         </div>
       </section>
     </Layout>
