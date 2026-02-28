@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+         xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://drdarshanareddy.com/</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://drdarshanareddy.com/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://drdarshanareddy.com/"/>
+    <image:image>
+      <image:loc>https://drdarshanareddy.com/doctor-profile.jpg</image:loc>
+      <image:title>Dr. Darshana Reddy - Senior Consultant Internal Medicine</image:title>
+    </image:image>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://drdarshanareddy.com/about</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://drdarshanareddy.com/about"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://drdarshanareddy.com/about"/>
+  </url>
+
+  <!-- Contact Page -->
+  <url>
+    <loc>https://drdarshanareddy.com/contact</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://drdarshanareddy.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://drdarshanareddy.com/contact"/>
+  </url>
+
+  <!-- Testimonials Page -->
+  <url>
+    <loc>https://drdarshanareddy.com/testimonials</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://drdarshanareddy.com/testimonials"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://drdarshanareddy.com/testimonials>
+
+  <!-- Videos"/>
+  </url Page -->
+  <url>
+    <loc>https://drdarshanareddy.com/videos</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://drdarshanareddy.com/videos"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://drdarshanareddy.com/videos"/>
+  </url>
+
+</urlset>
