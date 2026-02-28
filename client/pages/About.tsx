@@ -554,14 +554,13 @@ function JourneyPath() {
     return () => observer.disconnect();
   }, []);
 
-  const pathD =
-    "M 420 350 C 350 350 280 320 240 280 C 180 220 180 180 240 120 C 300 60 350 50 420 50";
-  const pathLength = 700;
+  const pathD = "M 380 40 Q 200 140 380 230 Q 200 320 380 370";
+  const pathLength = 600;
   const dashOffset = pathLength - pathProgress * pathLength;
   const iconPositions = [
-    { x: 420, y: 50, labelSide: "left" },
-    { x: 280, y: 140, labelSide: "left" },
-    { x: 140, y: 230, labelSide: "left" },
+    { x: 380, y: 40, labelSide: "left" },
+    { x: 380, y: 130, labelSide: "left" },
+    { x: 380, y: 230, labelSide: "left" },
     { x: 380, y: 340, labelSide: "left" },
   ];
 
@@ -627,18 +626,18 @@ function JourneyPath() {
         />
 
         <circle
-          cx="420"
-          cy="350"
+          cx="380"
+          cy="370"
           r="10"
           fill="#0055FF"
           stroke="white"
           strokeWidth="2"
         />
-        <circle cx="420" cy="350" r="5" fill="white" />
+        <circle cx="380" cy="370" r="5" fill="white" />
 
         <text
-          x="420"
-          y="375"
+          x="380"
+          y="395"
           textAnchor="middle"
           className="text-[10px] fill-gray-500 font-medium"
         >
@@ -646,16 +645,16 @@ function JourneyPath() {
         </text>
 
         <circle
-          cx="420"
-          cy="50"
+          cx="380"
+          cy="40"
           r="8"
           fill="#DC2626"
           stroke="white"
           strokeWidth="2"
         />
         <text
-          x="420"
-          y="35"
+          x="380"
+          y="25"
           textAnchor="middle"
           className="text-[10px] fill-gray-500 font-medium"
         >
@@ -719,7 +718,7 @@ function JourneyPath() {
             className={`absolute transition-all duration-700 ${active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             style={{
               top: `calc(${pct.y}% - 30px)`,
-              right: `calc(${100 - pct.x}% + 28px)`,
+              left: `calc(${pct.x}% + 28px)`,
               maxWidth: "42%",
             }}
           >
