@@ -447,40 +447,16 @@ const experienceStops = [
     color: "#0055FF",
     bg: "#BCE5FF",
     icon: (
-      <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-        <path
-          d="M21.048 13.33H31.79a2.733 2.733 0 012.733 2.733V33.39H18.314V16.063a2.733 2.733 0 012.734-2.733z"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <path
-          d="M18.967 17.17H8.21a2.733 2.733 0 00-2.733 2.733V33.393h16.223V19.903a2.733 2.733 0 00-2.733-2.733z"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <path
-          d="M26.291 6.607H13.314a2.733 2.733 0 00-2.733 2.733V33.392h18.444V9.34a2.733 2.733 0 00-2.734-2.733z"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <path
-          d="M19.8 10.43v2.97M18.316 11.913h2.97"
-          stroke="#333"
-          strokeWidth="1.2"
-          strokeLinecap="square"
-        />
-        <rect x="15.3" y="16.57" width="1.333" height="1.333" fill="#333" />
-        <rect x="19.133" y="16.57" width="1.333" height="1.333" fill="#333" />
-        <rect x="22.967" y="16.57" width="1.333" height="1.333" fill="#333" />
-        <rect x="15.3" y="20.41" width="1.333" height="1.333" fill="#333" />
-        <rect x="19.133" y="20.41" width="1.333" height="1.333" fill="#333" />
-        <rect x="22.967" y="20.41" width="1.333" height="1.333" fill="#333" />
-        <rect x="15.3" y="24.25" width="1.333" height="1.333" fill="#333" />
-        <rect x="19.133" y="24.25" width="1.333" height="1.333" fill="#333" />
-        <rect x="22.967" y="24.25" width="1.333" height="1.333" fill="#333" />
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#0055FF"
+        strokeWidth="2"
+      >
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+        <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
       </svg>
     ),
   },
@@ -489,55 +465,18 @@ const experienceStops = [
     hospital: "Apollo Hospitals",
     location: "Bangalore",
     note: "Consultant physician at one of India's premier hospital chains",
-    color: "#0055FF",
-    bg: "#E5EBF2",
+    color: "#7C3AED",
+    bg: "#EDE9FE",
     icon: (
-      <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-        <path
-          d="M30.618 20.449c3.091 1.234 5.19 4.145 5.387 7.468l.08 1.28c.057.975-.717 1.796-1.694 1.796H21.211c-.976 0-1.75-.821-1.693-1.796l.076-1.28c.197-3.323 2.296-6.233 5.387-7.467l2.819-1.126 2.818 1.125z"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <path
-          d="M15.02 20.449c3.091 1.234 5.19 4.145 5.387 7.468l.076 1.28c.057.975-.717 1.796-1.693 1.796H5.613c-.976 0-1.75-.821-1.796l.076-1.28c.197-3.323 2.296-6.233 5.387-7.467l2.818-1.126 2.819 1.125z"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <ellipse
-          cx="27.798"
-          cy="16.834"
-          rx="4.658"
-          ry="4.658"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <ellipse
-          cx="12.201"
-          cy="16.834"
-          rx="4.658"
-          ry="4.658"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <path
-          d="M24.47 18.594c3.091 1.234 5.19 4.145 5.387 7.468l.185 3.122c.057.974-.718 1.796-1.694 1.796H11.686c-.976 0-1.75-.822-1.693-1.796l.185-3.122c.197-3.323 2.296-6.234 5.387-7.468l4.453-1.778 4.453 1.778z"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <ellipse
-          cx="20.016"
-          cy="13.965"
-          rx="5.557"
-          ry="5.557"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#7C3AED"
+        strokeWidth="2"
+      >
+        <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
       </svg>
     ),
   },
@@ -546,45 +485,19 @@ const experienceStops = [
     hospital: "K C Raju Multispeciality Hospital",
     location: "Bangalore",
     note: "Full-time consultant managing complex multi-system diseases",
-    color: "#0055FF",
-    bg: "#E5EBF2",
+    color: "#059669",
+    bg: "#D1FAE5",
     icon: (
-      <svg width="24" height="30" viewBox="0 0 28 34" fill="none">
-        <path
-          d="M3.604.862H17.104a2.733 2.733 0 012.733 2.733v25.956H.871V3.595A2.733 2.733 0 013.604.862z"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <path
-          d="M23.727 7.472l-5.852-.001V1.615"
-          stroke="#333"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M6.48 12.512h12.472M6.48 17.164h12.472M6.48 21.776h5.152"
-          stroke="#333"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-        />
-        <ellipse
-          cx="20.983"
-          cy="26.996"
-          rx="6.743"
-          ry="6.743"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <path
-          d="M18.201 26.9l2.111 2.053 3.45-3.918"
-          stroke="#333"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#059669"
+        strokeWidth="2"
+      >
+        <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
+        <path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01" />
       </svg>
     ),
   },
@@ -593,25 +506,19 @@ const experienceStops = [
     hospital: "Altius Hospital",
     location: "HBR Layout, Bangalore",
     note: "Head of Dept — Internal Medicine; Medical Superintendent",
-    color: "#0055FF",
-    bg: "#BCE5FF",
+    color: "#DC2626",
+    bg: "#FEE2E2",
     icon: (
-      <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-        <path
-          d="M25.534 12.527c4.585 1.83 7.698 6.147 7.99 11.075l.198 3.372c.093 1.57-1.155 2.894-2.727 2.895H9.006c-1.573 0-2.82-1.325-2.728-2.895l.2-3.372c.29-4.928 3.403-9.244 7.989-11.07L20 10.317l5.534 2.21z"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
-        <ellipse
-          cx="20"
-          cy="6.615"
-          rx="7.5"
-          ry="7.5"
-          fill="white"
-          stroke="#333"
-          strokeWidth="1.2"
-        />
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#DC2626"
+        strokeWidth="2"
+      >
+        <circle cx="12" cy="8" r="6" />
+        <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
       </svg>
     ),
   },
@@ -648,14 +555,14 @@ function JourneyPath() {
   }, []);
 
   const pathD =
-    "M 60 340 C 80 300 100 270 130 240 C 160 210 200 200 230 190 L 320 160 C 350 148 370 130 380 110 C 390 88 380 60 360 45 C 340 30 310 28 290 38 L 200 90 C 175 105 155 110 135 105 C 115 100 100 85 105 65 C 110 45 135 35 155 32 C 175 29 200 35 215 50";
-  const pathLength = 900;
+    "M 80 350 C 80 300 120 280 180 250 C 240 220 280 200 320 180 C 360 160 380 140 380 90 C 380 50 340 40 300 35";
+  const pathLength = 700;
   const dashOffset = pathLength - pathProgress * pathLength;
   const iconPositions = [
-    { x: 190, y: 68, labelSide: "right" },
-    { x: 340, y: 152, labelSide: "left" },
-    { x: 290, y: 220, labelSide: "right" },
-    { x: 90, y: 318, labelSide: "right" },
+    { x: 300, y: 40, labelSide: "left" },
+    { x: 380, y: 130, labelSide: "right" },
+    { x: 260, y: 205, labelSide: "left" },
+    { x: 80, y: 330, labelSide: "right" },
   ];
 
   return (
@@ -670,83 +577,137 @@ function JourneyPath() {
         style={{ maxHeight: 390 }}
         preserveAspectRatio="xMidYMid meet"
       >
+        <defs>
+          <linearGradient id="pathGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stopColor="#0055FF" stopOpacity="0.3" />
+            <stop offset="50%" stopColor="#0055FF" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#0055FF" stopOpacity="1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
         <path
           d={pathD}
           stroke="#E5EBF2"
-          strokeWidth="3"
-          strokeDasharray="12 6"
+          strokeWidth="6"
           strokeLinecap="round"
           fill="none"
+          className="opacity-50"
         />
         <path
           d={pathD}
-          stroke="#BCE5FF"
-          strokeWidth="3"
+          stroke="url(#pathGradient)"
+          strokeWidth="4"
           strokeLinecap="round"
           fill="none"
           style={{
             strokeDasharray: pathLength,
             strokeDashoffset: dashOffset,
             transition: "stroke-dashoffset 0.05s linear",
+            filter: "url(#glow)",
           }}
         />
         <path
           d={pathD}
           stroke="#0055FF"
-          strokeWidth="1.5"
+          strokeWidth="2"
           strokeLinecap="round"
           fill="none"
-          opacity={pathProgress}
+          opacity={pathProgress * 0.8}
           style={{
             strokeDasharray: pathLength,
             strokeDashoffset: dashOffset,
-            filter: "blur(2px)",
           }}
         />
-        {iconPositions.map((pos, i) => (
-          <g key={i}>
-            {activeIdx >= i && (
+
+        <circle
+          cx="80"
+          cy="350"
+          r="10"
+          fill="#0055FF"
+          stroke="white"
+          strokeWidth="2"
+        />
+        <circle cx="80" cy="350" r="5" fill="white" />
+
+        <text
+          x="80"
+          y="375"
+          textAnchor="middle"
+          className="text-[10px] fill-gray-500 font-medium"
+        >
+          START
+        </text>
+
+        <circle
+          cx="300"
+          cy="35"
+          r="8"
+          fill="#DC2626"
+          stroke="white"
+          strokeWidth="2"
+        />
+        <text
+          x="300"
+          y="60"
+          textAnchor="middle"
+          className="text-[10px] fill-gray-500 font-medium"
+        >
+          CURRENT
+        </text>
+        {iconPositions.map((pos, i) => {
+          const isActive = activeIdx >= i;
+          return (
+            <g key={i}>
+              {isActive && (
+                <circle
+                  cx={pos.x}
+                  cy={pos.y}
+                  r="24"
+                  fill={experienceStops[i].bg}
+                  opacity="0.4"
+                >
+                  <animate
+                    attributeName="r"
+                    values="22;28;22"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0.4;0.2;0.4"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              )}
               <circle
                 cx={pos.x}
                 cy={pos.y}
-                r="22"
-                fill={experienceStops[i].bg}
-                opacity="0.6"
-              >
-                <animate
-                  attributeName="r"
-                  values="18;24;18"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="opacity"
-                  values="0.6;0.3;0.6"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-            )}
-            <circle
-              cx={pos.x}
-              cy={pos.y}
-              r="18"
-              fill={activeIdx >= i ? experienceStops[i].bg : "#E5EBF2"}
-              stroke={activeIdx >= i ? experienceStops[i].color : "#ccc"}
-              strokeWidth="1.5"
-              style={{ transition: "fill 0.5s ease, stroke 0.5s ease" }}
-            />
-            {activeIdx >= i && (
-              <circle
-                cx={pos.x}
-                cy={pos.y - 22}
-                r="4"
-                fill={experienceStops[i].color}
-                opacity="0.8"
+                r="20"
+                fill={isActive ? experienceStops[i].bg : "#F3F4F6"}
+                stroke={isActive ? experienceStops[i].color : "#D1D5DB"}
+                strokeWidth="2"
+                style={{ transition: "fill 0.5s ease, stroke 0.5s ease" }}
               />
-            )}
-          </g>
-        ))}
+              <text
+                x={pos.x}
+                y={pos.y + 4}
+                textAnchor="middle"
+                fill={isActive ? experienceStops[i].color : "#9CA3AF"}
+                className="text-[10px] font-bold"
+              >
+                {i + 1}
+              </text>
+            </g>
+          );
+        })}
       </svg>
       {iconPositions.map((pos, i) => {
         const stop = experienceStops[i];
@@ -756,7 +717,7 @@ function JourneyPath() {
         return (
           <div
             key={i}
-            className={`absolute flex items-center gap-2 transition-all duration-700 ${active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            className={`absolute transition-all duration-700 ${active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             style={{
               top: `calc(${pct.y}% - 30px)`,
               ...(isLeft
@@ -766,20 +727,22 @@ function JourneyPath() {
             }}
           >
             <div
-              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center shadow-md border border-white"
-              style={{ background: stop.bg }}
-            >
-              {stop.icon}
-            </div>
-            <div
               className={`bg-white rounded-xl shadow-lg border border-gray-100 p-3 transition-all duration-500 hover:shadow-xl hover:border-accent/40 ${active ? "scale-100" : "scale-95"}`}
             >
-              <span
-                className="text-xs font-bold px-2 py-0.5 rounded-full inline-block mb-1"
-                style={{ background: stop.bg, color: stop.color }}
-              >
-                {stop.role}
-              </span>
+              <div className="flex items-center gap-2 mb-1">
+                <span
+                  className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
+                  style={{ background: stop.color }}
+                >
+                  {i + 1}
+                </span>
+                <span
+                  className="text-xs font-bold px-2 py-0.5 rounded-full"
+                  style={{ background: stop.bg, color: stop.color }}
+                >
+                  {stop.role}
+                </span>
+              </div>
               <p className="text-xs font-bold text-primary leading-tight">
                 {stop.hospital}
               </p>

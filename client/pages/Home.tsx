@@ -17,6 +17,12 @@ import {
   ChevronDown,
   Phone,
   Mail,
+  Activity,
+  Pill,
+  Cloud,
+  Leaf,
+  FlaskConical,
+  StethoscopeIcon,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
@@ -334,28 +340,38 @@ const expertise = [
   {
     title: "General Medicine",
     description: "Comprehensive internal medicine care for complex conditions",
-    image: "/expertise/general-medicine.jpg",
+    image: "/Clinical Specialties/General Medicine.jpeg",
+    icon: Stethoscope,
+    color: "from-blue-500 to-blue-600",
   },
   {
     title: "Diabetology",
     description:
       "Specialized diabetes management & long-term treatment planning",
-    image: "/expertise/diabetology.jpg",
+    image: "/Clinical Specialties/Diabetology.jpeg",
+    icon: Activity,
+    color: "from-purple-500 to-purple-600",
   },
   {
     title: "Respiratory Care",
     description: "Advanced diagnosis and treatment of respiratory diseases",
-    image: "/expertise/respiratory.jpg",
+    image: "/Clinical Specialties/Respiratory Care.jpeg",
+    icon: Cloud,
+    color: "from-cyan-500 to-cyan-600",
   },
   {
     title: "Allergy & Asthma",
     description: "Precise allergy identification and evidence-based management",
-    image: "/expertise/allergy.jpg",
+    image: "/Clinical Specialties/Allergy & Asthma.jpeg",
+    icon: Leaf,
+    color: "from-green-500 to-green-600",
   },
   {
     title: "Endocrinology",
     description: "Expert hormonal & metabolic disorder management",
-    image: "/expertise/endocrinology.jpg",
+    image: "/Clinical Specialties/endocrinology.jpeg",
+    icon: FlaskConical,
+    color: "from-orange-500 to-orange-600",
   },
 ];
 
@@ -906,41 +922,82 @@ export default function Home() {
       {/* Expertise */}
       <section className="section-padding bg-gray-50 relative overflow-hidden">
         <div className="absolute top-0 left-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/10 rounded-full blur-2xl animate-pulse" />
+        <div
+          className="absolute top-20 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
         <div className="container-max relative z-10">
           <div className="text-center mb-16 animate-slide-up">
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
               Clinical Specialties
             </span>
             <h2>Areas of Expertise</h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
+              Comprehensive healthcare solutions backed by years of experience
+              and advanced medical certifications
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {expertise.map((item, idx) => (
-              <div
-                key={idx}
-                className="relative bg-white rounded-2xl shadow-md hover:shadow-2xl hover:border-accent border-2 border-transparent transition-all duration-300 transform hover:scale-105 hover:-translate-y-3 animate-slide-up group cursor-pointer overflow-hidden"
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
-                <div className="absolute top-0 left-0 w-full h-40 overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = "none";
-                    }}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {expertise.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={idx}
+                  className="relative bg-white rounded-2xl shadow-md hover:shadow-2xl border-2 border-transparent hover:border-accent/30 transition-all duration-500 transform hover:-translate-y-2 group cursor-pointer overflow-hidden"
+                  style={{ animationDelay: `${idx * 100}ms` }}
+                >
+                  {/* Gradient overlay on hover */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+                  {/* Image section */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                    {/* Floating icon badge */}
+                    <div
+                      className={`absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}
+                    >
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+
+                    {/* Number badge */}
+                    <div className="absolute bottom-4 left-4 text-5xl font-bold text-white/20 group-hover:text-white/30 transition-colors duration-300">
+                      {String(idx + 1).padStart(2, "0")}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 relative z-20">
+                    <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-white transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground group-hover:text-white/80 transition-colors duration-300 leading-relaxed">
+                      {item.description}
+                    </p>
+
+                    {/* Learn more link */}
+                    <div className="mt-4 flex items-center gap-2 text-accent font-semibold opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                      <span>Learn more</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  {/* Decorative corner */}
+                  <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-transparent border-r-accent/20 group-hover:border-r-transparent transition-all duration-300" />
                 </div>
-                <div className="absolute top-0 left-0 w-1 h-0 bg-gradient-to-b from-accent to-accent/50 group-hover:h-full transition-all duration-500 rounded-t-xl" />
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/0 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-                <div className="pt-40 p-6 relative z-10">
-                  <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground">{item.description}</p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
