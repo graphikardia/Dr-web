@@ -357,11 +357,6 @@ const expertise = [
     description: "Expert hormonal & metabolic disorder management",
     image: "/expertise/endocrinology.jpg",
   },
-  {
-    title: "Pulmonology",
-    description: "Comprehensive lung disease specialization & care",
-    image: "/expertise/pulmonology.jpg",
-  },
 ];
 
 const careerHighlights = [
@@ -372,7 +367,6 @@ const careerHighlights = [
   { title: "Consultant", subtitle: "Apollo Hospitals" },
   { title: "Consultant", subtitle: "K C Raju Multispeciality Hospital" },
   { title: "Senior Consultant", subtitle: "Altius Hospital" },
-  { title: "FICP", subtitle: "Fellow of Indian College of Physicians" },
 ];
 
 const faqs = [
