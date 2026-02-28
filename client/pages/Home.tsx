@@ -377,13 +377,104 @@ const expertise = [
 
 const careerHighlights = [
   {
-    title: "Senior Resident",
-    subtitle: "St. John's Medical College & Hospital, Bangalore",
+    year: "2022 - Present",
+    title: "Senior Consultant",
+    subtitle: "Altius Hospital, Bangalore",
+    description:
+      "Leading internal medicine department with focus on diabetes and respiratory care",
+    icon: Stethoscope,
+    color: "from-amber-500 to-orange-500",
   },
-  { title: "Consultant", subtitle: "Apollo Hospitals" },
-  { title: "Consultant", subtitle: "K C Raju Multispeciality Hospital" },
-  { title: "Senior Consultant", subtitle: "Altius Hospital" },
+  {
+    year: "2018 - 2022",
+    title: "Consultant",
+    subtitle: "K C Raju Multispeciality Hospital",
+    description: "Established comprehensive diabetes management program",
+    icon: Heart,
+    color: "from-rose-500 to-pink-500",
+  },
+  {
+    year: "2015 - 2018",
+    title: "Consultant",
+    subtitle: "Apollo Hospitals, Bangalore",
+    description: "Specialized in complex internal medicine cases",
+    icon: Activity,
+    color: "from-violet-500 to-purple-500",
+  },
+  {
+    year: "2012 - 2015",
+    title: "Senior Resident",
+    subtitle: "St. John's Medical College & Hospital",
+    description: "Post MD training in internal medicine",
+    icon: Users,
+    color: "from-cyan-500 to-blue-500",
+  },
 ];
+
+function AnimatedCareerTimeline() {
+  return (
+    <div className="relative">
+      {/* Vertical line */}
+      <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent via-accent/50 to-accent/30" />
+
+      {careerHighlights.map((item, idx) => {
+        const Icon = item.icon;
+        const isEven = idx % 2 === 0;
+
+        return (
+          <div
+            key={idx}
+            className={`relative flex items-center mb-8 last:mb-0 group ${
+              isEven ? "md:flex-row" : "md:flex-row-reverse"
+            }`}
+            style={{
+              animationDelay: `${idx * 150}ms`,
+            }}
+          >
+            {/* Dot on timeline */}
+            <div className="absolute left-4 md:left-1/2 w-4 h-4 -translate-x-1/2 flex items-center justify-center z-10">
+              <div className="w-4 h-4 bg-accent rounded-full group-hover:scale-150 transition-transform duration-300 shadow-lg shadow-accent/50" />
+              <div className="absolute w-10 h-10 bg-accent/20 rounded-full animate-ping" />
+            </div>
+
+            {/* Card */}
+            <div
+              className={`ml-12 md:ml-0 md:w-[45%] ${
+                isEven ? "md:mr-auto md:pr-8" : "md:ml-auto md:pl-8"
+              }`}
+            >
+              <div
+                className="bg-white rounded-xl p-5 shadow-md border-2 border-transparent hover:border-accent/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group-hover:bg-gradient-to-br group-hover:from-accent/5 group-hover:to-white"
+                style={{ animationDelay: `${idx * 100 + 200}ms` }}
+              >
+                {/* Year badge */}
+                <div
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3 bg-gradient-to-r ${item.color} text-white`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {item.year}
+                </div>
+
+                <h4 className="font-bold text-primary text-lg mb-1 group-hover:text-accent transition-colors duration-300">
+                  {item.title}
+                </h4>
+                <p className="text-accent font-semibold text-sm mb-2">
+                  {item.subtitle}
+                </p>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+
+            {/* Empty space for opposite side */}
+            <div className="hidden md:block md:w-[45%]" />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 const faqs = [
   {
@@ -1031,25 +1122,12 @@ export default function Home() {
                 View Full Profile
               </Link>
             </div>
-            <div className="bg-gradient-to-br from-accent/10 to-accent/5 p-8 rounded-2xl border border-accent/20 hover:shadow-xl transition-all duration-300 animate-slide-in-right transform hover:scale-105">
-              <h4 className="font-bold text-primary mb-5 text-lg">
-                Career Highlights
+            <div className="bg-gradient-to-br from-accent/10 to-accent/5 p-6 md:p-8 rounded-2xl border border-accent/20 hover:shadow-xl transition-all duration-300">
+              <h4 className="font-bold text-primary mb-6 text-lg flex items-center gap-2">
+                <span className="w-2 h-8 bg-accent rounded-full" />
+                Career Journey
               </h4>
-              <div className="space-y-4">
-                {careerHighlights.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-4 group">
-                    <div className="w-2.5 h-2.5 bg-accent rounded-full mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform duration-300" />
-                    <div>
-                      <h4 className="font-bold text-primary group-hover:text-accent transition-colors duration-300 text-base">
-                        {item.title}
-                      </h4>
-                      <p className="text-sm text-muted-foreground">
-                        {item.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <AnimatedCareerTimeline />
             </div>
           </div>
         </div>
