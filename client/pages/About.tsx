@@ -526,7 +526,6 @@ const experienceStops = [
 
 function JourneyPath() {
   const [activeIdx, setActiveIdx] = useState(-1);
-  const [pathProgress, setPathProgress] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const animatedRef = useRef(false);
 
@@ -540,215 +539,108 @@ function JourneyPath() {
           const animate = (ts: number) => {
             if (!start) start = ts;
             const progress = Math.min((ts - start) / duration, 1);
-            setPathProgress(progress);
-            setActiveIdx(Math.floor(progress * experienceStops.length) - 1);
+            setActiveIdx(Math.floor(progress * experienceStops.length));
             if (progress < 1) requestAnimationFrame(animate);
-            else setActiveIdx(experienceStops.length - 1);
+            else setActiveIdx(experienceStops.length);
           };
           requestAnimationFrame(animate);
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.3 },
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const pathD = "M 380 40 Q 200 140 380 230 Q 200 320 380 370";
-  const pathLength = 600;
-  const dashOffset = pathLength - pathProgress * pathLength;
-  const iconPositions = [
-    { x: 380, y: 40, labelSide: "left" },
-    { x: 380, y: 130, labelSide: "left" },
-    { x: 380, y: 230, labelSide: "left" },
-    { x: 380, y: 340, labelSide: "left" },
-  ];
-
   return (
-    <div
-      ref={sectionRef}
-      className="relative w-full"
-      style={{ minHeight: 440 }}
-    >
-      <svg
-        viewBox="0 0 480 390"
-        className="absolute inset-0 w-full h-full"
-        style={{ maxHeight: 390 }}
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <defs>
-          <linearGradient id="pathGradient" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="#0055FF" stopOpacity="0.3" />
-            <stop offset="50%" stopColor="#0055FF" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#0055FF" stopOpacity="1" />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        <path
-          d={pathD}
-          stroke="#E5EBF2"
-          strokeWidth="6"
-          strokeLinecap="round"
-          fill="none"
-          className="opacity-50"
-        />
-        <path
-          d={pathD}
-          stroke="url(#pathGradient)"
-          strokeWidth="4"
-          strokeLinecap="round"
-          fill="none"
+    <div ref={sectionRef} className="relative pl-8">
+      <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 via-purple-400 to-red-400">
+        <div
+          className="w-full bg-gradient-to-b from-blue-500 via-purple-500 to-red-500 transition-all duration-300"
           style={{
-            strokeDasharray: pathLength,
-            strokeDashoffset: dashOffset,
-            transition: "stroke-dashoffset 0.05s linear",
-            filter: "url(#glow)",
+            height: `${(activeIdx / experienceStops.length) * 100}%`,
+            opacity: activeIdx > 0 ? 1 : 0,
           }}
         />
-        <path
-          d={pathD}
-          stroke="#0055FF"
-          strokeWidth="2"
-          strokeLinecap="round"
-          fill="none"
-          opacity={pathProgress * 0.8}
-          style={{
-            strokeDasharray: pathLength,
-            strokeDashoffset: dashOffset,
-          }}
-        />
-
-        <circle
-          cx="380"
-          cy="370"
-          r="10"
-          fill="#0055FF"
-          stroke="white"
-          strokeWidth="2"
-        />
-        <circle cx="380" cy="370" r="5" fill="white" />
-
-        <text
-          x="380"
-          y="395"
-          textAnchor="middle"
-          className="text-[10px] fill-gray-500 font-medium"
-        >
-          START
-        </text>
-
-        <circle
-          cx="380"
-          cy="40"
-          r="8"
-          fill="#DC2626"
-          stroke="white"
-          strokeWidth="2"
-        />
-        <text
-          x="380"
-          y="25"
-          textAnchor="middle"
-          className="text-[10px] fill-gray-500 font-medium"
-        >
-          CURRENT
-        </text>
-        {iconPositions.map((pos, i) => {
-          const isActive = activeIdx >= i;
+      </div>
+      <div className="space-y-6">
+        {experienceStops.map((stop, i) => {
+          const isActive = activeIdx > i;
+          const isCurrent =
+            i === experienceStops.length - 1 &&
+            activeIdx >= experienceStops.length;
           return (
-            <g key={i}>
-              {isActive && (
-                <circle
-                  cx={pos.x}
-                  cy={pos.y}
-                  r="24"
-                  fill={experienceStops[i].bg}
-                  opacity="0.4"
-                >
-                  <animate
-                    attributeName="r"
-                    values="22;28;22"
-                    dur="2s"
-                    repeatCount="indefinite"
-                  />
-                  <animate
-                    attributeName="opacity"
-                    values="0.4;0.2;0.4"
-                    dur="2s"
-                    repeatCount="indefinite"
-                  />
-                </circle>
-              )}
-              <circle
-                cx={pos.x}
-                cy={pos.y}
-                r="20"
-                fill={isActive ? experienceStops[i].bg : "#F3F4F6"}
-                stroke={isActive ? experienceStops[i].color : "#D1D5DB"}
-                strokeWidth="2"
-                style={{ transition: "fill 0.5s ease, stroke 0.5s ease" }}
-              />
-              <text
-                x={pos.x}
-                y={pos.y + 4}
-                textAnchor="middle"
-                fill={isActive ? experienceStops[i].color : "#9CA3AF"}
-                className="text-[10px] font-bold"
+            <div
+              key={i}
+              className={`relative transition-all duration-700 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
+              style={{ transitionDelay: `${i * 200}ms` }}
+            >
+              <div
+                className={`absolute -left-5 top-4 w-4 h-4 rounded-full border-4 border-white shadow-md transition-all duration-500 ${isActive ? "scale-125" : "scale-100"}`}
+                style={{ background: isActive ? stop.color : "#D1D5DB" }}
               >
-                {i + 1}
-              </text>
-            </g>
+                {isActive && (
+                  <span
+                    className="absolute inset-0 rounded-full animate-ping opacity-75"
+                    style={{ background: stop.color }}
+                  />
+                )}
+              </div>
+              <div
+                className={`bg-white rounded-2xl p-5 shadow-lg border-2 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 group ${isActive ? "border-transparent" : "border-gray-100"}`}
+                style={{
+                  background: isActive
+                    ? `linear-gradient(135deg, ${stop.bg}40, white)`
+                    : undefined,
+                  boxShadow: isActive ? `0 10px 40px ${stop.bg}60` : undefined,
+                }}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className="text-xs font-bold px-3 py-1 rounded-full"
+                    style={{ background: stop.bg, color: stop.color }}
+                  >
+                    {stop.role}
+                  </span>
+                  {isCurrent && (
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-600 animate-pulse">
+                      Current
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-base font-bold text-primary group-hover:text-accent transition-colors">
+                  {stop.hospital}
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {stop.location}
+                </p>
+                <p
+                  className="text-sm text-muted-foreground/80 italic mt-2 border-l-2 pl-3"
+                  style={{ borderColor: stop.color }}
+                >
+                  {stop.note}
+                </p>
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="flex -space-x-2">
+                    {[...Array(3)].map((_, j) => (
+                      <div
+                        key={j}
+                        className="w-6 h-6 rounded-full border-2 border-white"
+                        style={{
+                          background: [stop.bg, stop.color, "#E5E7EB"][j],
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Tap to expand
+                  </span>
+                </div>
+              </div>
+            </div>
           );
         })}
-      </svg>
-      {iconPositions.map((pos, i) => {
-        const stop = experienceStops[i];
-        const pct = { x: (pos.x / 480) * 100, y: (pos.y / 390) * 100 };
-        const active = activeIdx >= i;
-        return (
-          <div
-            key={i}
-            className={`absolute transition-all duration-700 ${active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            style={{
-              top: `calc(${pct.y}% - 30px)`,
-              left: `calc(${pct.x}% + 28px)`,
-              maxWidth: "42%",
-            }}
-          >
-            <div
-              className={`bg-white rounded-xl shadow-lg border border-gray-100 p-3 transition-all duration-500 hover:shadow-xl hover:border-accent/40 ${active ? "scale-100" : "scale-95"}`}
-            >
-              <div className="flex items-center gap-2 mb-1">
-                <span
-                  className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
-                  style={{ background: stop.color }}
-                >
-                  {i + 1}
-                </span>
-                <span
-                  className="text-xs font-bold px-2 py-0.5 rounded-full"
-                  style={{ background: stop.bg, color: stop.color }}
-                >
-                  {stop.role}
-                </span>
-              </div>
-              <p className="text-xs font-bold text-primary leading-tight">
-                {stop.hospital}
-              </p>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                {stop.location}
-              </p>
-            </div>
-          </div>
-        );
-      })}
+      </div>
     </div>
   );
 }
@@ -879,7 +771,46 @@ export default function About() {
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
         <div className="container-max relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            <div>
+            <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-6 lg:p-8 order-2 lg:order-1">
+              <div className="mb-8 animate-slide-up">
+                <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                  Qualifications
+                </span>
+                <h2>Educational Background</h2>
+              </div>
+              <div className="space-y-4">
+                {education.map((edu, idx) => (
+                  <div
+                    key={idx}
+                    className="flex gap-4 animate-slide-up"
+                    style={{ animationDelay: `${idx * 80}ms` }}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center text-accent-foreground flex-shrink-0">
+                        <GraduationCap size={18} />
+                      </div>
+                      {idx < education.length - 1 && (
+                        <div className="w-0.5 h-12 bg-accent/30 mt-2" />
+                      )}
+                    </div>
+                    <div className="pb-4 flex-1 group">
+                      <div className="bg-gradient-to-br from-gray-50 to-accent/5 p-4 rounded-xl hover:shadow-md hover:border-accent border-2 border-transparent transition-all duration-300">
+                        <h3 className="text-sm font-bold text-primary group-hover:text-accent transition-colors">
+                          {edu.degree}
+                        </h3>
+                        <p className="text-muted-foreground text-xs mb-2">
+                          {edu.institution}
+                        </p>
+                        <span className="inline-block bg-accent/10 text-accent px-2 py-0.5 rounded-full text-xs font-semibold">
+                          {edu.year}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="order-1 lg:order-2">
               <div className="mb-8 animate-slide-up">
                 <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
                   Career Journey
@@ -931,45 +862,6 @@ export default function About() {
                         <p className="text-sm text-muted-foreground/80 italic mt-1">
                           {stop.note}
                         </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-6 lg:p-8">
-              <div className="mb-8 animate-slide-up">
-                <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-                  Qualifications
-                </span>
-                <h2>Educational Background</h2>
-              </div>
-              <div className="space-y-4">
-                {education.map((edu, idx) => (
-                  <div
-                    key={idx}
-                    className="flex gap-4 animate-slide-up"
-                    style={{ animationDelay: `${idx * 80}ms` }}
-                  >
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center text-accent-foreground flex-shrink-0">
-                        <GraduationCap size={18} />
-                      </div>
-                      {idx < education.length - 1 && (
-                        <div className="w-0.5 h-12 bg-accent/30 mt-2" />
-                      )}
-                    </div>
-                    <div className="pb-4 flex-1 group">
-                      <div className="bg-gradient-to-br from-gray-50 to-accent/5 p-4 rounded-xl hover:shadow-md hover:border-accent border-2 border-transparent transition-all duration-300">
-                        <h3 className="text-sm font-bold text-primary group-hover:text-accent transition-colors">
-                          {edu.degree}
-                        </h3>
-                        <p className="text-muted-foreground text-xs mb-2">
-                          {edu.institution}
-                        </p>
-                        <span className="inline-block bg-accent/10 text-accent px-2 py-0.5 rounded-full text-xs font-semibold">
-                          {edu.year}
-                        </span>
                       </div>
                     </div>
                   </div>
