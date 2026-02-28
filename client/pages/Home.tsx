@@ -416,98 +416,97 @@ const careerHighlights = [
 ];
 
 function FlyingCareerCards() {
+  const [flippedIdx, setFlippedIdx] = useState<number | null>(null);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {careerHighlights.map((item, idx) => {
         const Icon = item.icon;
         return (
-          <div key={idx} className="group perspective-1000">
+          <div
+            key={idx}
+            className="group h-72 perspective-1000"
+            onClick={() => setFlippedIdx(flippedIdx === idx ? null : idx)}
+          >
             <div
               className={`
-                relative overflow-hidden rounded-2xl p-6 bg-white shadow-lg 
-                border-2 border-transparent hover:border-accent/50 
-                transition-all duration-500 cursor-pointer
-                hover:-translate-y-2 hover:shadow-2xl
-                ${idx === 0 ? "animate-bounce-in-right" : idx === 1 ? "animate-bounce-in-left" : idx === 2 ? "animate-bounce-in-right" : "animate-bounce-in-left"}
+                relative w-full h-full transition-all duration-700 cursor-pointer
+                ${flippedIdx === idx ? "rotate-y-180" : ""}
               `}
               style={{
-                animationDelay: `${idx * 200}ms`,
-                animationFillMode: "both",
                 transformStyle: "preserve-3d",
-              }}
-              onMouseMove={(e) => {
-                const card = e.currentTarget;
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 10;
-                const rotateY = (centerX - x) / 10;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform =
-                  "perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)";
+                animationDelay: `${idx * 150}ms`,
+                animation: "fade-in-up 0.6s ease-out both",
               }}
             >
-              {/* Dramatic gradient overlay on hover */}
+              {/* FRONT - Brief info */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-all duration-500 scale-150 group-hover:scale-100`}
-              />
-
-              {/* Floating sparkle icons */}
-              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:rotate-12">
-                <Icon
-                  className={`w-8 h-8 text-${item.color.split(" ")[1].replace("to-", "")}`}
-                />
-              </div>
-
-              {/* Big background icon */}
-              <div
-                className={`absolute -right-8 -bottom-8 w-40 h-40 bg-gradient-to-br ${item.color} rounded-2xl opacity-10 group-hover:opacity-30 group-hover:scale-150 group-hover:rotate-12 transition-all duration-500`}
+                className="absolute inset-0 backface-hidden rounded-2xl p-6 bg-gradient-to-br from-white to-gray-50 shadow-lg border-2 border-transparent hover:border-accent/50 flex flex-col justify-between overflow-hidden"
+                style={{ backfaceVisibility: "hidden" }}
               >
-                <Icon className="w-32 h-32 text-white absolute -right-4 -bottom-4 opacity-50" />
-              </div>
-
-              {/* Sparkle dots */}
-              <div className="absolute top-4 left-4 w-2 h-2 bg-accent rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
-              <div
-                className="absolute top-8 right-8 w-1.5 h-1.5 bg-accent rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"
-                style={{ animationDelay: "100ms" }}
-              />
-              <div
-                className="absolute bottom-6 left-8 w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"
-                style={{ animationDelay: "200ms" }}
-              />
-
-              <div className="relative z-10">
-                {/* Bouncy year badge */}
+                {/* Background pattern */}
                 <div
-                  className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold mb-4 bg-gradient-to-r ${item.color} text-white shadow-lg group-hover:scale-125 group-hover:rotate-3 transition-all duration-300`}
+                  className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.color} opacity-10 rounded-bl-full transition-transform duration-500 group-hover:scale-150`}
+                />
+
+                {/* Year badge */}
+                <div
+                  className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold bg-gradient-to-r ${item.color} text-white shadow-lg w-fit`}
                 >
                   <Icon className="w-4 h-4" />
                   {item.year}
                 </div>
 
-                <h4 className="font-bold text-primary text-xl mb-2 group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                  {item.title}
-                </h4>
-                <p className="text-accent font-bold text-base mb-3 group-hover:text-white/90 group-hover:translate-x-2 transition-all duration-300">
-                  {item.subtitle}
-                </p>
-                <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-white/80 transition-all duration-300">
-                  {item.description}
-                </p>
+                {/* Title */}
+                <div>
+                  <h4 className="font-bold text-primary text-xl mb-1">
+                    {item.title}
+                  </h4>
+                  <p className="text-accent font-bold">{item.subtitle}</p>
+                </div>
+
+                {/* Flip hint */}
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <span>Click to flip</span>
+                  <svg
+                    className="w-4 h-4 animate-bounce"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                </div>
               </div>
 
-              {/* Corner burst */}
+              {/* BACK - Detailed info */}
               <div
-                className={`absolute top-0 ${idx % 2 === 0 ? "right-0" : "left-0"} w-0 h-0 group-hover:w-20 group-hover:h-20 transition-all duration-500 overflow-hidden`}
+                className="absolute inset-0 backface-hidden rounded-2xl p-6 bg-gradient-to-br from-accent to-primary shadow-xl flex flex-col justify-center text-white overflow-hidden"
+                style={{
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                }}
               >
-                <div
-                  className={`absolute top-0 ${idx % 2 === 0 ? "right-0" : "left-0"} w-0 h-0 border-t-[40px] ${idx % 2 === 0 ? "border-r-[40px] border-r-accent" : "border-l-[40px] border-l-accent"} border-transparent group-hover:border-opacity-100 transition-all duration-300`}
-                />
+                {/* Background icon */}
+                <Icon className="absolute -right-8 -bottom-8 w-48 h-48 opacity-10" />
+
+                <div className="relative z-10">
+                  <h4 className="font-bold text-2xl mb-4">{item.title}</h4>
+                  <p className="text-white/90 text-lg mb-4">{item.subtitle}</p>
+                  <p className="text-white/80 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+
+                {/* Close hint */}
+                <div className="absolute bottom-4 left-0 right-0 text-center text-sm text-white/60">
+                  Click to flip back
+                </div>
               </div>
             </div>
           </div>
