@@ -417,62 +417,99 @@ const careerHighlights = [
 
 function FlyingCareerCards() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {careerHighlights.map((item, idx) => {
         const Icon = item.icon;
         return (
-          <div
-            key={idx}
-            className={`relative overflow-hidden rounded-xl p-5 bg-white shadow-md hover:shadow-2xl border-2 border-transparent hover:border-accent/30 transition-all duration-500 group cursor-pointer ${
-              idx === 0
-                ? "animate-fly-in-right"
-                : idx === 1
-                  ? "animate-fly-in-left"
-                  : idx === 2
-                    ? "animate-fly-in-right"
-                    : "animate-fly-in-left"
-            }`}
-            style={{
-              animationDelay: `${idx * 150}ms`,
-              animationFillMode: "both",
-            }}
-          >
-            {/* Animated background gradient */}
+          <div key={idx} className="group perspective-1000">
             <div
-              className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-            />
-
-            {/* Floating icon */}
-            <div
-              className={`absolute -right-4 -bottom-4 w-24 h-24 bg-gradient-to-br ${item.color} rounded-full opacity-10 group-hover:opacity-20 group-hover:scale-150 transition-all duration-500`}
+              className={`
+                relative overflow-hidden rounded-2xl p-6 bg-white shadow-lg 
+                border-2 border-transparent hover:border-accent/50 
+                transition-all duration-500 cursor-pointer
+                hover:-translate-y-2 hover:shadow-2xl
+                ${idx === 0 ? "animate-bounce-in-right" : idx === 1 ? "animate-bounce-in-left" : idx === 2 ? "animate-bounce-in-right" : "animate-bounce-in-left"}
+              `}
+              style={{
+                animationDelay: `${idx * 200}ms`,
+                animationFillMode: "both",
+                transformStyle: "preserve-3d",
+              }}
+              onMouseMove={(e) => {
+                const card = e.currentTarget;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform =
+                  "perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)";
+              }}
             >
-              <Icon className="w-16 h-16 text-white absolute -right-2 -bottom-2 opacity-20" />
-            </div>
-
-            <div className="relative z-10">
-              {/* Year badge */}
+              {/* Dramatic gradient overlay on hover */}
               <div
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3 bg-gradient-to-r ${item.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                {item.year}
+                className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-all duration-500 scale-150 group-hover:scale-100`}
+              />
+
+              {/* Floating sparkle icons */}
+              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:rotate-12">
+                <Icon
+                  className={`w-8 h-8 text-${item.color.split(" ")[1].replace("to-", "")}`}
+                />
               </div>
 
-              <h4 className="font-bold text-primary text-lg mb-1 group-hover:text-white transition-colors duration-300">
-                {item.title}
-              </h4>
-              <p className="text-accent font-semibold text-sm mb-2 group-hover:text-white/90 transition-colors duration-300">
-                {item.subtitle}
-              </p>
-              <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-white/80 transition-colors duration-300">
-                {item.description}
-              </p>
-            </div>
+              {/* Big background icon */}
+              <div
+                className={`absolute -right-8 -bottom-8 w-40 h-40 bg-gradient-to-br ${item.color} rounded-2xl opacity-10 group-hover:opacity-30 group-hover:scale-150 group-hover:rotate-12 transition-all duration-500`}
+              >
+                <Icon className="w-32 h-32 text-white absolute -right-4 -bottom-4 opacity-50" />
+              </div>
 
-            {/* Corner decoration */}
-            <div
-              className={`absolute top-0 ${idx % 2 === 0 ? "right-0" : "left-0"} w-0 h-0 border-t-[30px] ${idx % 2 === 0 ? "border-r-[30px] border-r-transparent" : "border-l-[30px] border-l-transparent"} border-t-accent/20 group-hover:border-t-transparent group-hover:border-opacity-0 transition-all duration-300`}
-            />
+              {/* Sparkle dots */}
+              <div className="absolute top-4 left-4 w-2 h-2 bg-accent rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
+              <div
+                className="absolute top-8 right-8 w-1.5 h-1.5 bg-accent rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"
+                style={{ animationDelay: "100ms" }}
+              />
+              <div
+                className="absolute bottom-6 left-8 w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"
+                style={{ animationDelay: "200ms" }}
+              />
+
+              <div className="relative z-10">
+                {/* Bouncy year badge */}
+                <div
+                  className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold mb-4 bg-gradient-to-r ${item.color} text-white shadow-lg group-hover:scale-125 group-hover:rotate-3 transition-all duration-300`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {item.year}
+                </div>
+
+                <h4 className="font-bold text-primary text-xl mb-2 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                  {item.title}
+                </h4>
+                <p className="text-accent font-bold text-base mb-3 group-hover:text-white/90 group-hover:translate-x-2 transition-all duration-300">
+                  {item.subtitle}
+                </p>
+                <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-white/80 transition-all duration-300">
+                  {item.description}
+                </p>
+              </div>
+
+              {/* Corner burst */}
+              <div
+                className={`absolute top-0 ${idx % 2 === 0 ? "right-0" : "left-0"} w-0 h-0 group-hover:w-20 group-hover:h-20 transition-all duration-500 overflow-hidden`}
+              >
+                <div
+                  className={`absolute top-0 ${idx % 2 === 0 ? "right-0" : "left-0"} w-0 h-0 border-t-[40px] ${idx % 2 === 0 ? "border-r-[40px] border-r-accent" : "border-l-[40px] border-l-accent"} border-transparent group-hover:border-opacity-100 transition-all duration-300`}
+                />
+              </div>
+            </div>
           </div>
         );
       })}
