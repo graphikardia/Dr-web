@@ -555,14 +555,14 @@ function JourneyPath() {
   }, []);
 
   const pathD =
-    "M 80 350 C 80 300 120 280 180 250 C 240 220 280 200 320 180 C 360 160 380 140 380 90 C 380 50 340 40 300 35";
+    "M 420 350 C 350 350 280 320 240 280 C 180 220 180 180 240 120 C 300 60 350 50 420 50";
   const pathLength = 700;
   const dashOffset = pathLength - pathProgress * pathLength;
   const iconPositions = [
-    { x: 300, y: 40, labelSide: "left" },
-    { x: 380, y: 130, labelSide: "right" },
-    { x: 260, y: 205, labelSide: "left" },
-    { x: 80, y: 330, labelSide: "right" },
+    { x: 420, y: 50, labelSide: "left" },
+    { x: 280, y: 140, labelSide: "left" },
+    { x: 140, y: 230, labelSide: "left" },
+    { x: 380, y: 340, labelSide: "left" },
   ];
 
   return (
@@ -627,17 +627,17 @@ function JourneyPath() {
         />
 
         <circle
-          cx="80"
+          cx="420"
           cy="350"
           r="10"
           fill="#0055FF"
           stroke="white"
           strokeWidth="2"
         />
-        <circle cx="80" cy="350" r="5" fill="white" />
+        <circle cx="420" cy="350" r="5" fill="white" />
 
         <text
-          x="80"
+          x="420"
           y="375"
           textAnchor="middle"
           className="text-[10px] fill-gray-500 font-medium"
@@ -646,16 +646,16 @@ function JourneyPath() {
         </text>
 
         <circle
-          cx="300"
-          cy="35"
+          cx="420"
+          cy="50"
           r="8"
           fill="#DC2626"
           stroke="white"
           strokeWidth="2"
         />
         <text
-          x="300"
-          y="60"
+          x="420"
+          y="35"
           textAnchor="middle"
           className="text-[10px] fill-gray-500 font-medium"
         >
@@ -711,7 +711,6 @@ function JourneyPath() {
       </svg>
       {iconPositions.map((pos, i) => {
         const stop = experienceStops[i];
-        const isLeft = pos.labelSide === "left";
         const pct = { x: (pos.x / 480) * 100, y: (pos.y / 390) * 100 };
         const active = activeIdx >= i;
         return (
@@ -720,9 +719,7 @@ function JourneyPath() {
             className={`absolute transition-all duration-700 ${active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             style={{
               top: `calc(${pct.y}% - 30px)`,
-              ...(isLeft
-                ? { right: `calc(${100 - pct.x}% + 28px)` }
-                : { left: `calc(${pct.x}% + 28px)` }),
+              right: `calc(${100 - pct.x}% + 28px)`,
               maxWidth: "42%",
             }}
           >
@@ -882,104 +879,104 @@ export default function About() {
         <div className="absolute top-0 right-0 w-80 h-80 bg-blue-100/40 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
         <div className="container-max relative z-10">
-          <div className="mb-10 animate-slide-up">
-            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Career Journey
-            </span>
-            <h2>Work Experience</h2>
-            <p className="text-muted-foreground mt-2 max-w-xl">
-              A journey through Bangalore's most prestigious medical
-              institutions.
-            </p>
-          </div>
-          <div className="hidden md:block">
-            <JourneyPath />
-          </div>
-          <div className="md:hidden space-y-5">
-            {experienceStops.map((stop, idx) => (
-              <div
-                key={idx}
-                className="flex gap-4 animate-slide-up"
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
-                <div className="flex flex-col items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <div>
+              <div className="mb-8 animate-slide-up">
+                <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                  Career Journey
+                </span>
+                <h2>Work Experience</h2>
+                <p className="text-muted-foreground mt-2">
+                  A journey through Bangalore's most prestigious medical
+                  institutions.
+                </p>
+              </div>
+              <div className="hidden md:block">
+                <JourneyPath />
+              </div>
+              <div className="md:hidden space-y-5">
+                {experienceStops.map((stop, idx) => (
                   <div
-                    className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 shadow-md border border-white"
-                    style={{ background: stop.bg }}
+                    key={idx}
+                    className="flex gap-4 animate-slide-up"
+                    style={{ animationDelay: `${idx * 100}ms` }}
                   >
-                    {stop.icon}
+                    <div className="flex flex-col items-center">
+                      <div
+                        className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 shadow-md border border-white"
+                        style={{ background: stop.bg }}
+                      >
+                        {stop.icon}
+                      </div>
+                      {idx < experienceStops.length - 1 && (
+                        <div
+                          className="w-0.5 flex-1 mt-2"
+                          style={{ background: "#BCE5FF" }}
+                        />
+                      )}
+                    </div>
+                    <div className="pb-6 flex-1">
+                      <div className="bg-white rounded-2xl shadow-sm p-5 border border-gray-100 hover:border-accent/40 hover:shadow-md transition-all duration-300">
+                        <span
+                          className="text-xs font-bold px-2 py-0.5 rounded-full inline-block mb-2"
+                          style={{ background: stop.bg, color: stop.color }}
+                        >
+                          {stop.role}
+                        </span>
+                        <h3 className="text-base font-bold text-primary">
+                          {stop.hospital}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {stop.location}
+                        </p>
+                        <p className="text-sm text-muted-foreground/80 italic mt-1">
+                          {stop.note}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  {idx < experienceStops.length - 1 && (
-                    <div
-                      className="w-0.5 flex-1 mt-2"
-                      style={{ background: "#BCE5FF" }}
-                    />
-                  )}
-                </div>
-                <div className="pb-6 flex-1">
-                  <div className="bg-white rounded-2xl shadow-sm p-5 border border-gray-100 hover:border-accent/40 hover:shadow-md transition-all duration-300">
-                    <span
-                      className="text-xs font-bold px-2 py-0.5 rounded-full inline-block mb-2"
-                      style={{ background: stop.bg, color: stop.color }}
-                    >
-                      {stop.role}
-                    </span>
-                    <h3 className="text-base font-bold text-primary">
-                      {stop.hospital}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {stop.location}
-                    </p>
-                    <p className="text-sm text-muted-foreground/80 italic mt-1">
-                      {stop.note}
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-white relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
-        <div className="container-max relative z-10">
-          <div className="mb-12 animate-slide-up">
-            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Qualifications
-            </span>
-            <h2>Educational Background</h2>
-          </div>
-          <div className="max-w-3xl mx-auto">
-            {education.map((edu, idx) => (
-              <div
-                key={idx}
-                className="flex gap-6 mb-6 animate-slide-up"
-                style={{ animationDelay: `${idx * 80}ms` }}
-              >
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-accent-foreground flex-shrink-0">
-                    <GraduationCap size={22} />
-                  </div>
-                  {idx < education.length - 1 && (
-                    <div className="w-0.5 h-16 bg-accent/30 mt-2" />
-                  )}
-                </div>
-                <div className="pb-6 flex-1 group">
-                  <div className="bg-gradient-to-br from-gray-50 to-accent/5 p-5 rounded-2xl hover:shadow-md hover:border-accent border-2 border-transparent transition-all duration-300">
-                    <h3 className="text-base font-bold text-primary mb-1 group-hover:text-accent transition-colors">
-                      {edu.degree}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mb-2">
-                      {edu.institution}
-                    </p>
-                    <span className="inline-block bg-accent/10 text-accent px-3 py-0.5 rounded-full text-xs font-semibold">
-                      {edu.year}
-                    </span>
-                  </div>
-                </div>
+            </div>
+            <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-6 lg:p-8">
+              <div className="mb-8 animate-slide-up">
+                <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                  Qualifications
+                </span>
+                <h2>Educational Background</h2>
               </div>
-            ))}
+              <div className="space-y-4">
+                {education.map((edu, idx) => (
+                  <div
+                    key={idx}
+                    className="flex gap-4 animate-slide-up"
+                    style={{ animationDelay: `${idx * 80}ms` }}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center text-accent-foreground flex-shrink-0">
+                        <GraduationCap size={18} />
+                      </div>
+                      {idx < education.length - 1 && (
+                        <div className="w-0.5 h-12 bg-accent/30 mt-2" />
+                      )}
+                    </div>
+                    <div className="pb-4 flex-1 group">
+                      <div className="bg-gradient-to-br from-gray-50 to-accent/5 p-4 rounded-xl hover:shadow-md hover:border-accent border-2 border-transparent transition-all duration-300">
+                        <h3 className="text-sm font-bold text-primary group-hover:text-accent transition-colors">
+                          {edu.degree}
+                        </h3>
+                        <p className="text-muted-foreground text-xs mb-2">
+                          {edu.institution}
+                        </p>
+                        <span className="inline-block bg-accent/10 text-accent px-2 py-0.5 rounded-full text-xs font-semibold">
+                          {edu.year}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
