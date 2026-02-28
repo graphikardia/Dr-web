@@ -384,6 +384,7 @@ const careerHighlights = [
       "Leading internal medicine department with focus on diabetes and respiratory care",
     icon: Stethoscope,
     color: "from-amber-500 to-orange-500",
+    flyFrom: "right",
   },
   {
     year: "2018 - 2022",
@@ -392,6 +393,7 @@ const careerHighlights = [
     description: "Established comprehensive diabetes management program",
     icon: Heart,
     color: "from-rose-500 to-pink-500",
+    flyFrom: "left",
   },
   {
     year: "2015 - 2018",
@@ -400,6 +402,7 @@ const careerHighlights = [
     description: "Specialized in complex internal medicine cases",
     icon: Activity,
     color: "from-violet-500 to-purple-500",
+    flyFrom: "right",
   },
   {
     year: "2012 - 2015",
@@ -408,67 +411,68 @@ const careerHighlights = [
     description: "Post MD training in internal medicine",
     icon: Users,
     color: "from-cyan-500 to-blue-500",
+    flyFrom: "left",
   },
 ];
 
-function AnimatedCareerTimeline() {
+function FlyingCareerCards() {
   return (
-    <div className="relative">
-      {/* Vertical line */}
-      <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent via-accent/50 to-accent/30" />
-
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {careerHighlights.map((item, idx) => {
         const Icon = item.icon;
-        const isEven = idx % 2 === 0;
-
         return (
           <div
             key={idx}
-            className={`relative flex items-center mb-8 last:mb-0 group ${
-              isEven ? "md:flex-row" : "md:flex-row-reverse"
+            className={`relative overflow-hidden rounded-xl p-5 bg-white shadow-md hover:shadow-2xl border-2 border-transparent hover:border-accent/30 transition-all duration-500 group cursor-pointer ${
+              idx === 0
+                ? "animate-fly-in-right"
+                : idx === 1
+                  ? "animate-fly-in-left"
+                  : idx === 2
+                    ? "animate-fly-in-right"
+                    : "animate-fly-in-left"
             }`}
             style={{
               animationDelay: `${idx * 150}ms`,
+              animationFillMode: "both",
             }}
           >
-            {/* Dot on timeline */}
-            <div className="absolute left-4 md:left-1/2 w-4 h-4 -translate-x-1/2 flex items-center justify-center z-10">
-              <div className="w-4 h-4 bg-accent rounded-full group-hover:scale-150 transition-transform duration-300 shadow-lg shadow-accent/50" />
-              <div className="absolute w-10 h-10 bg-accent/20 rounded-full animate-ping" />
-            </div>
-
-            {/* Card */}
+            {/* Animated background gradient */}
             <div
-              className={`ml-12 md:ml-0 md:w-[45%] ${
-                isEven ? "md:mr-auto md:pr-8" : "md:ml-auto md:pl-8"
-              }`}
-            >
-              <div
-                className="bg-white rounded-xl p-5 shadow-md border-2 border-transparent hover:border-accent/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group-hover:bg-gradient-to-br group-hover:from-accent/5 group-hover:to-white"
-                style={{ animationDelay: `${idx * 100 + 200}ms` }}
-              >
-                {/* Year badge */}
-                <div
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3 bg-gradient-to-r ${item.color} text-white`}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                  {item.year}
-                </div>
+              className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+            />
 
-                <h4 className="font-bold text-primary text-lg mb-1 group-hover:text-accent transition-colors duration-300">
-                  {item.title}
-                </h4>
-                <p className="text-accent font-semibold text-sm mb-2">
-                  {item.subtitle}
-                </p>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+            {/* Floating icon */}
+            <div
+              className={`absolute -right-4 -bottom-4 w-24 h-24 bg-gradient-to-br ${item.color} rounded-full opacity-10 group-hover:opacity-20 group-hover:scale-150 transition-all duration-500`}
+            >
+              <Icon className="w-16 h-16 text-white absolute -right-2 -bottom-2 opacity-20" />
             </div>
 
-            {/* Empty space for opposite side */}
-            <div className="hidden md:block md:w-[45%]" />
+            <div className="relative z-10">
+              {/* Year badge */}
+              <div
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3 bg-gradient-to-r ${item.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                {item.year}
+              </div>
+
+              <h4 className="font-bold text-primary text-lg mb-1 group-hover:text-white transition-colors duration-300">
+                {item.title}
+              </h4>
+              <p className="text-accent font-semibold text-sm mb-2 group-hover:text-white/90 transition-colors duration-300">
+                {item.subtitle}
+              </p>
+              <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-white/80 transition-colors duration-300">
+                {item.description}
+              </p>
+            </div>
+
+            {/* Corner decoration */}
+            <div
+              className={`absolute top-0 ${idx % 2 === 0 ? "right-0" : "left-0"} w-0 h-0 border-t-[30px] ${idx % 2 === 0 ? "border-r-[30px] border-r-transparent" : "border-l-[30px] border-l-transparent"} border-t-accent/20 group-hover:border-t-transparent group-hover:border-opacity-0 transition-all duration-300`}
+            />
           </div>
         );
       })}
@@ -1127,7 +1131,7 @@ export default function Home() {
                 <span className="w-2 h-8 bg-accent rounded-full" />
                 Career Journey
               </h4>
-              <AnimatedCareerTimeline />
+              <FlyingCareerCards />
             </div>
           </div>
         </div>
