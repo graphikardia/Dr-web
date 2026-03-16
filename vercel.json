@@ -2,6 +2,15 @@
   "buildCommand": "npm run build:client",
   "outputDirectory": "dist/spa",
   "installCommand": "pnpm install --no-frozen-lockfile",
+  "env": {
+    "GROQ_API_KEY": "@groq-api-key",
+    "SEARCH_API_KEY": "@search-api-key",
+    "TAVILY_API_KEY": "@tavily-api-key",
+    "GROQ_MODEL": "@groq-model",
+    "PING_MESSAGE": "@ping-message",
+    "ALLOWED_ORIGINS": "@allowed-origins",
+    "VITE_GOOGLE_SHEET_URL": "@google-sheet-url"
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",

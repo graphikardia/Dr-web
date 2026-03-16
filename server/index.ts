@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { handleDemo } from "./routes/demo";
+import { handleChat } from "./routes/chat";
 
 export function createServer() {
   const app = express();
@@ -96,6 +97,8 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  app.post("/api/chat", handleChat);
 
   // 404 handler
   app.use((_req, res) => {
