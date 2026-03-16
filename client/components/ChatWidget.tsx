@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Phone, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Phone, Loader2, Calendar } from "lucide-react";
 
 interface Message {
   id: string;
@@ -53,7 +53,7 @@ export default function ChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const welcomeMessage =
-    "Namaste! 🙏 I'm Dr. Darshana's virtual assistant. I'm here to help you with appointments, consultations, and any questions about our services.\n\nMay I know your good name?";
+    "Namaste! 🙏 I'm Dr. Darshana's virtual assistant. I'm here to help you with appointments, consultations, and any health-related questions.\n\nMay I know your name?";
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
@@ -92,7 +92,7 @@ export default function ChatWidget() {
       {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `Thank you! 📋\n\nWhat is the reason for your visit? (e.g., diabetes checkup, general consultation, allergy issues, etc.)`,
+        content: `Thank you! 📋\n\nWhat is the reason for your visit?`,
       },
     ]);
   };
@@ -102,7 +102,6 @@ export default function ChatWidget() {
     setUserData(updatedData);
     setCollectionStep("done");
 
-    // Save lead to Google Sheets
     saveLeadToSheet({
       name: userData.name,
       phone: userData.phone,
@@ -115,7 +114,7 @@ export default function ChatWidget() {
       {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `Thank you for sharing, ${userData.name}! ✅\n\nOur team will contact you at ${userData.phone} shortly to confirm your appointment.\n\nIs there anything else you'd like to know about Dr. Darshana's services?`,
+        content: `Thank you, ${userData.name}! ✅\n\nOur team will contact you at ${userData.phone} shortly.\n\nIs there anything else I can help you with?`,
       },
     ]);
   };
@@ -174,8 +173,7 @@ export default function ChatWidget() {
         {
           id: Date.now().toString(),
           role: "assistant",
-          content:
-            "Sorry, please call +91 8882 799799 for immediate assistance.",
+          content: "Sorry, please call +91 8882 799799 for assistance.",
         },
       ]);
     } finally {
@@ -184,10 +182,10 @@ export default function ChatWidget() {
   };
 
   const getPlaceholder = () => {
-    if (collectionStep === "name") return "Your name please...";
-    if (collectionStep === "phone") return "Your mobile number...";
+    if (collectionStep === "name") return "Your name...";
+    if (collectionStep === "phone") return "Mobile number...";
     if (collectionStep === "reason") return "Reason for visit...";
-    return "Ask me anything...";
+    return "Type your message...";
   };
 
   const getProgressText = () => {
@@ -203,194 +201,96 @@ export default function ChatWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-[99998] w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 animate-pulse"
+          className="fixed bottom-6 right-6 z-[99998] group"
         >
-          <MessageCircle className="w-8 h-8 text-white" />
+          <div className="relative">
+            <div className="absolute -inset-2 bg-accent/30 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
+            <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 border-4 border-white">
+              <MessageCircle className="w-8 h-8 text-white" />
+            </div>
+            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white animate-pulse" />
+          </div>
+          <span className="absolute right-20 top-1/2 -translate-y-1/2 bg-primary text-white text-sm px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Chat with us
+          </span>
         </button>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: "90px",
-            right: "20px",
-            width: "380px",
-            maxWidth: "calc(100vw - 40px)",
-            height: "520px",
-            maxHeight: "calc(100vh - 120px)",
-            background: "white",
-            borderRadius: "16px",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.15)",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-            zIndex: 99999,
-          }}
-        >
+        <div className="fixed bottom-20 right-6 z-[99999] w-[380px] max-w-[calc(100vw-32px)] bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col max-h-[560px]">
           {/* Header */}
-          <div
-            style={{
-              background: "linear-gradient(135deg, #0f766e 0%, #0d9488 100%)",
-              padding: "14px 18px",
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
-          >
-            <div
-              style={{
-                width: "42px",
-                height: "42px",
-                borderRadius: "50%",
-                background: "rgba(255,255,255,0.2)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "2px solid rgba(255,255,255,0.3)",
-                overflow: "hidden",
-              }}
-            >
-              <div className="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center">
-                <span className="text-white text-lg font-bold">D</span>
+          <div className="bg-gradient-to-r from-primary to-[#1a3a5c] px-5 py-4 flex items-center gap-3">
+            <div className="relative">
+              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
+                <span className="text-white text-xl font-bold">DR</span>
               </div>
+              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-400 rounded-full border-2 border-white" />
             </div>
-            <div style={{ flex: 1 }}>
-              <div
-                style={{ color: "white", fontSize: "16px", fontWeight: 600 }}
-              >
-                Dr. Darshana's Assistant
-              </div>
-              <div
-                style={{
-                  color: "rgba(255,255,255,0.8)",
-                  fontSize: "12px",
-                }}
-              >
+            <div className="flex-1">
+              <h3 className="text-white font-semibold text-base">
+                Dr. Darshana Reddy
+              </h3>
+              <p className="text-white/70 text-xs">
                 Internal Medicine & Diabetology
-              </div>
+              </p>
             </div>
-
             <button
               onClick={() => setIsOpen(false)}
-              style={{
-                background: "none",
-                border: "none",
-                color: "white",
-                cursor: "pointer",
-                padding: "5px",
-                fontSize: "18px",
-                opacity: 0.8,
-              }}
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 text-white" />
             </button>
           </div>
 
           {/* Progress */}
           {collectionStep !== "done" && (
-            <div
-              style={{
-                background: "#f0fdfa",
-                padding: "8px 18px",
-                fontSize: "12px",
-                color: "#0d9488",
-                fontWeight: 600,
-                borderBottom: "1px solid #ccfbf1",
-              }}
-            >
-              {getProgressText()}
+            <div className="bg-amber-50 px-5 py-2 text-xs font-medium text-amber-700 flex items-center justify-between">
+              <span>{getProgressText()}</span>
+              <span className="text-amber-500">📋 Booking</span>
             </div>
           )}
 
           {/* Messages */}
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              padding: "16px",
-              background: "#f8fafc",
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
+          <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-3">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                style={{
-                  maxWidth: "85%",
-                  alignSelf: msg.role === "user" ? "flex-end" : "flex-start",
-                  padding: "12px 16px",
-                  borderRadius: "16px",
-                  fontSize: "14px",
-                  lineHeight: 1.5,
-                  background: msg.role === "user" ? "#0d9488" : "white",
-                  color: msg.role === "user" ? "white" : "#334155",
-                  border:
-                    msg.role === "assistant" ? "1px solid #e2e8f0" : "none",
-                  borderBottomLeftRadius:
-                    msg.role === "assistant" ? "4px" : "16px",
-                  borderBottomRightRadius: msg.role === "user" ? "4px" : "16px",
-                  boxShadow:
-                    msg.role === "assistant"
-                      ? "0 1px 3px rgba(0,0,0,0.08)"
-                      : "none",
-                }}
+                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
-                {msg.content.split("\n").map((line, i) => (
-                  <p
-                    key={i}
-                    style={{
-                      margin: i > 0 ? "6px 0 0" : 0,
-                      whiteSpace: "pre-wrap",
-                    }}
-                  >
-                    {line}
-                  </p>
-                ))}
+                <div
+                  className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                    msg.role === "user"
+                      ? "bg-gradient-to-r from-primary to-[#1a3a5c] text-white rounded-br-md"
+                      : "bg-white border border-gray-200 text-gray-700 rounded-bl-md shadow-sm"
+                  }`}
+                >
+                  {msg.content.split("\n").map((line, i) => (
+                    <p key={i} className={i > 0 ? "mt-2" : ""}>
+                      {line}
+                    </p>
+                  ))}
+                </div>
               </div>
             ))}
             {loading && (
-              <div
-                style={{
-                  alignSelf: "flex-start",
-                  padding: "12px 16px",
-                  borderRadius: "16px",
-                  background: "white",
-                  border: "1px solid #e2e8f0",
-                  display: "flex",
-                  gap: "4px",
-                }}
-              >
-                <span
-                  style={{
-                    animation: "bounce 1s infinite",
-                    margin: "0 2px",
-                    color: "#0d9488",
-                  }}
-                >
-                  •
-                </span>
-                <span
-                  style={{
-                    animation: "bounce 1s infinite 0.2s",
-                    margin: "0 2px",
-                    color: "#0d9488",
-                  }}
-                >
-                  •
-                </span>
-                <span
-                  style={{
-                    animation: "bounce 1s infinite 0.4s",
-                    margin: "0 2px",
-                    color: "#0d9488",
-                  }}
-                >
-                  •
-                </span>
+              <div className="flex justify-start">
+                <div className="bg-white border border-gray-200 px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+                  <div className="flex gap-1">
+                    <span
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "0ms" }}
+                    />
+                    <span
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "150ms" }}
+                    />
+                    <span
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "300ms" }}
+                    />
+                  </div>
+                </div>
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -398,39 +298,12 @@ export default function ChatWidget() {
 
           {/* Specialty Buttons */}
           {collectionStep === "reason" && (
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "8px",
-                padding: "12px",
-                background: "white",
-                borderTop: "1px solid #e2e8f0",
-              }}
-            >
+            <div className="px-4 py-3 bg-white border-t border-gray-100 flex flex-wrap gap-2">
               {specialties.map((specialty) => (
                 <button
                   key={specialty}
                   onClick={() => handleReasonSubmit(specialty)}
-                  style={{
-                    padding: "8px 14px",
-                    background: "#f0fdfa",
-                    color: "#0d9488",
-                    border: "1px solid #0d9488",
-                    borderRadius: "20px",
-                    fontSize: "12px",
-                    fontWeight: 500,
-                    cursor: "pointer",
-                    transition: "all 0.2s",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = "#0d9488";
-                    e.currentTarget.style.color = "white";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = "#f0fdfa";
-                    e.currentTarget.style.color = "#0d9488";
-                  }}
+                  className="px-3 py-1.5 bg-amber-50 hover:bg-accent text-accent-foreground text-xs font-medium rounded-full border border-accent/20 hover:border-accent hover:shadow-sm transition-all"
                 >
                   {specialty}
                 </button>
@@ -439,47 +312,19 @@ export default function ChatWidget() {
           )}
 
           {/* Input */}
-          <div
-            style={{
-              padding: "14px",
-              background: "white",
-              borderTop: "1px solid #e2e8f0",
-              display: "flex",
-              gap: "10px",
-              alignItems: "center",
-            }}
-          >
+          <div className="p-4 bg-white border-t border-gray-100 flex gap-3">
             <input
               type={collectionStep === "phone" ? "tel" : "text"}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
               placeholder={getPlaceholder()}
-              style={{
-                flex: 1,
-                padding: "12px 16px",
-                border: "1px solid #cbd5e1",
-                borderRadius: "24px",
-                outline: "none",
-                fontSize: "14px",
-              }}
+              className="flex-1 px-4 py-3 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
             />
             <button
               onClick={() => sendMessage(input)}
               disabled={loading || !input.trim()}
-              style={{
-                width: "44px",
-                height: "44px",
-                background: "#0d9488",
-                color: "white",
-                border: "none",
-                borderRadius: "50%",
-                cursor: loading || !input.trim() ? "not-allowed" : "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                opacity: loading || !input.trim() ? 0.5 : 1,
-              }}
+              className="w-12 h-12 bg-gradient-to-r from-accent to-[#e65a2a] rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -491,51 +336,30 @@ export default function ChatWidget() {
 
           {/* Quick Actions */}
           {collectionStep === "done" && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "24px",
-                padding: "12px",
-                background: "white",
-                borderTop: "1px solid #e2e8f0",
-              }}
-            >
+            <div className="px-4 py-3 bg-gray-50 border-t border-gray-100 flex justify-center gap-6">
               <a
                 href="tel:+918882799799"
-                style={{
-                  fontSize: "13px",
-                  color: "#0d9488",
-                  textDecoration: "none",
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
+                className="flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 Call Now
               </a>
               <a
                 href="/contact"
-                style={{
-                  fontSize: "13px",
-                  color: "#0d9488",
-                  textDecoration: "none",
-                  fontWeight: 600,
-                }}
+                className="flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors"
               >
+                <Calendar className="w-4 h-4" />
                 Book Appointment
               </a>
             </div>
           )}
 
-          <style>{`
-            @keyframes bounce {
-              0%, 60%, 100% { transform: translateY(0); }
-              30% { transform: translateY(-4px); }
-            }
-          `}</style>
+          {/* Footer */}
+          <div className="px-4 py-2 bg-gradient-to-r from-primary to-[#1a3a5c] text-center">
+            <p className="text-white/60 text-xs">
+              Powered by AI • Not for emergencies
+            </p>
+          </div>
         </div>
       )}
     </>
