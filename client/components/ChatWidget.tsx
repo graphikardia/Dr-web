@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Phone, Loader2, Calendar } from "lucide-react";
 
@@ -197,21 +199,18 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Floating Button - Chat with AI-Doc */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-[99998] group"
+          className="fixed bottom-6 right-6 z-[99998] flex items-center gap-3 bg-gradient-to-r from-primary to-[#1a3a5c] px-5 py-3 rounded-full shadow-2xl hover:scale-105 transition-transform duration-300 border-2 border-white"
         >
           <div className="relative">
-            <div className="absolute -inset-2 bg-accent/30 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
-            <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 border-4 border-white">
-              <MessageCircle className="w-8 h-8 text-white" />
-            </div>
-            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white animate-pulse" />
+            <MessageCircle className="w-6 h-6 text-white" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border border-white" />
           </div>
-          <span className="absolute right-20 top-1/2 -translate-y-1/2 bg-primary text-white text-sm px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-            Chat with us
+          <span className="text-white font-semibold text-sm whitespace-nowrap">
+            Chat with AI-Doc
           </span>
         </button>
       )}
