@@ -23,6 +23,121 @@ const GOOGLE_SHEET_URL =
   import.meta.env.VITE_GOOGLE_SHEET_URL ||
   "https://script.google.com/macros/s/AKfycbzXXXXXXXXXXXXX";
 
+const localFAQs = [
+  {
+    q: ["allergy", "allergies", "allergic"],
+    a: "Allergy is a condition where the immune system reacts abnormally to substances that are normally harmless. Common allergens include pollen, dust mites, pet dander, certain foods, and insect stings. Symptoms can range from mild (sneezing, itching) to severe (breathing difficulties). Dr. Darshana specializes in allergy diagnosis and treatment. Would you like to book an appointment?",
+  },
+  {
+    q: ["diabetes", "diabetic", "blood sugar", "sugar"],
+    a: "Diabetes is a chronic condition that affects how your body processes blood sugar. Common symptoms include increased thirst, frequent urination, fatigue, and blurred vision. Dr. Darshana has 16+ years of experience in diabetes management. We offer free diabetes camps on the 1st and 3rd Tuesday of every month. Would you like more information or book an appointment?",
+  },
+  {
+    q: ["fever", "febrile"],
+    a: "Fever is usually a sign that your body is fighting an infection. It can be caused by viral or bacterial infections. Rest, hydration, and paracetamol can help. However, if fever persists for more than 3 days or is accompanied by severe symptoms, please consult a doctor. Call +91 8882 799799 to book an appointment.",
+  },
+  {
+    q: ["cold", "cough", "flu"],
+    a: "Cold, cough, and flu are common respiratory infections. Rest, plenty of fluids, and steam inhalation can help. If symptoms persist for more than a week or include breathing difficulty, please consult a doctor. Dr. Darshana specializes in respiratory care.",
+  },
+  {
+    q: ["asthma", "breathing", "respiratory"],
+    a: "Asthma is a chronic condition where the airways narrow and produce excess mucus, causing breathing difficulties. Dr. Darshana has expertise in respiratory care and offers allergy & asthma treatment. We conduct Allergy Check-ups on Monday & Thursday. Would you like to book an consultation?",
+  },
+  {
+    q: ["blood pressure", "hypertension", "bp"],
+    a: "High blood pressure (hypertension) often has no symptoms but can lead to serious health issues if untreated. Regular monitoring, low-salt diet, exercise, and medication help manage it. Dr. Darshana can help you manage blood pressure effectively. Call +91 8882 799799.",
+  },
+  {
+    q: ["thyroid"],
+    a: "Thyroid disorders affect the thyroid gland which regulates metabolism. Common issues include hypothyroidism (underactive) and hyperthyroidism (overactive). Symptoms vary but can include fatigue, weight changes, and mood swings. Dr. Darshana specializes in endocrinology. Would you like to book an appointment?",
+  },
+  {
+    q: ["appointment", "book", "consultation", "schedule"],
+    a: "To book an appointment with Dr. Darshana:\n\n📞 Call: +91 8882 799799\n\n🏥 Location: Altius Hospital, HBR Layout, Bangalore\n\n🕐 Timing: 9 AM - 12 PM & 3 PM - 5 PM (Closed Sunday)\n\nWould you like me to help you book an appointment?",
+  },
+  {
+    q: ["timing", "hours", "open", "closed"],
+    a: "Dr. Darshana's consultation hours:\n\n🏥 Altius Hospital, HBR Layout, Bangalore\n\n⏰ Morning: 9:00 AM - 12:00 PM\n⏰ Evening: 3:00 PM - 5:00 PM\n\n📅 Closed on Sunday\n\nCall +91 8882 799799 to book an appointment.",
+  },
+  {
+    q: ["fee", "cost", "charges", "price"],
+    a: "Dr. Darshana offers quality healthcare at affordable rates. Consultation fees are reasonable compared to other specialists. For accurate fee details, please call +91 8882 799799.",
+  },
+  {
+    q: ["location", "address", "hospital"],
+    a: "Dr. Darshana consults at:\n\n🏥 Altius Hospital\n📍 HBR Layout, Bangalore\n\nFor directions or to book an appointment, call +91 8882 799799.",
+  },
+  {
+    q: ["who are you", "what are you", "chatbot", "assistant"],
+    a: "I'm Dr. Darshana's AI assistant! I can help you with:\n\n• Health-related questions\n• Appointment bookings\n• Information about services\n\nHow can I assist you today?",
+  },
+];
+
+const findLocalAnswer = (question: string): string | null => {
+  const lowerQ = question.toLowerCase();
+  for (const faq of localFAQs) {
+    for (const keyword of faq.q) {
+      if (lowerQ.includes(keyword)) {
+        return faq.a;
+      }
+    }
+  }
+  return null;
+};
+
+const healthKeywords = [
+  "symptom",
+  "disease",
+  "diagnosis",
+  "treatment",
+  "medicine",
+  "drug",
+  "cancer",
+  "tumor",
+  "stroke",
+  "heart attack",
+  "seizure",
+  "paralysis",
+  "pregnant",
+  "abortion",
+  "miscarriage",
+  "fertility",
+  "ivf",
+  "hiv",
+  "aids",
+  "sex",
+  "sexual",
+  "std",
+  "sti",
+  "mental",
+  "depression",
+  "anxiety",
+  "suicide",
+  "psychiatrist",
+  "kidney",
+  "liver",
+  "dialysis",
+  "transplant",
+  "surgery",
+  "operation",
+  "chemotherapy",
+  "radiation",
+  "prescription",
+  " dosage",
+  "side effect",
+  "interaction",
+  "medical advice",
+  "should i",
+  "do i need",
+  "is it normal",
+];
+
+const isSeriousHealthQuestion = (question: string): boolean => {
+  const lowerQ = question.toLowerCase();
+  return healthKeywords.some((keyword) => lowerQ.includes(keyword));
+};
+
 const saveLeadToSheet = async (data: {
   name: string;
   phone: string;
@@ -170,6 +285,41 @@ export default function ChatWidget() {
     if (!text.trim()) return;
 
     if (collectionStep === "greeting") {
+      const localAnswer = findLocalAnswer(text);
+
+      if (localAnswer) {
+        const userMsg: Message = {
+          id: Date.now().toString(),
+          role: "user",
+          content: text,
+        };
+        const botMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: localAnswer,
+        };
+        setMessages((prev) => [...prev, userMsg, botMsg]);
+        setInput("");
+        return;
+      }
+
+      if (isSeriousHealthQuestion(text)) {
+        const userMsg: Message = {
+          id: Date.now().toString(),
+          role: "user",
+          content: text,
+        };
+        const botMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content:
+            "For specific medical concerns, I recommend consulting Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Altius Hospital, HBR Layout\n\nFor general health tips, feel free to ask!",
+        };
+        setMessages((prev) => [...prev, userMsg, botMsg]);
+        setInput("");
+        return;
+      }
+
       setCollectionStep("name");
       setMessages((prev) => [
         ...prev,
@@ -223,21 +373,55 @@ export default function ChatWidget() {
       });
 
       const data = await res.json();
-      const botMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: data.reply,
-      };
-      setMessages((prev) => [...prev, botMsg]);
-    } catch (error) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now().toString(),
+
+      if (data.reply && !data.error) {
+        const botMsg: Message = {
+          id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: "Sorry, please call +91 8882 799799 for assistance.",
-        },
-      ]);
+          content: data.reply,
+        };
+        setMessages((prev) => [...prev, botMsg]);
+      } else {
+        const localAnswer = findLocalAnswer(text);
+        if (localAnswer) {
+          const botMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            role: "assistant",
+            content: localAnswer,
+          };
+          setMessages((prev) => [...prev, botMsg]);
+        } else {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: Date.now().toString(),
+              role: "assistant",
+              content:
+                "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Altius Hospital, HBR Layout",
+            },
+          ]);
+        }
+      }
+    } catch (error) {
+      const localAnswer = findLocalAnswer(text);
+      if (localAnswer) {
+        const botMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: localAnswer,
+        };
+        setMessages((prev) => [...prev, botMsg]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now().toString(),
+            role: "assistant",
+            content:
+              "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Altius Hospital, HBR Layout",
+          },
+        ]);
+      }
     } finally {
       setLoading(false);
     }

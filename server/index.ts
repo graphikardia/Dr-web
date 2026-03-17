@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -61,7 +61,6 @@ export function createServer() {
     message: { error: "Too many requests, please try again later." },
     standardHeaders: true,
     legacyHeaders: false,
-    skip: (req) => req.path.startsWith("/api/ping"),
   });
   app.use("/api/", limiter);
 
@@ -101,22 +100,15 @@ export function createServer() {
   app.post("/api/chat", handleChat);
 
   // 404 handler
-  app.use((_req, res) => {
+  app.use((_req: Request, res: Response) => {
     res.status(404).json({ error: "Not Found" });
   });
 
   // Error handler
-  app.use(
-    (
-      err: Error,
-      _req: express.Request,
-      res: express.Response,
-      _next: express.NextFunction,
-    ) => {
-      console.error("Server Error:", err.message);
-      res.status(500).json({ error: "Internal Server Error" });
-    },
-  );
+  app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    console.error("Server Error:", err.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  });
 
   return app;
 }
