@@ -379,7 +379,7 @@ const careerHighlights = [
   {
     year: "2022 - Present",
     title: "Senior Consultant",
-    subtitle: "Altius Hospital, Bangalore",
+    subtitle: "Even Hospital, Bangalore",
     description:
       "Leading internal medicine department with focus on diabetes and respiratory care",
     icon: Stethoscope,
@@ -520,7 +520,7 @@ const faqs = [
   {
     question: "What are Dr. Darshana's consultation hours?",
     answer:
-      "Dr. Darshana consults at Altius Hospital, HBR Layout, Bangalore from Monday to Saturday. Morning: 9:00 AM – 12:00 PM | Afternoon: 3:00 PM – 5:00 PM. Sundays are closed.",
+      "Dr. Darshana consults at Even Hospital, HBR Layout, Bangalore from Monday to Saturday. Morning: 9:00 AM – 12:00 PM | Afternoon: 3:00 PM – 5:00 PM. Sundays are closed.",
   },
   {
     question: "How do I book an appointment with Dr. Darshana?",
@@ -540,7 +540,7 @@ const faqs = [
   {
     question: "Does Dr. Darshana conduct free health camps?",
     answer:
-      "Yes! Dr. Darshana has been conducting free health camps twice every month for the past 5 years at Altius Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
+      "Yes! Dr. Darshana has been conducting free health camps twice every month for the past 5 years at Even Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
   },
   {
     question: "What makes Dr. Darshana's treatment approach unique?",
@@ -956,7 +956,7 @@ export default function Home() {
                   Trusted By Patients At
                 </p>
                 <div className="flex flex-wrap gap-6 opacity-60">
-                  {["Apollo Hospitals", "Altius Hospital", "St. John's"].map(
+                  {["Apollo Hospitals", "Even Hospital", "St. John's"].map(
                     (hospital, i) => (
                       <span
                         key={i}
@@ -1130,9 +1130,9 @@ export default function Home() {
               <h2 className="mb-6">About Dr. Darshana</h2>
               <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
                 Dr. Darshana Reddy is a highly respected Internal Medicine
-                Consultant and Medical Superintendent at Altius Hospital with
-                over 16 years of clinical experience in managing acute and
-                chronic medical conditions.
+                Consultant and Medical Superintendent at Even Hospital with over
+                16 years of clinical experience in managing acute and chronic
+                medical conditions.
               </p>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 She has successfully treated over 1.7 lakh patients, including
@@ -1186,7 +1186,7 @@ export default function Home() {
             <h2>Check-ups & Tests</h2>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
               Moments from consultations, diagnostic procedures, and patient
-              care at Altius Hospital.
+              care at Even Hospital.
             </p>
           </div>
           <div className="relative">
@@ -1337,7 +1337,7 @@ export default function Home() {
           <div className="mt-10 bg-gradient-to-r from-primary to-primary/85 rounded-xl p-8 text-white text-center">
             <h3 className="text-xl font-bold mb-2">Consultation Timings</h3>
             <p className="text-primary-foreground/90 mb-4">
-              Dr. Darshana consults at <strong>Altius Hospital</strong> daily
+              Dr. Darshana consults at <strong>Even Hospital</strong> daily
               except Sundays
             </p>
             <p className="text-2xl font-bold text-accent mb-2">

@@ -43,7 +43,7 @@ CRITICAL RULES:
 DR. DARSHANA'S INFO:
 - Senior Consultant — Internal Medicine & Diabetologist
 - 16+ Years Experience
-- Location: Altius Hospital, HBR Layout, Bangalore
+- Location: Even Hospital, HBR Layout, Bangalore
 - Phone: +91 8882 799799
 - Timing: 9 AM - 12 PM & 3 PM - 5 PM (Closed Sunday)
 - Specializations: General Medicine, Diabetology, Respiratory Care, Allergy & Asthma, Endocrinology

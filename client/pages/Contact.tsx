@@ -1,6 +1,14 @@
 import { Layout } from "@/components/Layout";
 import { useState } from "react";
-import { Phone, Mail, MapPin, Clock, CalendarDays, CheckCircle, Loader2 } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  CalendarDays,
+  CheckCircle,
+  Loader2,
+} from "lucide-react";
 
 const GOOGLE_SHEET_URL =
   import.meta.env.VITE_GOOGLE_SHEET_URL ||
@@ -16,10 +24,14 @@ export default function Contact() {
     message: "",
   });
 
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -37,7 +49,14 @@ export default function Contact() {
         body: JSON.stringify(formData),
       });
       setStatus("success");
-      setFormData({ name: "", email: "", phone: "", condition: "", preferredDate: "", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        condition: "",
+        preferredDate: "",
+        message: "",
+      });
       setTimeout(() => setStatus("idle"), 6000);
     } catch (err) {
       console.error("Form submission error:", err);
@@ -72,10 +91,15 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-primary mb-1">Phone</h4>
-                  <a href="tel:+918882799799" className="text-muted-foreground hover:text-accent transition-colors">
+                  <a
+                    href="tel:+918882799799"
+                    className="text-muted-foreground hover:text-accent transition-colors"
+                  >
                     +91 8882 799 799
                   </a>
-                  <p className="text-sm text-muted-foreground/70 mt-1">Call to schedule</p>
+                  <p className="text-sm text-muted-foreground/70 mt-1">
+                    Call to schedule
+                  </p>
                 </div>
               </div>
 
@@ -85,10 +109,15 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-primary mb-1">Email</h4>
-                  <a href="mailto:info@altiushospital.com" className="text-muted-foreground hover:text-accent transition-colors">
+                  <a
+                    href="mailto:info@altiushospital.com"
+                    className="text-muted-foreground hover:text-accent transition-colors"
+                  >
                     info@altiushospital.com
                   </a>
-                  <p className="text-sm text-muted-foreground/70 mt-1">We'll respond within 24 hours</p>
+                  <p className="text-sm text-muted-foreground/70 mt-1">
+                    We'll respond within 24 hours
+                  </p>
                 </div>
               </div>
 
@@ -99,8 +128,10 @@ export default function Contact() {
                 <div>
                   <h4 className="font-bold text-primary mb-1">Location</h4>
                   <p className="text-muted-foreground">
-                    Altius Hospital<br />
-                    HBR Layout, Bangalore<br />
+                    Even Hospital
+                    <br />
+                    HBR Layout, Bangalore
+                    <br />
                     Karnataka 560043
                   </p>
                 </div>
@@ -109,10 +140,14 @@ export default function Contact() {
               <div className="flex gap-4 p-6 bg-accent/10 rounded-lg border border-accent/20">
                 <Clock className="w-6 h-6 text-accent flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold text-primary mb-2">Working Hours</h4>
+                  <h4 className="font-bold text-primary mb-2">
+                    Consultation Hours
+                  </h4>
                   <p className="text-sm text-muted-foreground">
-                    Monday - Friday: 9:00 AM - 6:00 PM<br />
-                    Saturday: 10:00 AM - 2:00 PM<br />
+                    Monday - Saturday: 9:00 AM - 12:00 PM
+                    <br />
+                    Monday - Saturday: 3:00 PM - 5:00 PM
+                    <br />
                     Sunday: Closed
                   </p>
                 </div>
@@ -121,13 +156,16 @@ export default function Contact() {
 
             {/* Booking Form */}
             <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className="bg-gray-50 p-8 rounded-xl">
-
+              <form
+                onSubmit={handleSubmit}
+                className="bg-gray-50 p-8 rounded-xl"
+              >
                 {status === "success" && (
                   <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <p className="text-green-800 font-semibold">
-                      Thank you! Your appointment request has been received and saved. We'll contact you within 24 hours to confirm.
+                      Thank you! Your appointment request has been received and
+                      saved. We'll contact you within 24 hours to confirm.
                     </p>
                   </div>
                 )}
@@ -135,13 +173,16 @@ export default function Contact() {
                 {status === "error" && (
                   <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-800 font-semibold">
-                      Something went wrong. Please try again or call us directly at +91 8882 799 799.
+                      Something went wrong. Please try again or call us directly
+                      at +91 8882 799 799.
                     </p>
                   </div>
                 )}
 
                 <div className="mb-6">
-                  <label className="block text-sm font-semibold text-primary mb-2">Full Name *</label>
+                  <label className="block text-sm font-semibold text-primary mb-2">
+                    Full Name *
+                  </label>
                   <input
                     type="text"
                     name="name"
@@ -156,7 +197,9 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-semibold text-primary mb-2">Email Address *</label>
+                    <label className="block text-sm font-semibold text-primary mb-2">
+                      Email Address *
+                    </label>
                     <input
                       type="email"
                       name="email"
@@ -169,7 +212,9 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-primary mb-2">Phone Number *</label>
+                    <label className="block text-sm font-semibold text-primary mb-2">
+                      Phone Number *
+                    </label>
                     <input
                       type="tel"
                       name="phone"
@@ -185,7 +230,9 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-semibold text-primary mb-2">Primary Concern *</label>
+                    <label className="block text-sm font-semibold text-primary mb-2">
+                      Primary Concern *
+                    </label>
                     <select
                       name="condition"
                       value={formData.condition}
@@ -203,7 +250,9 @@ export default function Contact() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-primary mb-2">Preferred Date</label>
+                    <label className="block text-sm font-semibold text-primary mb-2">
+                      Preferred Date
+                    </label>
                     <input
                       type="date"
                       name="preferredDate"
@@ -257,11 +306,14 @@ export default function Contact() {
           <CalendarDays className="w-12 h-12 text-accent mx-auto mb-4" />
           <h2 className="mb-4">Free Health Camps</h2>
           <p className="text-lg text-muted-foreground mb-6">
-            Dr. Darshana conducts free diabetes awareness and health screening camps twice a month. These camps provide complimentary consultations, blood sugar screening, and health education.
+            Dr. Darshana conducts free diabetes awareness and health screening
+            camps twice a month. These camps provide complimentary
+            consultations, blood sugar screening, and health education.
           </p>
           <div className="bg-white p-6 rounded-lg border border-accent/20 mb-6">
             <p className="text-muted-foreground">
-              <strong>Next Camp Date:</strong> Contact us for the upcoming camp schedule
+              <strong>Next Camp Date:</strong> Contact us for the upcoming camp
+              schedule
             </p>
           </div>
           <a href="tel:+918882799799" className="inline-block btn-primary">
@@ -270,7 +322,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Map Section — Altius Hospital, HBR Layout, Bangalore */}
+      {/* Map Section — Even Hospital, HBR Layout, Bangalore */}
       <section className="section-padding bg-white">
         <div className="container-max">
           <h2 className="text-center mb-8">Visit Us</h2>

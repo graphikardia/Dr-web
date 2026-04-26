@@ -7,9 +7,12 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* About */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-accent">Dr. Darshana Reddy</h3>
+            <h3 className="text-lg font-bold mb-4 text-accent">
+              Dr. Darshana Reddy
+            </h3>
             <p className="text-sm opacity-90 mb-4">
-              Senior Consultant - Internal Medicine & Diabetologist at Altius Hospital
+              Senior Consultant - Internal Medicine & Diabetologist at Even
+              Hospital
             </p>
             <div className="flex gap-4">
               <a
@@ -33,17 +36,26 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/about" className="hover:text-accent transition-colors">
+                <a
+                  href="/about"
+                  className="hover:text-accent transition-colors"
+                >
                   About
                 </a>
               </li>
               <li>
-                <a href="/videos" className="hover:text-accent transition-colors">
+                <a
+                  href="/videos"
+                  className="hover:text-accent transition-colors"
+                >
                   Videos
                 </a>
               </li>
               <li>
-                <a href="/testimonials" className="hover:text-accent transition-colors">
+                <a
+                  href="/testimonials"
+                  className="hover:text-accent transition-colors"
+                >
                   Testimonials
                 </a>
               </li>
@@ -75,12 +87,18 @@ export const Footer = () => {
             <div className="space-y-3 text-sm">
               <div className="flex gap-2 items-start">
                 <Phone size={16} className="flex-shrink-0 mt-0.5 text-accent" />
-                <a href="tel:+918882799799" className="hover:text-accent transition-colors">
+                <a
+                  href="tel:+918882799799"
+                  className="hover:text-accent transition-colors"
+                >
                   +91 8882 799 799
                 </a>
               </div>
               <div className="flex gap-2 items-start">
-                <MapPin size={16} className="flex-shrink-0 mt-0.5 text-accent" />
+                <MapPin
+                  size={16}
+                  className="flex-shrink-0 mt-0.5 text-accent"
+                />
                 <p>HBR Layout, Bangalore</p>
               </div>
               <div className="flex gap-2 items-start">

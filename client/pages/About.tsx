@@ -503,7 +503,7 @@ const experienceStops = [
   },
   {
     role: "Senior Consultant & HOD",
-    hospital: "Altius Hospital",
+    hospital: "Even Hospital",
     location: "HBR Layout, Bangalore",
     note: "Head of Dept — Internal Medicine; Medical Superintendent",
     color: "#DC2626",

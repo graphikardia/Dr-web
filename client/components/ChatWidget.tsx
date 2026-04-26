@@ -54,11 +54,11 @@ const localFAQs = [
   },
   {
     q: ["appointment", "book", "consultation", "schedule"],
-    a: "To book an appointment with Dr. Darshana:\n\n📞 Call: +91 8882 799799\n\n🏥 Location: Altius Hospital, HBR Layout, Bangalore\n\n🕐 Timing: 9 AM - 12 PM & 3 PM - 5 PM (Closed Sunday)\n\nWould you like me to help you book an appointment?",
+    a: "To book an appointment with Dr. Darshana:\n\n📞 Call: +91 8882 799799\n\n🏥 Location: Even Hospital, HBR Layout, Bangalore\n\n🕐 Timing: 9 AM - 12 PM & 3 PM - 5 PM (Closed Sunday)\n\nWould you like me to help you book an appointment?",
   },
   {
     q: ["timing", "hours", "open", "closed"],
-    a: "Dr. Darshana's consultation hours:\n\n🏥 Altius Hospital, HBR Layout, Bangalore\n\n⏰ Morning: 9:00 AM - 12:00 PM\n⏰ Evening: 3:00 PM - 5:00 PM\n\n📅 Closed on Sunday\n\nCall +91 8882 799799 to book an appointment.",
+    a: "Dr. Darshana's consultation hours:\n\n🏥 Even Hospital, HBR Layout, Bangalore\n\n⏰ Morning: 9:00 AM - 12:00 PM\n⏰ Evening: 3:00 PM - 5:00 PM\n\n📅 Closed on Sunday\n\nCall +91 8882 799799 to book an appointment.",
   },
   {
     q: ["fee", "cost", "charges", "price"],
@@ -66,7 +66,7 @@ const localFAQs = [
   },
   {
     q: ["location", "address", "hospital"],
-    a: "Dr. Darshana consults at:\n\n🏥 Altius Hospital\n📍 HBR Layout, Bangalore\n\nFor directions or to book an appointment, call +91 8882 799799.",
+    a: "Dr. Darshana consults at:\n\n🏥 Even Hospital\n📍 HBR Layout, Bangalore\n\nFor directions or to book an appointment, call +91 8882 799799.",
   },
   {
     q: ["who are you", "what are you", "chatbot", "assistant"],
@@ -313,7 +313,7 @@ export default function ChatWidget() {
           id: (Date.now() + 1).toString(),
           role: "assistant",
           content:
-            "For specific medical concerns, I recommend consulting Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Altius Hospital, HBR Layout\n\nFor general health tips, feel free to ask!",
+            "For specific medical concerns, I recommend consulting Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Even Hospital, HBR Layout\n\nFor general health tips, feel free to ask!",
         };
         setMessages((prev) => [...prev, userMsg, botMsg]);
         setInput("");
@@ -397,7 +397,7 @@ export default function ChatWidget() {
               id: Date.now().toString(),
               role: "assistant",
               content:
-                "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Altius Hospital, HBR Layout",
+                "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Even Hospital, HBR Layout",
             },
           ]);
         }
@@ -418,7 +418,7 @@ export default function ChatWidget() {
             id: Date.now().toString(),
             role: "assistant",
             content:
-              "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Altius Hospital, HBR Layout",
+              "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Even Hospital, HBR Layout",
           },
         ]);
       }
