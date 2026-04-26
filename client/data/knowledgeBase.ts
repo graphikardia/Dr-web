@@ -99,35 +99,35 @@ export const drDarshanaKnowledgeBase = {
   faqs: [
     {
       q: "What are Dr. Darshana's consultation hours?",
-      a: "Dr. Darshana consults at Altius Hospital daily from 9:00 AM to 12:00 PM and 3:00 PM to 5:00 PM, except on Sundays.",
+      a: "Dr. Darshana consults at Altius Hospital, HBR Layout, Bangalore from Monday to Saturday. Morning: 9:00 AM – 12:00 PM | Afternoon: 3:00 PM – 5:00 PM. Sundays are closed.",
     },
     {
-      q: "How do I book an appointment?",
-      a: "You can book an appointment by calling us at +91 8882 799799, using the appointment form on our Contact page, or filling out the form in the chat widget.",
+      q: "How do I book an appointment with Dr. Darshana?",
+      a: "You can book an appointment by calling us at 8882799799, using the appointment form on our Contact page, or filling out the form in the chat widget.",
     },
     {
       q: "What should I bring for my first consultation?",
       a: "Please bring any previous medical records, prescription papers, and your ID proof. If you have diabetes or other chronic conditions, bring your recent test reports.",
     },
     {
-      q: "Do you offer online consultations?",
-      a: "Yes, we offer both in-person and teleconsultation services. Please contact us to schedule a virtual appointment.",
+      q: "What are Dr. Darshana's areas of specialization?",
+      a: "Dr. Darshana specializes in Internal Medicine, Diabetology, Allergology, and Lifestyle & Metabolic Disease Management. She has deep clinical interest in Diabetes Mellitus, PCOD, Obesity, Hypertension, Dyslipidemia, Hypothyroidism, Metabolic Syndrome, Respiratory Disorders, and Sleep Disorders.",
     },
     {
-      q: "What specialties do you treat?",
-      a: "We specialize in General Medicine, Diabetology, Respiratory Care, Allergy & Asthma, Endocrinology, and Pulmonology.",
-    },
-    {
-      q: "Do you conduct special health check-up camps?",
-      a: "Yes! We conduct Obesity Check-ups every Wednesday and Friday, Allergy Check-ups on Monday and Thursday, Free Diabetes Camp on 1st and 3rd Tuesday of every month, and Vaccination Check-ups on Saturday.",
+      q: "Does Dr. Darshana conduct free health camps?",
+      a: "Yes! Dr. Darshana has been conducting free health camps twice every month for the past 5 years at Altius Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
     },
     {
       q: "What makes Dr. Darshana's treatment approach unique?",
-      a: "Dr. Darshana is known for her conservative treatment approach — she prescribes only necessary medicines and tests. She focuses on identifying the root cause and emphasizes lifestyle modifications for long-term wellness.",
+      a: "Dr. Darshana is known for her compassionate and holistic approach — she treats patients as individuals, not just diseases. She focuses on prevention, long-term wellness, and sustainable lifestyle changes. She strongly believes in 'Prevention is Better Than Cure' and promotes early diagnosis and lifestyle modifications.",
     },
     {
-      q: "Are the consultation fees reasonable?",
-      a: "Yes! Dr. Darshana offers quality healthcare at affordable rates. Consultation fees are significantly lower compared to other physicians and diabetologists.",
+      q: "Does Dr. Darshana offer online consultations?",
+      a: "Yes, we offer both in-person and teleconsultation services. Please contact us at 8882799799 to schedule a virtual appointment.",
+    },
+    {
+      q: "What are Dr. Darshana's professional memberships?",
+      a: "Dr. Darshana is an Executive Committee Member of the Association of Physicians of India (2022–2026), Internal Audit Committee Member of API (2025–2026), Member of Indian Medical Association, Member of Research Society for the Study of Diabetes in India, Member of European Respiratory Society, and Member of Allergy Asthma Network India.",
     },
   ],
   contact: {

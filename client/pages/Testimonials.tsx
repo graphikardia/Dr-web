@@ -15,99 +15,90 @@ export default function Testimonials() {
   ];
 
   const platforms = [
-    { id: "all", label: "All Platforms" },
+    { id: "all", label: "All Reviews" },
     { id: "google", label: "Google Reviews" },
-    { id: "practo", label: "Practo" },
-    { id: "instagram", label: "Instagram" },
   ];
 
   const testimonials = [
     {
       id: 1,
-      name: "Rajesh Kumar",
-      category: "diabetes",
+      name: "Shashi Kala",
+      category: "general",
       platform: "google",
       rating: 5,
-      text: "Dr. Darshana has been instrumental in managing my diabetes. Her personalized approach and regular follow-ups have significantly improved my health metrics.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Rajesh",
+      text: "What a humble doctor. She spent good amount of time explaining my issues and trust me when I say that she is the real lifestyle doctor. She explained how our health entirely depends on our lifestyle. I strongly recommend her.",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Shashi",
     },
     {
       id: 2,
-      name: "Priya Sharma",
-      category: "respiratory",
-      platform: "practo",
+      name: "Padmanabhan Iyer",
+      category: "general",
+      platform: "google",
       rating: 5,
-      text: "Excellent doctor! She diagnosed my respiratory condition accurately and prescribed the right treatment. The improvement was remarkable within weeks.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priya",
+      text: "Though very young Darshana is wise, empathetic, makes patients comfortable, listens and is very honest in diagnosis and treatment. She has the right and different approach in a highly competitive profession where commercialisation is creeping in.",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Padmanabhan",
     },
     {
       id: 3,
-      name: "Arun Reddy",
+      name: "Ajay Singh",
       category: "general",
-      platform: "instagram",
+      platform: "google",
       rating: 5,
-      text: "Dr. Darshana's health tips on Instagram are life-changing. Her advice on preventive care has helped me maintain excellent health.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Arun",
+      text: "Dr Reddy is highly knowledgeable, listens to patients carefully, diagnoses properly, identifies the root of the problem and suggests precise medicines. She helped me post COVID recovery. SHE IS WONDERFUL DOCTOR AND ANGEL HUMAN.",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ajay",
     },
     {
       id: 4,
-      name: "Asha Patel",
+      name: "Pooja Mali",
       category: "diabetes",
       platform: "google",
       rating: 5,
-      text: "Very knowledgeable and caring doctor. She takes time to explain everything and ensures I understand my condition well.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Asha",
+      text: "I was suffering from Anemia. Dr Darshana Mam diagnosed it from route cause behind Anemia and then treated. Now my Haemoglobin is good and I feel more energetic. Very good Dr with vast experience.",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Pooja",
     },
     {
       id: 5,
-      name: "Vikram Singh",
+      name: "Mahesh Kumar",
       category: "respiratory",
       platform: "google",
       rating: 5,
-      text: "Dr. Darshana's expertise in respiratory care is evident. My asthma is now well-controlled thanks to her effective treatment plan.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram",
+      text: "My Grandfather who has asthmatic problem from past 5yrs. Through google we found Dr Darshana, Adult pulmonalogist, gave a good treatment and had a wonderful experience with her.",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Mahesh",
     },
     {
       id: 6,
-      name: "Meera Nair",
-      category: "general",
-      platform: "practo",
-      rating: 5,
-      text: "The best internal medicine doctor I've consulted. Professional, empathetic, and highly skilled. Highly recommended!",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Meera",
-    },
-    {
-      id: 7,
-      name: "Suresh Kumar",
-      category: "diabetes",
-      platform: "instagram",
-      rating: 5,
-      text: "Following Dr. Darshana's lifestyle tips has transformed my health. My blood sugar levels are now stable and I feel energetic.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Suresh",
-    },
-    {
-      id: 8,
-      name: "Divya Menon",
-      category: "respiratory",
-      platform: "practo",
-      rating: 5,
-      text: "Very attentive doctor who listens to patient concerns carefully. Her treatment approach is evidence-based and effective.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Divya",
-    },
-    {
-      id: 9,
-      name: "Ravi Prabhu",
+      name: "Aswathi Das",
       category: "general",
       platform: "google",
       rating: 5,
-      text: "Comprehensive health checkup and excellent guidance. Dr. Darshana helped identify early signs of a condition I wasn't aware of.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ravi",
+      text: "Dr Darshana is a wonderful doctor. She doesn't prescribe unnecessary medicines. She is extremely patient and listens to our concerns without any judgement. Very happy with our association for over 5 years with her.",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aswathi",
+    },
+    {
+      id: 7,
+      name: "Ajith T V",
+      category: "general",
+      platform: "google",
+      rating: 5,
+      text: "What an Amazing Doctor she is..!!! Three of us in family have recovered from Covid and so thankfull to Doctor Darshana for her excellent guidance. She only gives required medication instead of too many tablets.",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ajith",
+    },
+    {
+      id: 8,
+      name: "Sridhar Babu",
+      category: "general",
+      platform: "google",
+      rating: 5,
+      text: "One of the very few doctors I have come across who is genuine and caring for her patients. In these times of money mindedness of many in the medical fraternity, she stands out tall.",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sridhar",
     },
   ];
 
   const filteredTestimonials = testimonials.filter((t) => {
-    const categoryMatch = activeCategoryFilter === "all" || t.category === activeCategoryFilter;
-    const platformMatch = activePlatformFilter === "all" || t.platform === activePlatformFilter;
+    const categoryMatch =
+      activeCategoryFilter === "all" || t.category === activeCategoryFilter;
+    const platformMatch =
+      activePlatformFilter === "all" || t.platform === activePlatformFilter;
     return categoryMatch && platformMatch;
   });
 
@@ -118,7 +109,8 @@ export default function Testimonials() {
         <div className="container-max">
           <h1 className="text-white mb-4">Patient Testimonials</h1>
           <p className="text-lg text-primary-foreground/90">
-            Hear from patients who have experienced excellent care and positive health outcomes
+            Hear from patients who have experienced excellent care and positive
+            health outcomes
           </p>
         </div>
       </section>
@@ -129,7 +121,9 @@ export default function Testimonials() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Category Filter */}
             <div>
-              <h3 className="font-bold text-primary mb-4">Filter by Category</h3>
+              <h3 className="font-bold text-primary mb-4">
+                Filter by Category
+              </h3>
               <div className="flex flex-wrap gap-3">
                 {categories.map((category) => (
                   <button
@@ -139,7 +133,7 @@ export default function Testimonials() {
                       "px-4 py-2 rounded-full text-sm font-semibold transition-all",
                       activeCategoryFilter === category.id
                         ? "bg-accent text-accent-foreground shadow-lg"
-                        : "bg-gray-100 text-muted-foreground hover:bg-gray-200"
+                        : "bg-gray-100 text-muted-foreground hover:bg-gray-200",
                     )}
                   >
                     {category.label}
@@ -150,7 +144,9 @@ export default function Testimonials() {
 
             {/* Platform Filter */}
             <div>
-              <h3 className="font-bold text-primary mb-4">Filter by Platform</h3>
+              <h3 className="font-bold text-primary mb-4">
+                Filter by Platform
+              </h3>
               <div className="flex flex-wrap gap-3">
                 {platforms.map((platform) => (
                   <button
@@ -160,7 +156,7 @@ export default function Testimonials() {
                       "px-4 py-2 rounded-full text-sm font-semibold transition-all",
                       activePlatformFilter === platform.id
                         ? "bg-primary text-primary-foreground shadow-lg"
-                        : "bg-gray-100 text-muted-foreground hover:bg-gray-200"
+                        : "bg-gray-100 text-muted-foreground hover:bg-gray-200",
                     )}
                   >
                     {platform.label}
@@ -205,13 +201,21 @@ export default function Testimonials() {
                     className="w-12 h-12 rounded-full bg-gray-100"
                   />
                   <div className="flex-1">
-                    <h4 className="font-bold text-primary">{testimonial.name}</h4>
+                    <h4 className="font-bold text-primary">
+                      {testimonial.name}
+                    </h4>
                     <p className="text-xs text-muted-foreground">
-                      {platforms.find(p => p.id === testimonial.platform)?.label}
+                      {
+                        platforms.find((p) => p.id === testimonial.platform)
+                          ?.label
+                      }
                     </p>
                   </div>
                   <div className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-semibold">
-                    {categories.find(c => c.id === testimonial.category)?.label}
+                    {
+                      categories.find((c) => c.id === testimonial.category)
+                        ?.label
+                    }
                   </div>
                 </div>
               </div>
@@ -239,14 +243,12 @@ export default function Testimonials() {
                 <p className="text-muted-foreground">Happy Patients</p>
               </div>
               <div>
-                <p className="text-4xl font-bold text-accent mb-2">
-                  5.0
-                </p>
+                <p className="text-4xl font-bold text-accent mb-2">5.0</p>
                 <p className="text-muted-foreground">Average Rating</p>
               </div>
               <div>
                 <p className="text-4xl font-bold text-accent mb-2">
-                  {testimonials.filter(t => t.rating === 5).length}/
+                  {testimonials.filter((t) => t.rating === 5).length}/
                   {testimonials.length}
                 </p>
                 <p className="text-muted-foreground">5-Star Reviews</p>

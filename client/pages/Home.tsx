@@ -331,9 +331,9 @@ function AwardSlider() {
 // ── Static data ───────────────────────────────────────────────────────────────
 const stats = [
   { label: "Years of Experience", value: "16+", icon: Stethoscope },
-  { label: "Specialty Experience", value: "13+", icon: Heart },
-  { label: "OPD Patients Treated", value: "2L+", icon: Users },
-  { label: "Specialisations", value: "6+", icon: Wind },
+  { label: "Patients Treated", value: "1.7L+", icon: Users },
+  { label: "Expertise", value: "FICP | FIDA | DAA", icon: Heart },
+  { label: "Specializations", value: "Internal Medicine", icon: Wind },
 ];
 
 const expertise = [
@@ -520,12 +520,12 @@ const faqs = [
   {
     question: "What are Dr. Darshana's consultation hours?",
     answer:
-      "Dr. Darshana consults at Altius Hospital daily from 9:00 AM to 12:00 PM and 3:00 PM to 5:00 PM, except on Sundays.",
+      "Dr. Darshana consults at Altius Hospital, HBR Layout, Bangalore from Monday to Saturday. Morning: 9:00 AM – 12:00 PM | Afternoon: 3:00 PM – 5:00 PM. Sundays are closed.",
   },
   {
-    question: "How do I book an appointment?",
+    question: "How do I book an appointment with Dr. Darshana?",
     answer:
-      "You can book an appointment by calling us at +91 8882 799799, using the appointment form on our Contact page, or filling out the form below.",
+      "You can book an appointment by calling us at 8882799799, using the appointment form on our Contact page, or filling out the form below.",
   },
   {
     question: "What should I bring for my first consultation?",
@@ -533,29 +533,29 @@ const faqs = [
       "Please bring any previous medical records, prescription papers, and your ID proof. If you have diabetes or other chronic conditions, bring your recent test reports.",
   },
   {
-    question: "Do you offer online consultations?",
+    question: "What are Dr. Darshana's areas of specialization?",
     answer:
-      "Yes, we offer both in-person and teleconsultation services. Please contact us to schedule a virtual appointment.",
+      "Dr. Darshana specializes in Internal Medicine, Diabetology, Allergology, and Lifestyle & Metabolic Disease Management. She has deep clinical interest in Diabetes Mellitus, PCOD, Obesity, Hypertension, Dyslipidemia, Hypothyroidism, Metabolic Syndrome, Respiratory Disorders, and Sleep Disorders.",
   },
   {
-    question: "What specialties do you treat?",
+    question: "Does Dr. Darshana conduct free health camps?",
     answer:
-      "We specialize in General Medicine, Diabetology, Respiratory Care, Allergy & Asthma, Endocrinology, and Pulmonology.",
-  },
-  {
-    question: "Do you conduct special health check-up camps?",
-    answer:
-      "Yes! We conduct Obesity Check-ups every Wednesday and Friday (9 AM - 12 PM & 3 PM - 5 PM), Allergy Check-ups on Monday and Thursday (9 AM - 12 PM & 3 PM - 5 PM), Free Diabetes Camp on 1st and 3rd Tuesday of every month (9 AM - 12 PM), and Vaccination Check-ups on Saturday (9 AM - 12 PM & 3 PM - 5 PM).",
+      "Yes! Dr. Darshana has been conducting free health camps twice every month for the past 5 years at Altius Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
   },
   {
     question: "What makes Dr. Darshana's treatment approach unique?",
     answer:
-      "Dr. Darshana is known for her conservative treatment approach — she prescribes only necessary medicines and tests. She focuses on identifying the root cause of health issues and emphasizes lifestyle modifications for long-term wellness. Patients appreciate her empathetic listening and honest diagnosis.",
+      "Dr. Darshana is known for her compassionate and holistic approach — she treats patients as individuals, not just diseases. She focuses on prevention, long-term wellness, and sustainable lifestyle changes. She strongly believes in 'Prevention is Better Than Cure' and promotes early diagnosis and lifestyle modifications.",
   },
   {
-    question: "Are the consultation fees reasonable?",
+    question: "Does Dr. Darshana offer online consultations?",
     answer:
-      "Yes! Dr. Darshana offers quality healthcare at affordable rates. Consultation fees are significantly lower compared to other physicians and diabetologists, making expert care accessible to all patients.",
+      "Yes, we offer both in-person and teleconsultation services. Please contact us at 8882799799 to schedule a virtual appointment.",
+  },
+  {
+    question: "What are Dr. Darshana's professional memberships?",
+    answer:
+      "Dr. Darshana is an Executive Committee Member of the Association of Physicians of India (2022–2026), Internal Audit Committee Member of API (2025–2026), Member of Indian Medical Association, Member of Research Society for the Study of Diabetes in India, Member of European Respiratory Society, and Member of Allergy Asthma Network India.",
   },
 ];
 
@@ -595,7 +595,7 @@ const testimonials = [
   },
   {
     name: "Padmanabhan Iyer",
-    location: "Local Guide",
+    location: "Patient",
     rating: 5,
     text: "Though very young Darshana is wise, empathetic, makes patients comfortable, listens and is very honest in diagnosis and treatment. She has the right and different approach in a highly competitive profession where commercialisation is creeping in.",
   },
@@ -603,7 +603,7 @@ const testimonials = [
     name: "Ajay Singh",
     location: "Patient",
     rating: 5,
-    text: "Dr Reddy is highly knowledgeable, listen to patients carefully, diagnose properly, identifies the root of the problem and suggest precise medicines. She helped me post COVID recovery. SHE IS WONDERFUL DOCTOR AND ANGEL HUMAN.",
+    text: "Dr Reddy is highly knowledgeable, listens to patients carefully, diagnoses properly, identifies the root of the problem and suggests precise medicines. She helped me post COVID recovery. SHE IS WONDERFUL DOCTOR AND ANGEL HUMAN.",
   },
   {
     name: "Pooja Mali",
@@ -619,7 +619,7 @@ const testimonials = [
   },
   {
     name: "Aswathi Das",
-    location: "Local Guide",
+    location: "Patient",
     rating: 5,
     text: "Dr Darshana is a wonderful doctor. She doesn't prescribe unnecessary medicines. She is extremely patient and listens to our concerns without any judgement. Very happy with our association for over 5 years with her.",
   },
@@ -627,11 +627,11 @@ const testimonials = [
     name: "Ajith T V",
     location: "Patient",
     rating: 5,
-    text: "What an Amazing Doctor she is..!!! Three of us in family have recovered from Covid and so thankfull to Doctor Darshana for her excellent guidance. She only give required medication instead of too many tablets.",
+    text: "What an Amazing Doctor she is..!!! Three of us in family have recovered from Covid and so thankfull to Doctor Darshana for her excellent guidance. She only gives required medication instead of too many tablets.",
   },
   {
     name: "Sridhar Babu",
-    location: "Local Guide",
+    location: "Patient",
     rating: 5,
     text: "One of the very few doctors I have come across who is genuine and caring for her patients. In these times of money mindedness of many in the medical fraternity, she stands out tall.",
   },
@@ -932,15 +932,16 @@ export default function Home() {
                 className="text-xl text-primary-foreground/90 mb-3 font-semibold animate-slide-up"
                 style={{ animationDelay: "200ms" }}
               >
-                Senior Consultant — Internal Medicine & Diabetologist
+                Senior Consultant — Internal Medicine | Medical Superintendent
               </p>
               <p
                 className="text-base text-primary-foreground/75 mb-8 leading-relaxed animate-slide-up max-w-lg"
                 style={{ animationDelay: "300ms" }}
               >
-                16 years of dedicated excellence in internal medicine, diabetes
-                management, and respiratory care — serving over 2 lakh OPD
-                patients across Bangalore's leading hospitals.
+                Compassionate, evidence-based, and patient-centered medical care
+                focused on prevention, metabolic health, and long-term wellness.
+                Specialized in Diabetes, Allergology, and Lifestyle Disease
+                Management.
               </p>
               <div
                 className="flex gap-4 flex-wrap animate-slide-up"
@@ -1144,16 +1145,19 @@ export default function Home() {
               </span>
               <h2 className="mb-6">About Dr. Darshana</h2>
               <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
-                Dr. Darshana Reddy is a highly accomplished physician with 16
-                years of experience in internal medicine. She holds the
-                prestigious FICP (Fellow of Indian College of Physicians) — one
-                of India's highest distinctions in medicine.
+                Dr. Darshana Reddy is a highly respected Internal Medicine
+                Consultant and Medical Superintendent at Altius Hospital with
+                over 16 years of clinical experience in managing acute and
+                chronic medical conditions.
               </p>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                With advanced certifications including MD, DNB, Fellowship in
-                Diabetes, and a Diploma in Allergy &amp; Asthma from CMC
-                Vellore, she brings unmatched expertise to complex medical
-                conditions.
+                She has successfully treated over 1.7 lakh patients, including
+                OPD, IPD, and ICU cases, and has played a critical role in
+                saving numerous lives through timely diagnosis and
+                evidence-based care. Known for her compassionate and holistic
+                approach, she treats patients as individuals—not just
+                diseases—focusing on prevention, long-term wellness, and
+                sustainable lifestyle changes.
               </p>
               <Link
                 to="/about"
@@ -1312,10 +1316,10 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="font-bold text-primary mb-2">
-                Free Diabetes Camp
+                Free Diabetes & Metabolic Camp
               </h3>
               <p className="text-sm text-muted-foreground mb-2">
-                1st & 3rd Tuesday of Month
+                First Tuesday & Third Tuesday of Month
               </p>
               <p className="text-sm text-purple-600 font-semibold">
                 9:00 AM - 12:00 PM (FREE)
