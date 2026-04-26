@@ -349,3 +349,4 @@ buck-out/
 .fakebuckversion
 
 # End of https://www.toptal.com/developers/gitignore/api/node,react,reactnative
+.vercel

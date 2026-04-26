@@ -910,23 +910,7 @@ export default function Home() {
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 animate-slide-up leading-tight"
                 style={{ animationDelay: "100ms" }}
               >
-                Dr. Darshana{" "}
-                <span className="text-accent relative">
-                  Reddy
-                  <svg
-                    className="absolute -bottom-1 left-0 w-full h-1"
-                    viewBox="0 0 100 4"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      d="M0 2 Q 25 0, 50 2 T 100 2"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      fill="none"
-                      className="text-accent"
-                    />
-                  </svg>
-                </span>
+                Dr. Darshana Reddy
               </h1>
               <p
                 className="text-xl text-primary-foreground/90 mb-3 font-semibold animate-slide-up"
