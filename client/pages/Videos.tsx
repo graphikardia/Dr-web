@@ -124,7 +124,7 @@ export default function Videos() {
     if (match && match[1]) {
       return `https://www.instagram.com/p/${match[1]}/media/?size=l`;
     }
-    return "/placeholder-video.jpg";
+    return "";
   };
 
   return (
@@ -169,7 +169,7 @@ export default function Videos() {
               >
                 {/* Thumbnail Container */}
                 <div
-                  className="relative aspect-video overflow-hidden cursor-pointer"
+                  className="relative aspect-[9/16] overflow-hidden cursor-pointer bg-gray-200"
                   onClick={() =>
                     setSelectedVideo({
                       url: video.url,
@@ -178,31 +178,41 @@ export default function Videos() {
                     })
                   }
                 >
+                  {/* Loading Skeleton */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
+                  
                   <img
                     src={getInstagramThumbnail(video.url)}
                     alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-10"
+                    onLoad={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      const skeleton = target.previousElementSibling;
+                      if (skeleton) skeleton.classList.add("hidden");
+                    }}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = "none";
-                      target.parentElement!.classList.add("bg-gradient-to-br");
-                      target.parentElement!.classList.add(
-                        categoryGradients[video.category] || "from-primary to-primary/70"
-                      );
+                      const skeleton = target.previousElementSibling;
+                      if (skeleton) {
+                        skeleton.classList.remove("animate-pulse");
+                        skeleton.classList.add("bg-gradient-to-br", "from-primary/20", "to-accent/20");
+                        skeleton.classList.remove("hidden");
+                      }
                     }}
                   />
                   
                   {/* Play Overlay */}
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center z-20">
                     <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 shadow-xl">
                       <Play className="w-8 h-8 text-primary group-hover:text-white fill-current" />
                     </div>
                   </div>
 
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                    <span className="bg-black/60 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded-md font-bold flex items-center gap-1 border border-white/20">
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-30">
+                    <span className="bg-black/40 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded-md font-bold flex items-center gap-1 border border-white/20">
                       <Instagram className="w-3 h-3" />
-                      INSTAGRAM REEL
+                      WATCH REEL
                     </span>
                   </div>
                 </div>
@@ -210,10 +220,12 @@ export default function Videos() {
                 {/* Content */}
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3 text-xs font-bold uppercase tracking-wider">
-                    <span className="text-accent">
+                    <span className="text-accent underline decoration-accent/30 underline-offset-4">
                       {categories.find(c => c.id === video.category)?.label}
                     </span>
-                    <span className="text-muted-foreground">{video.views} Views</span>
+                    <span className="text-muted-foreground flex items-center gap-1">
+                      <Play className="w-3 h-3" /> {video.views} 
+                    </span>
                   </div>
                   <h3 className="text-lg font-bold text-primary group-hover:text-accent transition-colors line-clamp-2 leading-tight">
                     {video.title}
