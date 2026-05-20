@@ -440,6 +440,10 @@ function FlyingCareerCards() {
             key={idx}
             className="group h-72 perspective-1000"
             onClick={() => setFlippedIdx(flippedIdx === idx ? null : idx)}
+            style={{
+              animation: "fade-in-up 0.6s ease-out both",
+              animationDelay: `${idx * 150}ms`,
+            }}
           >
             <div
               className={`
@@ -448,8 +452,6 @@ function FlyingCareerCards() {
               `}
               style={{
                 transformStyle: "preserve-3d",
-                animationDelay: `${idx * 150}ms`,
-                animation: "fade-in-up 0.6s ease-out both",
               }}
             >
               {/* FRONT - Brief info */}
