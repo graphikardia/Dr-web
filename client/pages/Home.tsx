@@ -332,7 +332,7 @@ function AwardSlider() {
 const stats = [
   { label: "Years of Experience", value: "16+", icon: Stethoscope },
   { label: "Patients Treated", value: "2L+", icon: Users },
-  { label: "Expertise", value: "MBBS | MD | DNB | FICP | DAA | FID", icon: Heart },
+  { label: "Expertise", value: "MBBS, MD, DNB, FICP, DAA, FID", icon: Heart },
   { label: "Specializations", value: "Internal Medicine", icon: Wind },
 ];
 
@@ -918,7 +918,7 @@ export default function Home() {
               <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/40 text-accent px-5 py-2 rounded-full text-sm font-semibold mb-6 backdrop-blur-sm">
                 <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
                 <span className="tracking-wider">
-                  MBBS | MD | DNB | FICP | DAA | FID
+                  MBBS, MD, DNB, FICP, DAA, FID
                 </span>
               </div>
               <h1
