@@ -184,6 +184,7 @@ export default function Videos() {
                   <img
                     src={getInstagramThumbnail(video.url)}
                     alt={video.title}
+                    referrerPolicy="no-referrer"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-10"
                     onLoad={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -195,8 +196,8 @@ export default function Videos() {
                       target.style.display = "none";
                       const skeleton = target.previousElementSibling;
                       if (skeleton) {
-                        skeleton.classList.remove("animate-pulse");
-                        skeleton.classList.add("bg-gradient-to-br", "from-primary/20", "to-accent/20");
+                        skeleton.classList.remove("animate-pulse", "from-gray-200", "to-gray-100");
+                        skeleton.classList.add("bg-gradient-to-br", "from-primary/40", "to-accent/40");
                         skeleton.classList.remove("hidden");
                       }
                     }}
