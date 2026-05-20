@@ -74,7 +74,15 @@ export const VideoModal = ({
         <div className="aspect-[9/16] w-full relative">
           {!isLoaded ? (
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600">
-              <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+              {thumbnail ? (
+                <img
+                  src={thumbnail}
+                  alt="Loading Thumb"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : null}
+              <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
+              <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm relative z-10">
                 <Play className="w-10 h-10 text-white fill-white ml-1" />
               </div>
             </div>
