@@ -176,7 +176,10 @@ function SlideCard({
             ? "border-accent ring-4 ring-accent/25 scale-100 z-10 cursor-zoom-in"
             : "border-transparent scale-90 opacity-40 cursor-pointer"
         }`}
-      style={{ width: isCenter ? 310 : 180, height: isCenter ? 280 : 200 }}
+      style={{ 
+        width: isCenter ? 'min(310px, 75vw)' : 'min(180px, 40vw)', 
+        height: isCenter ? 'min(280px, 65vw)' : 'min(200px, 45vw)' 
+      }}
     >
       {errored ? (
         <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 p-4">
@@ -284,7 +287,7 @@ function AwardSlider() {
             <ChevronLeft className="w-5 h-5" />
           </button>
 
-          <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-3xl">
+          <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-4xl px-2">
             {visible.map((imgIdx, pos) => (
               <SlideCard
                 key={imgIdx}

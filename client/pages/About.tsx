@@ -156,7 +156,10 @@ function NewspaperCard({
             ? "border-accent ring-4 ring-accent/25 scale-100 z-10 opacity-100 cursor-zoom-in"
             : "border-transparent scale-90 opacity-40 cursor-default"
         }`}
-      style={{ width: isCenter ? 280 : 170, height: isCenter ? 380 : 240 }}
+      style={{ 
+        width: isCenter ? 'min(280px, 70vw)' : 'min(170px, 40vw)', 
+        height: isCenter ? 'min(380px, 90vw)' : 'min(240px, 60vw)' 
+      }}
     >
       {errored ? (
         <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-accent/10 p-4">
@@ -297,7 +300,10 @@ function AwardSlideCard({
             ? "border-accent ring-4 ring-accent/25 scale-100 z-10 cursor-zoom-in"
             : "border-transparent scale-90 opacity-40 cursor-pointer"
         }`}
-      style={{ width: isCenter ? 310 : 180, height: isCenter ? 280 : 200 }}
+      style={{ 
+        width: isCenter ? 'min(310px, 75vw)' : 'min(180px, 40vw)', 
+        height: isCenter ? 'min(280px, 65vw)' : 'min(200px, 45vw)' 
+      }}
     >
       {errored ? (
         <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 p-4">
