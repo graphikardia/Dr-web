@@ -34,9 +34,9 @@ function App() {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ChatWidget />
+          <FloatingCTA />
         </BrowserRouter>
-        <ChatWidget />
-        <FloatingCTA />
       </TooltipProvider>
     </QueryClientProvider>
   );
