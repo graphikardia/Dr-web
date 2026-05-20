@@ -969,16 +969,19 @@ export default function Home() {
                   Trusted By Patients At
                 </p>
                 <div className="flex flex-wrap gap-6 opacity-60">
-                  {["Apollo Hospitals", "Even Hospital", "St. John's"].map(
-                    (hospital, i) => (
-                      <span
-                        key={i}
-                        className="text-sm text-primary-foreground/70 font-medium"
-                      >
-                        {hospital}
-                      </span>
-                    ),
-                  )}
+                  {[
+                    "Altius Hospital",
+                    "Apollo Hospitals",
+                    "Even Hospital",
+                    "St. John's",
+                  ].map((hospital, i) => (
+                    <span
+                      key={i}
+                      className="text-sm text-primary-foreground/70 font-medium"
+                    >
+                      {hospital}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1006,7 +1009,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg whitespace-nowrap">
                     <p className="text-primary text-xs font-bold text-center">
-                      Altius Hospital : trusted by
+                      16 Years · 2L+ OPD Patients
                     </p>
                   </div>
                 </div>
