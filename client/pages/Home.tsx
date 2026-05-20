@@ -331,47 +331,60 @@ function AwardSlider() {
 // ── Static data ───────────────────────────────────────────────────────────────
 const stats = [
   { label: "Years of Experience", value: "16+", icon: Stethoscope },
-  { label: "Patients Treated", value: "1.7L+", icon: Users },
-  { label: "Expertise", value: "FICP | FIDA | DAA", icon: Heart },
+  { label: "Patients Treated", value: "2L+", icon: Users },
+  { label: "Expertise", value: "MBBS | MD | DNB | FICP | DAA | FID", icon: Heart },
   { label: "Specializations", value: "Internal Medicine", icon: Wind },
 ];
 
 const expertise = [
   {
     title: "General Medicine",
-    description: "Comprehensive internal medicine care for complex conditions",
-    image: "/Clinical Specialties/General Medicine.jpeg",
+    description: "Diagnosis and management of acute and chronic illnesses, from common viral fevers to complex multi-system disorders.",
+    image: "https://images.pexels.com/photos/4033148/pexels-photo-4033148.jpeg",
     icon: Stethoscope,
     color: "from-blue-500 to-blue-600",
+    slug: "general-medicine"
   },
   {
     title: "Diabetology",
     description:
-      "Specialized diabetes management & long-term treatment planning",
-    image: "/Clinical Specialties/Diabetology.jpeg",
+      "Evidence-based management of Diabetes, focusing on insulin optimization, complication prevention, and long-term control.",
+    image: "https://images.pexels.com/photos/7579165/pexels-photo-7579165.jpeg",
     icon: Activity,
     color: "from-purple-500 to-purple-600",
+    slug: "diabetology"
   },
   {
     title: "Respiratory Care",
-    description: "Advanced diagnosis and treatment of respiratory diseases",
-    image: "/Clinical Specialties/Respiratory Care.jpeg",
+    description: "Advanced diagnostics and care for asthma, COPD, and lung diseases using state-of-the-art diagnostic tools.",
+    image: "https://images.pexels.com/photos/7088530/pexels-photo-7088530.jpeg",
     icon: Cloud,
     color: "from-cyan-500 to-cyan-600",
+    slug: "respiratory-care"
   },
   {
     title: "Allergy & Asthma",
-    description: "Precise allergy identification and evidence-based management",
-    image: "/Clinical Specialties/Allergy & Asthma.jpeg",
+    description: "Precise identification of allergens via skin prick testing and personalized immunotherapy for long-term relief.",
+    image: "https://images.pexels.com/photos/5998511/pexels-photo-5998511.jpeg",
     icon: Leaf,
     color: "from-green-500 to-green-600",
+    slug: "allergy-asthma"
   },
   {
     title: "Endocrinology",
-    description: "Expert hormonal & metabolic disorder management",
-    image: "/Clinical Specialties/endocrinology.jpeg",
+    description: "Specialized treatment for thyroid disorders, PCOD, and metabolic syndromes through hormonal balancing.",
+    image: "https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg",
     icon: FlaskConical,
     color: "from-orange-500 to-orange-600",
+    slug: "endocrinology"
+  },
+  {
+    title: "Adult Immunisation",
+    description: "Comprehensive vaccination programs for adults to prevent influenza, pneumonia, hepatitis, and cervical cancer.",
+    image: "https://images.pexels.com/photos/5863389/pexels-photo-5863389.jpeg",
+    icon: CheckCircle,
+    color: "from-rose-500 to-rose-600",
+    slug: "adult-immunisation"
   },
 ];
 
@@ -379,7 +392,7 @@ const careerHighlights = [
   {
     year: "2022 - Present",
     title: "Senior Consultant",
-    subtitle: "Even Hospital, Bangalore",
+    subtitle: "Altius/Even Hospital, Bangalore",
     description:
       "Leading internal medicine department with focus on diabetes and respiratory care",
     icon: Stethoscope,
@@ -555,7 +568,7 @@ const faqs = [
   {
     question: "What are Dr. Darshana's professional memberships?",
     answer:
-      "Dr. Darshana is an Executive Committee Member of the Association of Physicians of India (2022–2026), Internal Audit Committee Member of API (2025–2026), Member of Indian Medical Association, Member of Research Society for the Study of Diabetes in India, Member of European Respiratory Society, and Member of Allergy Asthma Network India.",
+      "Dr. Darshana is an Executive Committee Member of the Association of Physicians of India (2022–2027), Internal Audit Committee Member of API (2025–2027), Member of Indian Medical Association, Member of Research Society for the Study of Diabetes in India, Member of European Respiratory Society, and Member of Allergy Asthma Network India.",
   },
 ];
 
@@ -993,7 +1006,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg whitespace-nowrap">
                     <p className="text-primary text-xs font-bold text-center">
-                      16 Years · 2L+ OPD Patients
+                      Altius Hospital : trusted by
                     </p>
                   </div>
                 </div>
@@ -1094,7 +1107,7 @@ export default function Home() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-6 relative z-20">
+                  <Link to={`/specialties/${item.slug}`} className="p-6 relative z-20 block">
                     <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-white transition-colors duration-300">
                       {item.title}
                     </h3>
@@ -1107,7 +1120,7 @@ export default function Home() {
                       <span>Learn more</span>
                       <ChevronRight className="w-4 h-4" />
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Decorative corner */}
                   <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-transparent border-r-accent/20 group-hover:border-r-transparent transition-all duration-300" />
@@ -1135,11 +1148,11 @@ export default function Home() {
                 medical conditions.
               </p>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                She has successfully treated over 1.7 lakh patients, including
+                She has successfully treated over 2 lakh patients, including
                 OPD, IPD, and ICU cases, and has played a critical role in
                 saving numerous lives through timely diagnosis and
-                evidence-based care. Known for her compassionate and holistic
-                approach, she treats patients as individuals—not just
+                evidence-based care. Altius Hospital : trusted by Dr. Darshana for her clinical practice. 
+                Known for her compassionate and holistic approach, she treats patients as individuals—not just
                 diseases—focusing on prevention, long-term wellness, and
                 sustainable lifestyle changes.
               </p>
@@ -1181,12 +1194,12 @@ export default function Home() {
         <div className="container-max relative z-10">
           <div className="text-center mb-12 animate-slide-up">
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Glimpses of Care
+              Services
             </span>
-            <h2>Check-ups & Tests</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Moments from consultations, diagnostic procedures, and patient
-              care at Even Hospital.
+            <h2>Our Clinics & Programs</h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
+              Comprehensive clinical services including Allergy Clinic with skin prick testing, 
+              Diabetes Reversal programs, Obesity clinic, Adult Immunisation, and Preventive Health clinics.
             </p>
           </div>
           <div className="relative">
@@ -1230,9 +1243,9 @@ export default function Home() {
         <div className="container-max">
           <div className="text-center mb-12 animate-slide-up">
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Special Services
+              Clinics
             </span>
-            <h2>Special Check-ups & Timings</h2>
+            <h2>Special Clinic & Timings</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 p-6 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300">
@@ -1251,7 +1264,7 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="font-bold text-primary mb-2">Obesity Check-ups</h3>
+              <h3 className="font-bold text-primary mb-2">Obesity Clinic</h3>
               <p className="text-sm text-muted-foreground mb-2">
                 Wednesday & Friday
               </p>
@@ -1275,7 +1288,7 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="font-bold text-primary mb-2">Allergy Check-ups</h3>
+              <h3 className="font-bold text-primary mb-2">Allergy Clinic</h3>
               <p className="text-sm text-muted-foreground mb-2">
                 Monday & Thursday
               </p>
@@ -1326,7 +1339,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="font-bold text-primary mb-2">
-                Vaccination Check-ups
+                Adult Immunisation & Vaccination Clinic
               </h3>
               <p className="text-sm text-muted-foreground mb-2">Saturday</p>
               <p className="text-sm text-orange-600 font-semibold">

@@ -45,7 +45,13 @@ export const VideoModal = ({
   if (!isOpen) return null;
 
   const getVideoId = (url: string) => {
-    return url.split("/reel/")[1]?.split("/")[0];
+    // Handles https://www.instagram.com/reel/ID/
+    // Handles https://www.instagram.com/reels/ID/
+    // Handles https://www.instagram.com/p/ID/
+    // Handles IDs directly
+    const reelMatch = url.match(/\/(?:reel|reels|p)\/([a-zA-Z0-9_-]+)/);
+    if (reelMatch) return reelMatch[1];
+    return url.split('/').filter(Boolean).pop(); // Fallback to last segment
   };
 
   const videoId = getVideoId(videoUrl);
@@ -55,11 +61,11 @@ export const VideoModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-      <div className="relative w-full max-w-lg md:max-w-xl bg-black rounded-2xl overflow-hidden shadow-2xl animate-scale-in">
+    <div className="fixed inset-0 bg-black/95 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-fade-in">
+      <div className="relative w-full max-w-sm md:max-w-md bg-black rounded-3xl overflow-hidden shadow-2xl animate-scale-in border border-white/10">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center transition-colors"
+          className="absolute top-4 right-4 z-[110] w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center transition-all border border-white/10"
           aria-label="Close video"
         >
           <X size={20} className="text-white" />

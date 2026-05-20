@@ -503,7 +503,7 @@ const experienceStops = [
   },
   {
     role: "Senior Consultant & HOD",
-    hospital: "Even Hospital",
+    hospital: "Altius/Even Hospital",
     location: "HBR Layout, Bangalore",
     note: "Head of Dept — Internal Medicine; Medical Superintendent",
     color: "#DC2626",
@@ -526,6 +526,7 @@ const experienceStops = [
 
 function JourneyPath() {
   const [activeIdx, setActiveIdx] = useState(-1);
+  const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const animatedRef = useRef(false);
 
@@ -569,6 +570,8 @@ function JourneyPath() {
           const isCurrent =
             i === experienceStops.length - 1 &&
             activeIdx >= experienceStops.length;
+          const isExpanded = expandedIdx === i;
+
           return (
             <div
               key={i}
@@ -587,7 +590,8 @@ function JourneyPath() {
                 )}
               </div>
               <div
-                className={`bg-white rounded-2xl p-5 shadow-lg border-2 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 group ${isActive ? "border-transparent" : "border-gray-100"}`}
+                onClick={() => setExpandedIdx(isExpanded ? null : i)}
+                className={`bg-white rounded-2xl p-5 shadow-lg border-2 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 group cursor-pointer ${isActive ? "border-transparent" : "border-gray-100"}`}
                 style={{
                   background: isActive
                     ? `linear-gradient(135deg, ${stop.bg}40, white)`
@@ -614,12 +618,16 @@ function JourneyPath() {
                 <p className="text-sm text-muted-foreground mt-1">
                   {stop.location}
                 </p>
-                <p
-                  className="text-sm text-muted-foreground/80 italic mt-2 border-l-2 pl-3"
-                  style={{ borderColor: stop.color }}
-                >
-                  {stop.note}
-                </p>
+                
+                <div className={`overflow-hidden transition-all duration-500 ${isExpanded ? "max-h-40 mt-4 opacity-100" : "max-h-0 opacity-0"}`}>
+                  <p
+                    className="text-sm text-muted-foreground/80 italic border-l-2 pl-3"
+                    style={{ borderColor: stop.color }}
+                  >
+                    {stop.note}
+                  </p>
+                </div>
+
                 <div className="mt-3 flex items-center gap-2">
                   <div className="flex -space-x-2">
                     {[...Array(3)].map((_, j) => (
@@ -633,7 +641,7 @@ function JourneyPath() {
                     ))}
                   </div>
                   <span className="text-xs text-muted-foreground">
-                    Tap to expand
+                    {isExpanded ? "Tap to collapse" : "Tap to expand"}
                   </span>
                 </div>
               </div>
@@ -678,11 +686,10 @@ const education = [
 const affiliations = [
   "Executive Committee Member — API (2023–2026)",
   "Current Executive Committee Member — API (2025–26)",
-  "Internal Audit Committee Member — API (2025–26)",
+  "Internal Audit Committee Member — API (2026–27)",
   "Life Member — Research Society for the Study of Diabetes in India(RSSDI)",
   "Life Member — Indian Medical Association (IMA)",
   "Life Member — European Respiratory Society (ERS)",
-  "Life Member — Indian Association of Endocrinologists (IAE)",
 ];
 
 const community = [

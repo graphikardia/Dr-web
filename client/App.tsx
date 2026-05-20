@@ -11,7 +11,9 @@ import Videos from "./pages/Videos";
 import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import SpecialtyDetail from "./pages/SpecialtyDetail";
 import ChatWidget from "@/components/ChatWidget";
+import { FloatingCTA } from "@/components/FloatingCTA";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/videos" element={<Videos />} />
+            <Route path="/specialties/:slug" element={<SpecialtyDetail />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/contact" element={<Contact />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -33,6 +36,7 @@ function App() {
           </Routes>
         </BrowserRouter>
         <ChatWidget />
+        <FloatingCTA />
       </TooltipProvider>
     </QueryClientProvider>
   );
