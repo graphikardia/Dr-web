@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import SpecialtyDetail from "./pages/SpecialtyDetail";
 import ChatWidget from "@/components/ChatWidget";
 import { FloatingCTA } from "@/components/FloatingCTA";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function App() {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
