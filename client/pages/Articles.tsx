@@ -449,6 +449,38 @@ export default function Articles() {
         </div>
       </section>
 
+      {/* ── Video Highlight ─────────────────────────────── */}
+      <section className="section-padding bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
+        <div className="container-max relative z-10">
+          <div className="mb-10 text-center animate-slide-up">
+            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
+              Video Highlight
+            </span>
+            <h2>CME Programme — Addressing Over 100 Doctors</h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
+              23rd May 2026 — Dr. Darshana Reddy delivering a continuing medical
+              education session on lifestyle diseases and preventive medicine to
+              an audience of over 100 fellow physicians.
+            </p>
+          </div>
+          <div
+            className="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-accent/20 bg-black animate-slide-up"
+            style={{ animationDelay: "100ms" }}
+          >
+            <video
+              controls
+              playsInline
+              className="w-full aspect-video"
+              poster="/newspaper/article-1.jpeg"
+            >
+              <source src="/CME-Programme.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </section>
+
       <section className="section-padding bg-gradient-to-br from-slate-50 to-blue-50/40 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
         <div className="container-max relative z-10">
