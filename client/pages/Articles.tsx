@@ -1,21 +1,305 @@
 import { Layout } from "@/components/Layout";
+import { useState, useEffect } from "react";
 import {
-  Newspaper,
+  X,
   ChevronLeft,
   ChevronRight,
-  ZoomIn,
-  X,
-  ExternalLink,
+  Newspaper,
   Award,
   BookOpen,
-  Quote,
   Stethoscope,
   Calendar,
   FileText,
+  ZoomIn,
 } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
 
-// ── Lightbox (reused from About) ─────────────────────────────────────────────
+interface ArticleData {
+  id: number;
+  image: string;
+  topic: string;
+  publication: string;
+  date: string;
+  text: string;
+}
+
+const articleData: ArticleData[] = [
+  {
+    id: 1,
+    image: "/newspaper/article-1.jpeg",
+    topic:
+      "Asthma cases on rise, doctors point to poor air quality & late diagnosis",
+    publication: "Times of India",
+    date: "May 2025",
+    text: `Asthma cases on rise, doctors point to poor air quality & late diagnosis
+Yashaswini.Sri @timesofindia.com
+
+Bengaluru: Asthma tightening its grip on the city, hospitals reporting a 25% rise in cases and 15% increase in hospitalisation the past five years. Doctors attribute the spike to deteriorating air quality, rampant construction dust and frequent weather fluctuations, noting that the condition is becoming both more common and harder to manage.
+
+WORLD ASTHMA DAY
+
+Following Covid, recovery from viral infections is taking longer, and many people without prior asthma history are now developing post-viral wheeze requiring long-term inhalers. Either way, asthma outcomes are getting worse," said Dr Vivek Anand Padegal, director of pulmonology at Fortis Hospital.
+
+Dr Darshana Reddy, senior consultant at Altius Hospital, highlighted that over 70% of asthma cases in Bengaluru remain undiagnosed.
+
+"Prevalence has jumped from 9% to 25% in five years, especially due to air pollution and underdiagnosis. Symptoms like cough and wheezing often mistaken for other conditions. After the lockdown ended, increased vehicular emissions and low mixing worsened air quality. In children alone, it's as high as 19.4%," she said.`,
+  },
+  {
+    id: 3,
+    image: "/newspaper/article-3.jpeg",
+    topic: "Trouble in the air? B'lureans huff & puff as pollution surges",
+    publication: "Times of India",
+    date: "2024",
+    text: `Trouble in the air? B'lureans huff & puff as pollution surges
+Yashaswini.Sri @timesofindia.com
+
+Bengaluru: Several Bengalureans are battling eye irritation, cough and respiratory discomfort. Many complain that what once was a seasonal irritation is now turning into a year-round challenge. The reason, according to doctors, is the alarming rise in levels of PM2.5 and PM10 in the city.
+
+Doctors highlight the growing link between pollution and these ailments, warning of potential long-term risks. PM10 levels have exceeded safe limits, while PM2.5 continues to rise.
+
+Dr Darshana Reddy | Senior Consultant, Internal Medicine and Allergologist, Altius Hospital:
+"PM10 affects the upper airways, triggering allergies, asthma and COPD, while PM2.5 leads to lung infections, inflammation and even genetic mutations linked to cancer. Long-term exposure increases the risk of heart attacks, strokes, diabetes and cognitive decline in children. Pregnant women face risks of premature births and low birth weight babies. With vehicular emissions being the primary source, vulnerable groups like children and the elderly remain most affected."`,
+  },
+  {
+    id: 4,
+    image: "/newspaper/article-4.jpeg",
+    topic:
+      "Rain & pain: Bengaluru hospitals see surge in viral infection cases",
+    publication: "Times of India",
+    date: "May 2025",
+    text: `Rain & pain: Bengaluru hospitals see surge in viral infection cases
+Yahaswini.Sri@timesofindia.com
+
+Bengaluru: As pre-monsoon showers turn into full-blown rain across Bengaluru, city hospitals are witnessing a surge in viral infections, particularly respiratory illnesses. Doctors are reporting a spike in cases of cold, cough, fever, flu-like symptoms.
+
+They say key triggers are sudden temperature drops, rising humidity, and increased social mixing in closed environments.
+
+Dr Darshana Reddy, senior consultant in internal medicine at Altius Hospital in HBR Layout, said: "We're seeing an increase in upper respiratory tract infections, especially the common cold, cough, and flu-like illnesses. About 60-70% of my OPD is now respiratory viral cases. The sudden weather shifts and rise in humidity are creating the perfect recipe for viruses to thrive and spread."
+
+Alongside respiratory infections, there's also an uptick in cases of viral fevers accompanied by body aches, fatigue, sore throat, and even viral arthritis. Dr Reddy said she's treating about 7-8 such patients daily, with children, elderly, and adults with compromised immunity being the most vulnerable.`,
+  },
+  {
+    id: 5,
+    image: "/newspaper/article-5.jpeg",
+    topic: "K'taka Issues Advisory on HMPV; Taking Steps to Prevent Spread: CM",
+    publication: "Times of India",
+    date: "2025",
+    text: `TWO CASES DETECTED, HAVE NO HISTORY OF INTERNATIONAL TRAVEL
+
+K'taka Issues Advisory on HMPV; Taking Steps to Prevent Spread: CM
+Puran Choudhary
+
+Bengaluru: Two cases of Human Metapneumovirus (HMPV) were reported in Bengaluru in two infants on Monday. The 3-month-old girl and 8-month-old boy were tested positive for the virus at the city's private Baptist Hospital.
+
+The Indian Council of Medical Research (ICMR) said both cases had no history of international travel and while the girl has been discharged from the hospital, the boy is recovering.
+
+DOCTORS CALL FOR MORE TESTING
+"People need to understand that HMPV is no different from other respiratory viruses. If we follow these precautions, the risk of spread can be minimised," senior consultant of internal medicine and allergologist at Altius Hospital Darshana Reddy said. Early detection and timely treatment can help manage complications and avoid hospitalisation or ICU stays, she said. Reddy recommended that the government conduct rapid screenings.
+
+"Right now, we don't have a vaccine for HMPV, unlike Covid-19. More testing will also aid research and help us develop a vaccine in the future," the doctor said.`,
+  },
+  {
+    id: 6,
+    image: "/newspaper/article-6.jpeg",
+    topic: "3rd time lucky? Schools told to reintroduce water bells",
+    publication: "Times of India",
+    date: "2024",
+    text: `3rd time lucky? Schools told to reintroduce water bells
+Times News Network
+
+Bengaluru: Failed in 2019 and 2022. Will the reintroduction of water bells — an attempt to encourage students to stay hydrated in schools — pass the test this time around?
+
+State govt has brought back water bells in all schools in the state — govt, aided and unaided schools. Water bells rang thrice a day — at 10.35am, 12 noon and 2pm — in the first two attempts.
+
+Water bells — short pauses between classes to remind students to stay hydrated — was first introduced in 2019 by the then primary and secondary education minister S Suresh Kumar.`,
+  },
+  {
+    id: 7,
+    image: "/newspaper/article-7.jpeg",
+    topic: "Move suggested by child rights panel — Water Bells",
+    publication: "Times of India",
+    date: "2024",
+    text: `Move suggested by child rights panel — Continued from page 1
+
+The concept was introduced in the state by the then primary and secondary education minister S Suresh Kumar in 2019 on the suggestion of his colleague, the then tourism minister CT Ravi. At that time, Kerala had launched the initiative.
+
+The Karnataka project was barely implemented when the Covid-19 pandemic ended physical attendance in schools for nearly two years.
+
+Dr Darshana Reddy | Senior Consultant (Internal Medicine) & Medical Superintendent, Altius Hospital:
+"The water bell initiative will improve concentration and learning outcomes, build a healthy lifelong habit, and is a low-cost intervention that can be integrated with nutrition & wellness programmes. A practical, non-disruptive schedule would be every 60-90 min, typically 3-4 times during school hours."`,
+  },
+  {
+    id: 8,
+    image: "/newspaper/article-8.jpeg",
+    topic: "Do school children need reminders for drinking water?",
+    publication: "Times of India",
+    date: "2024",
+    text: `Do school children need reminders for drinking water? How harmful is dehydration in children? How important is the water-bell initiative?
+
+3rd time lucky? Schools told to reintroduce water bells
+Times News Network
+
+Bengaluru: Failed in 2019 and 2022. Will the reintroduction of water bells — an attempt to encourage students to stay hydrated in schools — pass the test this time around?
+
+State govt has brought back water bells in all schools in the state — govt, aided and unaided schools. Water bells rang thrice a day — at 10.35am, 12 noon and 2pm in the first two attempts.
+
+According to experts, kids often do not recognise thirst early, especially when they are engaged in classes or playing. Say state govt initiative will build a healthy lifelong habit, and is a low-cost intervention.`,
+  },
+  {
+    id: 9,
+    image: "/newspaper/article-9.jpeg",
+    topic: "Public feeding of pigeons: For or against?",
+    publication: "Bangalore Mirror",
+    date: "2024",
+    text: `Public feeding of pigeons: For or against? — CONTINUED FROM PAGE 1
+
+"Urban pigeon overpopulation has emerged as an under-recognised environmental health hazard. The fine particulate matter generated from droppings and feathers contaminates indoor air and predisposes residents to chronic respiratory illness. The immunologic response to avian proteins and fungal antigens found in pigeon debris can mimic other interstitial lung diseases, often leading to delayed diagnosis and progressive fibrosis. We are seeing an increasing subset of patients with unexplained dyspnea, hypoxia, and ground-glass opacities on imaging, later traced back to chronic pigeon exposure—highlighting the need for detailed environmental history in respiratory evaluation," said Dr Darshana Reddy, Altius Hospital.
+
+She noted that once pulmonary fibrosis develops secondary to pigeon exposure, the damage is largely irreversible making early recognition and cessation of exposure remain the only effective preventive strategies. "ICU admissions are necessary for severe respiratory failure following exposure to pigeon nests or droppings, especially in immunocompromised or elderly individuals, underscoring the potential for acute exacerbations," she said.`,
+  },
+  {
+    id: 10,
+    image: "/newspaper/article-10.jpeg",
+    topic: "Move suggested by child rights panel — Water Bells (page 2)",
+    publication: "Times of India",
+    date: "2024",
+    text: `Move suggested by child rights panel — Continued from page 1
+
+The concept was introduced in the state by the then primary and secondary education minister S Suresh Kumar in 2019 on the suggestion of his colleague, the then tourism minister CT Ravi.
+
+This time, the decision to reintroduce water bells was taken on the recommendation of Karnataka State Commission for Protection of Child Rights (KSCPCR) to the education department.
+
+Dr Darshana Reddy | Senior Consultant (Internal Medicine) & Medical Superintendent, Altius Hospital:
+"The water bell initiative will improve concentration and learning outcomes, build a healthy lifelong habit, and is a low-cost intervention that can be integrated with nutrition & wellness programmes. A practical, non-disruptive schedule would be every 60-90 min, typically 3-4 times during school hours."`,
+  },
+  {
+    id: 11,
+    image: "/newspaper/article-11.jpeg",
+    topic: "Water Bells — Expert Quote Close-up",
+    publication: "Times of India",
+    date: "2024",
+    text: `The water bell initiative will improve concentration and learning outcomes, build a healthy lifelong habit, and is a low-cost intervention that can be integrated with nutrition & wellness programmes. A practical, non-disruptive schedule would be every 60-90 min, typically 3-4 times during school hours.
+
+Dr Darshana Reddy | Senior Consultant (Internal Medicine) & Medical Superintendent, Altius Hospital`,
+  },
+  {
+    id: 12,
+    image: "/newspaper/article-12.jpeg",
+    topic: "Candida auris fungal infection",
+    publication: "Times of India",
+    date: "2024",
+    text: `"Candida auris is a formidable fungal pathogen causing outbreaks, particularly in healthcare facilities. It poses a significant threat due to its resistance to multiple antifungal drugs, rendering treatment challenging. Its ability to persist on surfaces and spread between patients makes containment efforts complex," says Dr Darshana Reddy, MBBS, MD, DNB Internal Medicine, Senior Consultant, Internal Medicine, Altius hospital, HBR layout.`,
+  },
+  {
+    id: 13,
+    image: "/newspaper/article-13.jpeg",
+    topic: "Tummy ache? Blame it on too many mangoes",
+    publication: "Bangalore Mirror / Times of India",
+    date: "July 2022",
+    text: `Tummy ache? Blame it on too many mangoes
+Iffath.Fathima @timesgroup.com
+
+Bengalureans love their mangoes. But too many mangoes might just land you in the doctor's chamber as doctors are reporting an increase in the incidence of gastric and diarrhoea due to overconsumption of mangoes.
+
+Dr Darshana Reddy, senior consultant, internal medicine, Altius Hospitals, HBR layout said: "There are a few side effects of consuming mangoes in large quantities. The most common ones are diarrhoea and gastritis. I have patients who eat kilos of mangoes in a day."
+
+There are several reasons for this. Mango is rich in fibre and sorbitol, a type of sugar that enables gut motility, informed Reddy.
+
+"Diarrhoea does not ensue when mangoes are consumed in moderation. However excessive consumption may result in increased frequency of upset stomach. Ripening of commercially sold mangoes is not natural. Mangoes are picked before they achieve early ripening. There are several chemicals that are being used to achieve it like calcium carbide. These chemicals can be harmful to the gut. Treated mangoes soaked for 15 minutes in water releases a pungent smell," Reddy added.`,
+  },
+  {
+    id: 14,
+    image: "/newspaper/article-14.jpeg",
+    topic: "Deforestation and rapid urbanization — health impact",
+    publication: "Times of India",
+    date: "2024",
+    text: `Deforestation and rapid urbanization is progressing at a fast pace at the cost of our planet, Dr. Darshana Reddy, Senior Consultant - Internal Medicine, Altius Hospital, Bangalore pointed out.
+
+"Rising temperatures increase the risk of extreme heat leading to headache, confusion, tiredness, and vomiting. Temperatures above 40 degrees result in heat strokes causing organ failure and hospitalization, sometimes even death," she explained.`,
+  },
+  {
+    id: 15,
+    image: "/newspaper/article-15.jpeg",
+    topic: "Lingering illnesses rise, docs flag immunity issues",
+    publication: "Times of India",
+    date: "February 2025",
+    text: `Lingering illnesses rise, docs flag immunity issues
+Yashaswini.Sri @timesofindia.com
+
+Bengaluru: Fever, cough, fatigue — which were once a passing seasonal flu — now seem to linger for weeks, leaving Bengalureans drained and frustrated.
+
+Gastrointestinal infections have tripled, with an alarming increase in stomach flu, rotavirus, salmonella, typhoid, and E. coli cases, according to Dr Darshana Reddy, senior consultant in internal medicine at Altius Hospital.
+
+"Compared to last year, respiratory illnesses have risen by at least 20%, including allergic rhinitis cases. Cases of influenza H1N1 are spiking, and post-viral coughs are lingering for weeks. Severe sinusitis and congestion are also leading to absenteeism and reduced productivity," she added.`,
+  },
+  {
+    id: 16,
+    image: "/newspaper/article-16.jpeg",
+    topic: "Dengue cases surge in Bengaluru",
+    publication: "Times of India",
+    date: "2023",
+    text: `Dr Darshana Reddy, consultant, internal medicine, Altius Hospital, said they usually see a spurt in dengue cases by May and a peak in September-October each year. However, this year they have witnessed cases surge by early January-March.
+
+"It is probably because of ease in Covid restrictions and people stepping out. There have been about 1,417 cases of dengue in Karnataka up to early May this year with no deaths noted as per the National Centre for Vector-Borne Diseases. Almost 80% of the cases are from Bengaluru," Dr Reddy said.`,
+  },
+  {
+    id: 17,
+    image: "/newspaper/article-17.jpeg",
+    topic: "Omicron third wave — mild due to vaccination",
+    publication: "Times of India",
+    date: "2022",
+    text: `Dr Darshana Reddy, consultant, Internal Medicine, Altius Hospital, Bangalore, who saw many young people who tested positive during the third wave, agreed with the report findings, saying that thankfully most of the cases were mild, as a result of a successful vaccination drive that had undoubtedly proved useful.
+
+"The number of people infected with Omicron was dramatically higher than at any other time in the pandemic. The infection is mild in most individuals, but those who have severe illness still represent a significant number," Dr Reddy said.`,
+  },
+  {
+    id: 18,
+    image: "/newspaper/article-18.jpeg",
+    topic: "Small Size Kidney (Hindi) — Expert Opinion",
+    publication: "Hindi News",
+    date: "2024",
+    text: `Hindi article on Small Size Kidney (renal hypoplasia). Dr. Darshana R, Consultant Internal Medicine, Altius Hospital, Bangalore quoted as medical expert.`,
+  },
+  {
+    id: 19,
+    image: "/newspaper/article-19.jpeg",
+    topic: "World Health Day 2022 — 'Our planet, our health'",
+    publication: "WHO / Times of India",
+    date: "April 2022",
+    text: `World Health Day 2022 - theme — "Our planet, our health." Amid a pandemic, a polluted planet, increasing diseases like cancer, asthma, heart disease, on World Health Day 2022, WHO has claimed global attention on the interconnectedness between the planet and our health, urgent actions needed to keep humans and the planet healthy and foster a movement to create societies focused on well-being.`,
+  },
+  {
+    id: 20,
+    image: "/newspaper/article-20.jpeg",
+    topic:
+      "13°C to 31°C: Weather flip-flop leaves Bengalureans sniffling and wheezing",
+    publication: "Times of India",
+    date: "February 2026",
+    text: `13°C to 31°C: Weather flip-flop leaves Bengalureans sniffling and wheezing
+Jahnavi@timesofindia.com
+
+Bengaluru: The city's once-predictable weather has turned capricious. Mornings now arrive with a sharp chill — temperatures dipping to 13-14°C — only for afternoons to climb swiftly to a sweltering 31°C. The stark swing within a matter of hours is driving an uptick in visits to clinics across neighbourhoods.
+
+Doctors report a noticeable surge in respiratory illnesses, including bronchitis, viral flu, persistent cough, sore throat and fever.
+
+"Compared to last year, we're seeing a 50% rise in such cases. On an average day, we now consult 10-15 patients, reflecting a rise in both outpatient visits and inpatient admissions. This surge is largely driven by sharp weather fluctuations, worsening air pollution and unhealthy dietary habits," said Dr Ajay HR, consultant in internal medicine, Prakriya Hospitals.
+
+Doctors note children's immunity is still developing, while older adults — particularly those with diabetes, asthma or COPD — are more sensitive to temperature swings.`,
+  },
+  {
+    id: 21,
+    image: "/newspaper/article-21.jpeg",
+    topic: "Tomato flu — rare viral infection explained",
+    publication: "Financial Express",
+    date: "2022",
+    text: `"The name 'tomato flu' is a misnomer. It is a rare viral infection of uncertain origin that gets its name from the typical tomato-shaped red rashes that it causes on the body of infected individuals. It is not known if the fever is related to chikungunya or dengue that it mimicks in presentation," Dr. Darshana Reddy, Consultant — Internal Medicine, Altius Hospital, Bangalore told Financial Express.com.`,
+  },
+];
+
+const articleImages = articleData.map((a) => ({
+  src: a.image,
+  caption: a.topic,
+}));
+
 function Lightbox({
   images,
   startIdx,
@@ -26,27 +310,23 @@ function Lightbox({
   onClose: () => void;
 }) {
   const [idx, setIdx] = useState(startIdx);
-  const total = images.length;
-
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
+    const h = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") setIdx((i) => (i + 1) % total);
-      if (e.key === "ArrowLeft") setIdx((i) => (i - 1 + total) % total);
+      if (e.key === "ArrowRight") setIdx((i) => (i + 1) % images.length);
+      if (e.key === "ArrowLeft")
+        setIdx((i) => (i - 1 + images.length) % images.length);
     };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [onClose, total]);
-
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  }, [onClose, images.length]);
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
   }, []);
-
   const img = images[idx];
-
   return (
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center"
@@ -55,45 +335,40 @@ function Lightbox({
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 z-50 w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center transition-all hover:scale-110"
+        className="absolute top-4 right-4 z-50 w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center"
       >
         <X className="w-7 h-7 text-white" />
       </button>
-
-      <div className="absolute top-5 left-1/2 -translate-x-1/2 text-white/60 text-sm font-medium tabular-nums">
-        {idx + 1} / {total}
+      <div className="absolute top-5 left-1/2 -translate-x-1/2 text-white/60 text-sm font-medium">
+        {idx + 1} / {images.length}
       </div>
-
       <button
         onClick={(e) => {
           e.stopPropagation();
-          setIdx((i) => (i - 1 + total) % total);
+          setIdx((i) => (i - 1 + images.length) % images.length);
         }}
-        className="absolute left-4 md:left-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center transition-colors z-10"
+        className="absolute left-4 md:left-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center"
       >
         <ChevronLeft className="w-7 h-7 text-white" />
       </button>
-
       <div className="relative flex flex-col items-center justify-center px-20 w-full h-full">
         <img
           key={img.src}
           src={img.src}
           alt={img.caption}
           className="max-h-[85vh] max-w-[85vw] object-contain rounded-xl shadow-2xl"
-          style={{ animation: "lbFadeIn 0.2s ease" }}
+          style={{ animation: "fadeIn 0.2s ease" }}
         />
       </div>
-
       <button
         onClick={(e) => {
           e.stopPropagation();
-          setIdx((i) => (i + 1) % total);
+          setIdx((i) => (i + 1) % images.length);
         }}
-        className="absolute right-4 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center transition-colors z-10"
+        className="absolute right-4 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center"
       >
         <ChevronRight className="w-7 h-7 text-white" />
       </button>
-
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 flex-wrap justify-center px-4 max-w-lg">
         {images.map((_, i) => (
           <button
@@ -106,379 +381,24 @@ function Lightbox({
           />
         ))}
       </div>
-
-      <style>{`
-        @keyframes lbFadeIn {
-          from { opacity:0; transform:scale(0.96); }
-          to   { opacity:1; transform:scale(1); }
-        }
-      `}</style>
     </div>
   );
 }
 
-// ── Newspaper Slider ─────────────────────────────────────────────────────────
-const newspaperImages = Array.from({ length: 23 }, (_, i) => ({
-  src: `/newspaper/article-${i + 1}.jpeg`,
-  caption: `Article ${i + 1}`,
-}));
-
-function NewspaperCard({
-  img,
-  isCenter,
-  onOpen,
-}: {
-  img: { src: string; caption: string };
-  isCenter: boolean;
-  onOpen: () => void;
-}) {
-  const [errored, setErrored] = useState(false);
-  return (
-    <div
-      onClick={isCenter ? onOpen : undefined}
-      className={`relative flex-shrink-0 rounded-xl overflow-hidden border-2 shadow-lg transition-all duration-500 group
-        ${
-          isCenter
-            ? "border-accent ring-4 ring-accent/25 scale-100 z-10 opacity-100 cursor-zoom-in"
-            : "border-transparent scale-90 opacity-40 cursor-default"
-        }`}
-      style={{
-        width: isCenter ? "min(280px, 70vw)" : "min(170px, 40vw)",
-        height: isCenter ? "min(380px, 90vw)" : "min(240px, 60vw)",
-      }}
-    >
-      {errored ? (
-        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-accent/10 p-4">
-          <Newspaper className="w-10 h-10 text-accent/50 mb-3" />
-          <p className="text-xs font-bold text-primary text-center">
-            {img.caption}
-          </p>
-        </div>
-      ) : (
-        <img
-          src={img.src}
-          alt={img.caption}
-          className="w-full h-full object-contain bg-gray-50 transition-transform duration-300 group-hover:scale-105"
-          onError={() => setErrored(true)}
-        />
-      )}
-
-      {isCenter && !errored && (
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-2.5 shadow-lg">
-            <ZoomIn className="w-6 h-6 text-primary" />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function NewspaperSlider() {
-  const [current, setCurrent] = useState(0);
-  const [lightbox, setLightbox] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const total = newspaperImages.length;
-
-  const resetTimer = (next: number) => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(
-      () => setCurrent((c) => (c + 1) % total),
-      4000,
-    );
-    setCurrent(next);
-  };
-
-  useEffect(() => {
-    timerRef.current = setInterval(
-      () => setCurrent((c) => (c + 1) % total),
-      4000,
-    );
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
-
-  const visible = [
-    (current - 1 + total) % total,
-    current,
-    (current + 1) % total,
-  ];
-
-  return (
-    <>
-      {lightbox && (
-        <Lightbox
-          images={newspaperImages}
-          startIdx={current}
-          onClose={() => setLightbox(false)}
-        />
-      )}
-
-      <div className="w-full select-none">
-        <p className="text-center text-xs text-accent font-semibold mb-4 flex items-center justify-center gap-1.5">
-          <ZoomIn className="w-3.5 h-3.5" /> Click the centre article to view
-          full screen
-        </p>
-
-        <div className="flex items-center justify-center gap-3 md:gap-6">
-          <button
-            onClick={() => resetTimer((current - 1 + total) % total)}
-            className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-
-          <div className="flex gap-3 md:gap-6 items-center justify-center overflow-hidden w-full max-w-3xl">
-            {visible.map((imgIdx, pos) => (
-              <NewspaperCard
-                key={imgIdx}
-                img={newspaperImages[imgIdx]}
-                isCenter={pos === 1}
-                onOpen={() => setLightbox(true)}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={() => resetTimer((current + 1) % total)}
-            className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-lg border border-accent/30 hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
-
-        <p className="text-center text-sm text-muted-foreground mt-4 font-medium">
-          {current + 1} / {total}
-        </p>
-        <div className="flex justify-center gap-1.5 mt-2 flex-wrap px-4">
-          {newspaperImages.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => resetTimer(i)}
-              className={`rounded-full transition-all duration-300 ${i === current ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-accent/25 hover:bg-accent/50"}`}
-            />
-          ))}
-        </div>
-      </div>
-    </>
-  );
-}
-
-// ── Data ─────────────────────────────────────────────────────────────────────
-
-const authoredArticles = [
-  {
-    title: "The Diabetes-Heart Connection",
-    publication: "Deccan Herald",
-    date: "April 30, 2022",
-    url: "https://www.deccanherald.com/features/the-diabetes-heart-connection-1104684.html",
-    excerpt:
-      "If high blood glucose levels remain in the bloodstream for a long period of time, it can damage blood vessels and the nerves that control them leading to heart disease.",
-    content: [
-      "Heart disease and diabetes are closely linked. High blood sugar damages blood vessels, making them stiff and narrow — a condition called atherosclerosis. This restricts blood flow to the heart, increasing risk of heart attack and stroke.",
-      "Diabetes also damages the nerves controlling the heart and blood vessels (autonomic neuropathy), causing irregular heart rhythms and blood pressure problems. Peripheral arterial disease — narrowing of arteries in legs — is also common, causing pain, ulcers, and increased risk of amputation.",
-      "Regular screening, blood sugar control, blood pressure management, and lifestyle changes are essential to prevent cardiovascular complications in diabetic patients.",
-    ],
-  },
-];
-
-const mediaQuotes = [
-  {
-    topic: "Asthma & Air Quality",
-    publication: "Times of India",
-    date: "May 2025",
-    quote:
-      "Over 70% of asthma cases in Bengaluru remain undiagnosed. Prevalence has jumped from 9% to 25% in five years. Deteriorating air quality, construction dust, and weather fluctuations are key triggers.",
-  },
-  {
-    topic: "Dust Allergy Surge",
-    publication: "Times of India",
-    date: "May 2026",
-    quote:
-      "This rise is largely due to intensified construction activity, road excavation, dry weather, and reduced rainfall. PM10 particles directly affect the nose, throat, and airways.",
-  },
-  {
-    topic: "Weather & Health",
-    publication: "Times of India",
-    date: "February 2026",
-    quote:
-      "Compared to last year, we're seeing a 50% rise in cases. On an average day, we now consult 10-15 patients. Sharp weather fluctuations, worsening air pollution, and unhealthy dietary habits are driving this surge.",
-  },
-  {
-    topic: "Viral Infections (Monsoon)",
-    publication: "Times of India",
-    date: "May 2025",
-    quote:
-      "60-70% of my OPD is now respiratory viral cases — upper respiratory tract infections, common cold, cough, flu-like illnesses. Closed, poorly ventilated spaces create ideal conditions for spread.",
-  },
-  {
-    topic: "Windcheaters & Dust",
-    publication: "Times of India",
-    date: "December 2024",
-    quote:
-      "Increase in dust allergies traced to ongoing Metro construction, poor road conditions, and dry spells. Effective road maintenance, dust control at construction sites, and public awareness are crucial.",
-  },
-  {
-    topic: "Candida auris Infection",
-    publication: "Times of India",
-    date: "2024",
-    quote:
-      "Candida auris is a formidable fungal pathogen causing outbreaks, particularly in healthcare facilities. Its resistance to multiple antifungal drugs and ability to persist on surfaces makes containment complex.",
-  },
-  {
-    topic: "Water Bells Initiative",
-    publication: "Times of India",
-    date: "2024",
-    quote:
-      "The water bell initiative will improve concentration and learning outcomes, build a healthy lifelong habit, and is a low-cost intervention. A practical schedule would be every 60-90 min, 3-4 times during school hours.",
-  },
-  {
-    topic: "Mango Overconsumption",
-    publication: "Bangalore Mirror",
-    date: "July 2022",
-    quote:
-      "Overconsumption of mangoes — its excessive fibre can cause upset stomach, diarrhoea, gastritis. 30-40% increase in gastroenteritis cases reported at OPDs.",
-  },
-  {
-    topic: "Urban Heating",
-    publication: "Times of India",
-    date: "2024",
-    quote:
-      "Rising temperatures increase risk of extreme heat leading to headache, confusion, tiredness, vomiting. Temperatures above 40°C cause heat strokes, organ failure, even death.",
-  },
-  {
-    topic: "Dengue Surge",
-    publication: "Times of India",
-    date: "2023",
-    quote:
-      "Usually see a spurt by May, peak Sept-Oct. This year cases surged Jan-March. 80% of Karnataka's 1,417 dengue cases are from Bengaluru, probably due to ease of COVID restrictions.",
-  },
-  {
-    topic: "Omicron Third Wave",
-    publication: "Times of India",
-    date: "2022",
-    quote:
-      "The number infected with Omicron was dramatically higher but mostly mild due to successful vaccination drive. Severe cases still represent significant numbers.",
-  },
-  {
-    topic: "Lingering Illnesses",
-    publication: "Times of India",
-    date: "February 2025",
-    quote:
-      "Gastrointestinal infections have tripled. Respiratory illnesses up by at least 20%. Post-viral cough and breathlessness are now lasting weeks.",
-  },
-  {
-    topic: "Tomato Flu",
-    publication: "Financial Express",
-    date: "2022",
-    quote:
-      "The name 'tomato flu' is a misnomer. It is a rare viral infection that gets its name from tomato-shaped red rashes. Not known if related to chikungunya or dengue.",
-  },
-  {
-    topic: "Pigeon Feeding",
-    publication: "Bangalore Mirror",
-    date: "2024",
-    quote:
-      "Urban pigeon overpopulation is an under-recognised environmental health hazard. Accumulated droppings can cause pulmonary fibrosis, which is largely irreversible.",
-  },
-  {
-    topic: "HMPV Virus",
-    publication: "Times of India",
-    date: "2025",
-    quote:
-      "HMPV is no different from other respiratory viruses. Early detection helps manage complications.",
-  },
-];
-
-const articlesByCategory = [
-  {
-    category: "Respiratory & Allergy",
-    color: "from-blue-600 to-blue-400",
-    bg: "bg-blue-50",
-    border: "border-blue-200",
-    items: [
-      "Asthma prevalence jumped 9% → 25% in 5 years; 70% undiagnosed",
-      "PM10/PM2.5 pollution causing chronic respiratory distress",
-      "Dust allergies linked to Metro construction & poor roads",
-      "Weather flip-flop (13°C–31°C) driving 50% rise in viral cases",
-      "Monsoon surge: 60-70% OPD now respiratory viral infections",
-      "Candida auris — multidrug-resistant fungal threat",
-      "HMPV detection & management in children",
-    ],
-  },
-  {
-    category: "Diabetes & Metabolism",
-    color: "from-red-600 to-red-400",
-    bg: "bg-red-50",
-    border: "border-red-200",
-    items: [
-      "Authored: 'The Diabetes-Heart Connection' — Deccan Herald",
-      "Diabetes-heart disease nexus: atherosclerosis & neuropathy",
-      "Comprehensive diabetes care & reversal programmes",
-      "Gestational, Type 1, and Type 2 diabetes management",
-    ],
-  },
-  {
-    category: "Infectious Diseases",
-    color: "from-green-600 to-green-400",
-    bg: "bg-green-50",
-    border: "border-green-200",
-    items: [
-      "Dengue surge: 80% of Karnataka cases from Bengaluru",
-      "Omicron third wave — mild due to vaccination coverage",
-      "Tomato flu — rare viral infection explained",
-      "HMPV advisory and outbreak management",
-    ],
-  },
-  {
-    category: "Child & Community Health",
-    color: "from-purple-600 to-purple-400",
-    bg: "bg-purple-50",
-    border: "border-purple-200",
-    items: [
-      "Water bells initiative — hydration & learning outcomes",
-      "Pigeon feeding — pulmonary fibrosis risks",
-      "Mango overconsumption & gastroenteritis",
-      "Urban heating & heat stroke prevention",
-    ],
-  },
-  {
-    category: "Healthcare & Wellness",
-    color: "from-orange-500 to-amber-400",
-    bg: "bg-orange-50",
-    border: "border-orange-200",
-    items: [
-      "World Health Day 2022 — 'Our planet, our health'",
-      "Lingering post-viral illnesses & immunity rebuilding",
-      "Preventive healthcare & lifestyle modifications",
-      "Regular health screenings for early detection",
-    ],
-  },
-];
-
-const honors = [
-  {
-    title: "FICP — Fellow of Indian College of Physicians",
-    org: "Indian College of Physicians / APICON",
-    date: "2024",
-    description:
-      "One of India's highest academic distinctions in internal medicine, presented at the APICON convocation in Patna. Reserved for physicians who demonstrate excellence beyond standard practice.",
-  },
-];
-
-const stats = [
-  { value: "21", label: "Newspaper Articles", icon: Newspaper },
-  { value: "15+", label: "News Outlets Featured", icon: FileText },
-  { value: "1", label: "Authored Health Columns", icon: BookOpen },
-  { value: "FICP", label: "National Fellowship", icon: Award },
-];
-
-// ── Page ─────────────────────────────────────────────────────────────────────
 export default function Articles() {
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+
   return (
     <Layout>
-      {/* ── Hero ───────────────────────────────────────────── */}
+      {lightboxIdx !== null && (
+        <Lightbox
+          images={articleImages}
+          startIdx={lightboxIdx}
+          onClose={() => setLightboxIdx(null)}
+        />
+      )}
+
       <section className="bg-gradient-to-br from-primary to-primary/85 text-primary-foreground py-14 md:py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 left-0 w-60 h-60 bg-accent/8 rounded-full blur-3xl" />
@@ -502,11 +422,15 @@ export default function Articles() {
         </div>
       </section>
 
-      {/* ── Stats ──────────────────────────────────────────── */}
       <section className="section-padding bg-white">
         <div className="container-max">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((item, idx) => (
+            {[
+              { value: "20", label: "Newspaper Articles", icon: Newspaper },
+              { value: "5+", label: "News Outlets Featured", icon: FileText },
+              { value: "1", label: "Authored Health Columns", icon: BookOpen },
+              { value: "FICP", label: "National Fellowship", icon: Award },
+            ].map((item, idx) => (
               <div
                 key={idx}
                 className="bg-gradient-to-br from-accent/10 to-accent/5 p-6 rounded-2xl border border-accent/20 hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 animate-slide-up text-center group"
@@ -525,7 +449,6 @@ export default function Articles() {
         </div>
       </section>
 
-      {/* ── Authored Article ───────────────────────────────── */}
       <section className="section-padding bg-gradient-to-br from-slate-50 to-blue-50/40 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
         <div className="container-max relative z-10">
@@ -535,166 +458,140 @@ export default function Articles() {
             </span>
             <h2>Authored Columns</h2>
           </div>
-
-          <div className="space-y-8">
-            {authoredArticles.map((article, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-accent/10 hover:shadow-2xl transition-all duration-500 animate-slide-up"
-                style={{ animationDelay: "100ms" }}
-              >
-                <div className="flex flex-wrap items-center gap-3 mb-4">
-                  <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold">
-                    {article.publication}
-                  </span>
-                  <span className="text-muted-foreground text-sm flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" />
-                    {article.date}
-                  </span>
-                </div>
-
-                <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
-                  {article.title}
-                </h3>
-
-                <p className="text-muted-foreground italic border-l-4 border-accent pl-4 mb-6">
-                  "{article.excerpt}"
-                </p>
-
-                <div className="space-y-4 mb-6">
-                  {article.content.map((para, i) => (
-                    <p
-                      key={i}
-                      className="text-muted-foreground leading-relaxed"
-                    >
-                      {para}
-                    </p>
-                  ))}
-                </div>
-
-                <a
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-accent font-semibold hover:underline group"
-                >
-                  <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  Read full article on {article.publication}
-                </a>
-              </div>
-            ))}
+          <div
+            className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-accent/10 hover:shadow-2xl transition-all duration-500 animate-slide-up"
+            style={{ animationDelay: "100ms" }}
+          >
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold">
+                Deccan Herald
+              </span>
+              <span className="text-muted-foreground text-sm flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5" />
+                April 30, 2022
+              </span>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+              The Diabetes-Heart Connection
+            </h3>
+            <p className="text-muted-foreground italic border-l-4 border-accent pl-4 mb-6">
+              "If high blood glucose levels remain in the bloodstream for a long
+              period of time, it can damage blood vessels and the nerves that
+              control them leading to heart disease."
+            </p>
+            <div className="space-y-4 mb-6 text-muted-foreground leading-relaxed">
+              <p>
+                Heart disease and diabetes are closely linked. High blood sugar
+                damages blood vessels, making them stiff and narrow — a
+                condition called atherosclerosis. This restricts blood flow to
+                the heart, increasing risk of heart attack and stroke.
+              </p>
+              <p>
+                Diabetes also damages the nerves controlling the heart and blood
+                vessels (autonomic neuropathy), causing irregular heart rhythms
+                and blood pressure problems. Peripheral arterial disease —
+                narrowing of arteries in legs — is also common, causing pain,
+                ulcers, and increased risk of amputation.
+              </p>
+              <p>
+                Regular screening, blood sugar control, blood pressure
+                management, and lifestyle changes are essential to prevent
+                cardiovascular complications in diabetic patients.
+              </p>
+            </div>
+            <a
+              href="https://www.deccanherald.com/features/the-diabetes-heart-connection-1104684.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-accent font-semibold hover:underline group"
+            >
+              Read full article on Deccan Herald
+            </a>
           </div>
         </div>
       </section>
 
-      {/* ── Media Coverage by Category ─────────────────────── */}
       <section className="section-padding bg-white">
         <div className="container-max">
           <div className="mb-12 text-center animate-slide-up">
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Coverage
+              Newspaper Coverage
             </span>
-            <h2>Media Coverage by Topic</h2>
+            <h2>All Articles Featuring Dr. Darshana Reddy</h2>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Dr. Reddy has been quoted across 15+ publications on diverse
-              health topics.
+              Full text extracted from scanned newspaper clippings. Click an
+              image to view full screen.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articlesByCategory.map((cat, idx) => (
-              <div
-                key={idx}
-                className={`${cat.bg} rounded-3xl p-6 border ${cat.border} hover:shadow-lg transition-all duration-300 animate-slide-up group`}
-                style={{ animationDelay: `${idx * 80}ms` }}
-              >
+          <div className="space-y-10">
+            {articleData.map((article, idx) => {
+              const isExpanded = expanded[article.id] ?? false;
+              return (
                 <div
-                  className={`h-2 rounded-full bg-gradient-to-r ${cat.color} mb-5 w-16 group-hover:w-24 transition-all duration-500`}
-                />
-                <h3 className="text-lg font-bold text-primary mb-4">
-                  {cat.category}
-                </h3>
-                <ul className="space-y-3">
-                  {cat.items.map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex gap-2.5 text-sm text-muted-foreground"
+                  key={article.id}
+                  className="bg-gradient-to-br from-gray-50 to-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 animate-slide-up"
+                  style={{ animationDelay: `${idx * 60}ms` }}
+                >
+                  <div className="flex flex-col lg:flex-row">
+                    <div
+                      className="lg:w-80 xl:w-96 flex-shrink-0 bg-gray-100 cursor-pointer relative group"
+                      onClick={() => setLightboxIdx(idx)}
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Quoted In ──────────────────────────────────────── */}
-      <section className="section-padding bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/8 rounded-full blur-3xl" />
-        <div className="container-max relative z-10">
-          <div className="mb-12 text-center animate-slide-up">
-            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Expert Commentary
-            </span>
-            <h2>As Quoted In The News</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Dr. Reddy's expert commentary featured in leading national and
-              city publications.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mediaQuotes.map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-accent/10 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-slide-up group"
-                style={{ animationDelay: `${idx * 50}ms` }}
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <Quote className="w-6 h-6 text-accent flex-shrink-0 mt-1 opacity-60" />
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="bg-accent/10 text-accent px-2.5 py-0.5 rounded-full text-xs font-bold">
-                      {item.publication}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      {item.date}
-                    </span>
+                      <div className="aspect-[3/4] lg:aspect-auto lg:h-full min-h-[300px] relative">
+                        <img
+                          src={article.image}
+                          alt={article.topic}
+                          className="w-full h-full object-contain p-2"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                          <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-full p-3 shadow-lg">
+                            <ZoomIn className="w-6 h-6 text-primary" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex-1 p-6 md:p-8">
+                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                        <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold">
+                          {article.publication}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {article.date}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold text-primary mb-4">
+                        {article.topic}
+                      </h3>
+                      <pre className="font-sans text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap font-[Poppins]">
+                        {isExpanded
+                          ? article.text
+                          : article.text.split("\n").slice(0, 12).join("\n") +
+                            (article.text.split("\n").length > 12
+                              ? "\n..."
+                              : "")}
+                      </pre>
+                      {article.text.split("\n").length > 12 && (
+                        <button
+                          onClick={() =>
+                            setExpanded((prev) => ({
+                              ...prev,
+                              [article.id]: !isExpanded,
+                            }))
+                          }
+                          className="mt-4 text-accent font-semibold text-sm hover:underline"
+                        >
+                          {isExpanded ? "Show less ▲" : "Read full article ▼"}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <h4 className="text-sm font-bold text-primary mb-2">
-                  {item.topic}
-                </h4>
-                <p className="text-sm text-muted-foreground italic leading-relaxed">
-                  "{item.quote}"
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── Newspaper Clippings ────────────────────────────── */}
-      <section className="section-padding bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/8 rounded-full blur-3xl" />
-        <div className="container-max relative z-10">
-          <div className="text-center mb-12 animate-slide-up">
-            <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Print Media
-            </span>
-            <h2>Newspaper Clippings</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Scanned articles from Times of India, Bangalore Mirror, Deccan
-              Herald, Financial Express, and more.
-            </p>
-          </div>
-          <NewspaperSlider />
-        </div>
-      </section>
-
-      {/* ── Honors ─────────────────────────────────────────── */}
       <section className="section-padding bg-white">
         <div className="container-max">
           <div className="mb-12 animate-slide-up">
@@ -703,42 +600,35 @@ export default function Articles() {
             </span>
             <h2>Awards & Honours</h2>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {honors.map((honor, idx) => (
-              <div
-                key={idx}
-                className="col-span-1 md:col-span-2 bg-gradient-to-br from-accent/5 via-white to-accent/10 rounded-3xl p-8 md:p-10 border border-accent/20 shadow-lg hover:shadow-2xl transition-all duration-500 animate-slide-up group"
-                style={{ animationDelay: "100ms" }}
-              >
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <Award className="w-8 h-8 text-accent" />
-                  </div>
-                  <div>
-                    <div className="flex flex-wrap items-center gap-3 mb-3">
-                      <h3 className="text-xl font-bold text-primary">
-                        {honor.title}
-                      </h3>
-                      <span className="bg-accent/10 text-accent px-3 py-0.5 rounded-full text-xs font-bold">
-                        {honor.date}
-                      </span>
-                    </div>
-                    <p className="text-sm text-accent font-semibold mb-2">
-                      {honor.org}
-                    </p>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {honor.description}
-                    </p>
-                  </div>
-                </div>
+          <div className="bg-gradient-to-br from-accent/5 via-white to-accent/10 rounded-3xl p-8 md:p-10 border border-accent/20 shadow-lg hover:shadow-2xl transition-all duration-500 animate-slide-up group">
+            <div className="flex flex-col md:flex-row items-start gap-6">
+              <div className="w-16 h-16 rounded-2xl bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <Award className="w-8 h-8 text-accent" />
               </div>
-            ))}
+              <div>
+                <div className="flex flex-wrap items-center gap-3 mb-3">
+                  <h3 className="text-xl font-bold text-primary">
+                    FICP — Fellow of Indian College of Physicians
+                  </h3>
+                  <span className="bg-accent/10 text-accent px-3 py-0.5 rounded-full text-xs font-bold">
+                    2024
+                  </span>
+                </div>
+                <p className="text-sm text-accent font-semibold mb-2">
+                  Indian College of Physicians / APICON
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  One of India's highest academic distinctions in internal
+                  medicine, presented at the APICON convocation in Patna.
+                  Reserved for physicians who demonstrate excellence beyond
+                  standard practice.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── CTA ────────────────────────────────────────────── */}
       <section className="section-padding bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full -mr-48 -mt-48 blur-3xl opacity-50" />
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent/10 rounded-full -ml-36 -mb-36 blur-3xl opacity-50" />
@@ -758,6 +648,8 @@ export default function Articles() {
           </a>
         </div>
       </section>
+
+      <style>{`@keyframes fadeIn{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}`}</style>
     </Layout>
   );
 }
