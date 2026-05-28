@@ -176,9 +176,9 @@ function SlideCard({
             ? "border-accent ring-4 ring-accent/25 scale-100 z-10 cursor-zoom-in"
             : "border-transparent scale-90 opacity-40 cursor-pointer"
         }`}
-      style={{ 
-        width: isCenter ? 'min(310px, 75vw)' : 'min(180px, 40vw)', 
-        height: isCenter ? 'min(280px, 65vw)' : 'min(200px, 45vw)' 
+      style={{
+        width: isCenter ? "min(310px, 75vw)" : "min(180px, 40vw)",
+        height: isCenter ? "min(280px, 65vw)" : "min(200px, 45vw)",
       }}
     >
       {errored ? (
@@ -342,11 +342,12 @@ const stats = [
 const expertise = [
   {
     title: "General Medicine",
-    description: "Diagnosis and management of acute and chronic illnesses, from common viral fevers to complex multi-system disorders.",
+    description:
+      "Diagnosis and management of acute and chronic illnesses, from common viral fevers to complex multi-system disorders.",
     image: "https://images.pexels.com/photos/4033148/pexels-photo-4033148.jpeg",
     icon: Stethoscope,
     color: "from-blue-500 to-blue-600",
-    slug: "general-medicine"
+    slug: "general-medicine",
   },
   {
     title: "Diabetology",
@@ -355,39 +356,43 @@ const expertise = [
     image: "https://images.pexels.com/photos/7579165/pexels-photo-7579165.jpeg",
     icon: Activity,
     color: "from-purple-500 to-purple-600",
-    slug: "diabetology"
+    slug: "diabetology",
   },
   {
     title: "Respiratory Care",
-    description: "Advanced diagnostics and care for asthma, COPD, and lung diseases using state-of-the-art diagnostic tools.",
+    description:
+      "Advanced diagnostics and care for asthma, COPD, and lung diseases using state-of-the-art diagnostic tools.",
     image: "https://images.pexels.com/photos/7088530/pexels-photo-7088530.jpeg",
     icon: Cloud,
     color: "from-cyan-500 to-cyan-600",
-    slug: "respiratory-care"
+    slug: "respiratory-care",
   },
   {
     title: "Allergy & Asthma",
-    description: "Precise identification of allergens via skin prick testing and personalized immunotherapy for long-term relief.",
+    description:
+      "Precise identification of allergens via skin prick testing and personalized immunotherapy for long-term relief.",
     image: "https://images.pexels.com/photos/5998511/pexels-photo-5998511.jpeg",
     icon: Leaf,
     color: "from-green-500 to-green-600",
-    slug: "allergy-asthma"
+    slug: "allergy-asthma",
   },
   {
     title: "Endocrinology",
-    description: "Specialized treatment for thyroid disorders, PCOD, and metabolic syndromes through hormonal balancing.",
+    description:
+      "Specialized treatment for thyroid disorders, PCOD, and metabolic syndromes through hormonal balancing.",
     image: "https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg",
     icon: FlaskConical,
     color: "from-orange-500 to-orange-600",
-    slug: "endocrinology"
+    slug: "endocrinology",
   },
   {
     title: "Adult Immunisation",
-    description: "Comprehensive vaccination programs for adults to prevent influenza, pneumonia, hepatitis, and cervical cancer.",
+    description:
+      "Comprehensive vaccination programs for adults to prevent influenza, pneumonia, hepatitis, and cervical cancer.",
     image: "https://images.pexels.com/photos/5863389/pexels-photo-5863389.jpeg",
     icon: CheckCircle,
     color: "from-rose-500 to-rose-600",
-    slug: "adult-immunisation"
+    slug: "adult-immunisation",
   },
 ];
 
@@ -874,6 +879,14 @@ function HelpForm() {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function Home() {
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
   return (
     <Layout>
       {/* Hero */}
@@ -1014,7 +1027,8 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md rounded-xl px-4 py-3 shadow-2xl border border-accent/20 min-w-[240px]">
                     <p className="text-primary text-[10px] font-medium italic text-center leading-tight mb-1">
-                      "Wherever the art of Medicine is loved, there is also a love of Humanity."
+                      "Wherever the art of Medicine is loved, there is also a
+                      love of Humanity."
                     </p>
                     <p className="text-accent text-[9px] font-bold text-center uppercase tracking-wider">
                       — Hippocrates
@@ -1024,6 +1038,84 @@ export default function Home() {
                 {/* Decorative corner elements */}
                 <div className="absolute -bottom-3 -left-3 w-16 h-16 border-l-2 border-b-2 border-accent/40 rounded-bl-xl" />
                 <div className="absolute -top-3 -right-3 w-16 h-16 border-r-2 border-t-2 border-accent/40 rounded-tr-xl" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CME Video Highlight */}
+      <section className="py-10 md:py-14 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 relative overflow-hidden">
+        <div className="container-max">
+          <div className="max-w-4xl mx-auto bg-white rounded-3xl overflow-hidden shadow-xl border border-accent/20">
+            <div className="relative">
+              <div className="relative bg-black">
+                <video
+                  ref={videoRef}
+                  className="w-full aspect-video"
+                  playsInline
+                  muted={isMuted}
+                  loop
+                  autoPlay
+                  preload="auto"
+                >
+                  <source src="/CME-Programme.mp4" type="video/mp4" />
+                </video>
+                <button
+                  onClick={toggleMute}
+                  className="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/20"
+                  aria-label={isMuted ? "Unmute" : "Mute"}
+                >
+                  {isMuted ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <line x1="23" y1="9" x2="17" y2="15" />
+                      <line x1="17" y1="9" x2="23" y2="15" />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              <div className="p-5 md:p-6 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <span className="inline-block bg-accent/10 text-accent px-3 py-0.5 rounded-full text-xs font-bold mb-2">
+                    CME Programme — 23rd May 2026
+                  </span>
+                  <h3 className="text-lg md:text-xl font-bold text-primary">
+                    Addressing over 100 doctors on lifestyle diseases &
+                    preventive medicine
+                  </h3>
+                </div>
+                <Link
+                  to="/videos"
+                  className="flex-shrink-0 text-sm text-accent font-semibold hover:underline flex items-center gap-1"
+                >
+                  View all videos <ChevronRight className="w-4 h-4" />
+                </Link>
               </div>
             </div>
           </div>
@@ -1118,7 +1210,10 @@ export default function Home() {
                   </div>
 
                   {/* Content */}
-                  <Link to={`/specialties/${item.slug}`} className="p-6 relative z-20 block">
+                  <Link
+                    to={`/specialties/${item.slug}`}
+                    className="p-6 relative z-20 block"
+                  >
                     <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-white transition-colors duration-300">
                       {item.title}
                     </h3>
@@ -1162,8 +1257,9 @@ export default function Home() {
                 She has successfully treated over 2 lakh patients, including
                 OPD, IPD, and ICU cases, and has played a critical role in
                 saving numerous lives through timely diagnosis and
-                evidence-based care. Altius Hospital : trusted by Dr. Darshana for her clinical practice. 
-                Known for her compassionate and holistic approach, she treats patients as individuals—not just
+                evidence-based care. Altius Hospital : trusted by Dr. Darshana
+                for her clinical practice. Known for her compassionate and
+                holistic approach, she treats patients as individuals—not just
                 diseases—focusing on prevention, long-term wellness, and
                 sustainable lifestyle changes.
               </p>
@@ -1209,8 +1305,9 @@ export default function Home() {
             </span>
             <h2>Our Clinics & Programs</h2>
             <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              Comprehensive clinical services including Allergy Clinic with skin prick testing, 
-              Diabetes Reversal programs, Obesity clinic, Adult Immunisation, and Preventive Health clinics.
+              Comprehensive clinical services including Allergy Clinic with skin
+              prick testing, Diabetes Reversal programs, Obesity clinic, Adult
+              Immunisation, and Preventive Health clinics.
             </p>
           </div>
           <div className="relative">
