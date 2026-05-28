@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Play, Instagram } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { VideoModal } from "@/components/VideoModal";
@@ -108,6 +108,14 @@ const videos: Video[] = [
 
 export default function Videos() {
   const [activeCategory, setActiveCategory] = useState("all");
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
   const [selectedVideo, setSelectedVideo] = useState<{
     url: string;
     title: string;
@@ -157,10 +165,56 @@ export default function Videos() {
             <p className="text-sm text-muted-foreground mb-6">
               Dr. Darshana Reddy addressing an audience of over 100 doctors.
             </p>
-            <div className="rounded-2xl overflow-hidden shadow-xl bg-black">
-              <video controls playsInline className="w-full aspect-video">
+            <div className="rounded-2xl overflow-hidden shadow-xl bg-black relative">
+              <video
+                ref={videoRef}
+                className="w-full aspect-video"
+                playsInline
+                muted={isMuted}
+                loop
+                autoPlay
+                preload="auto"
+              >
                 <source src="/CME-Programme.mp4" type="video/mp4" />
               </video>
+              <button
+                onClick={toggleMute}
+                className="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/20"
+                aria-label={isMuted ? "Unmute" : "Mute"}
+              >
+                {isMuted ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  </svg>
+                )}
+              </button>
             </div>
           </div>
 
