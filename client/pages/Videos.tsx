@@ -141,6 +141,29 @@ export default function Videos() {
             </p>
           </div>
 
+          {/* Featured Video */}
+          <div className="mb-16 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 rounded-3xl p-6 md:p-8 border border-accent/20 shadow-lg animate-slide-up">
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold">
+                Featured
+              </span>
+              <span className="text-xs text-muted-foreground">
+                23rd May 2026
+              </span>
+            </div>
+            <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
+              CME Programme — Lifestyle Diseases & Preventive Medicine
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              Dr. Darshana Reddy addressing an audience of over 100 doctors.
+            </p>
+            <div className="rounded-2xl overflow-hidden shadow-xl bg-black">
+              <video controls playsInline className="w-full aspect-video">
+                <source src="/CME-Programme.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
           {/* Categories */}
           <div className="flex flex-wrap justify-center gap-3 mb-12 animate-slide-up">
             {categories.map((cat) => (
@@ -180,7 +203,7 @@ export default function Videos() {
                 >
                   {/* Loading Skeleton */}
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
-                  
+
                   <img
                     src={getInstagramThumbnail(video.url)}
                     alt={video.title}
@@ -196,13 +219,21 @@ export default function Videos() {
                       target.style.display = "none";
                       const skeleton = target.previousElementSibling;
                       if (skeleton) {
-                        skeleton.classList.remove("animate-pulse", "from-gray-200", "to-gray-100");
-                        skeleton.classList.add("bg-gradient-to-br", "from-primary/40", "to-accent/40");
+                        skeleton.classList.remove(
+                          "animate-pulse",
+                          "from-gray-200",
+                          "to-gray-100",
+                        );
+                        skeleton.classList.add(
+                          "bg-gradient-to-br",
+                          "from-primary/40",
+                          "to-accent/40",
+                        );
                         skeleton.classList.remove("hidden");
                       }
                     }}
                   />
-                  
+
                   {/* Play Overlay */}
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center z-20">
                     <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 shadow-xl">
@@ -222,10 +253,10 @@ export default function Videos() {
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3 text-xs font-bold uppercase tracking-wider">
                     <span className="text-accent underline decoration-accent/30 underline-offset-4">
-                      {categories.find(c => c.id === video.category)?.label}
+                      {categories.find((c) => c.id === video.category)?.label}
                     </span>
                     <span className="text-muted-foreground flex items-center gap-1">
-                      <Play className="w-3 h-3" /> {video.views} 
+                      <Play className="w-3 h-3" /> {video.views}
                     </span>
                   </div>
                   <h3 className="text-lg font-bold text-primary group-hover:text-accent transition-colors line-clamp-2 leading-tight">
@@ -238,7 +269,9 @@ export default function Videos() {
 
           {filteredVideos.length === 0 && (
             <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-100">
-              <p className="text-muted-foreground text-lg">No videos found in this category.</p>
+              <p className="text-muted-foreground text-lg">
+                No videos found in this category.
+              </p>
             </div>
           )}
         </div>
@@ -250,7 +283,8 @@ export default function Videos() {
         <div className="container-max text-center relative z-10">
           <h2 className="text-white mb-6">Stay Informed on Instagram</h2>
           <p className="text-lg text-primary-foreground/80 mb-10 max-w-2xl mx-auto">
-            Follow Dr. Darshana Reddy for daily tips, live Q&A sessions, and the latest in internal medicine and lifestyle wellness.
+            Follow Dr. Darshana Reddy for daily tips, live Q&A sessions, and the
+            latest in internal medicine and lifestyle wellness.
           </p>
           <a
             href="https://instagram.com/your_lifestyle_doctor"
