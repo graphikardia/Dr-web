@@ -160,10 +160,11 @@ export default function Videos() {
               </span>
             </div>
             <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
-              CME Programme — Lifestyle Diseases & Preventive Medicine
+              Of the many CME programs — Addressing hundreds of Doctors
             </h3>
             <p className="text-sm text-muted-foreground mb-6">
-              Dr. Darshana Reddy addressing an audience of over 100 doctors.
+              23rd May 2026 — CME Programme on lifestyle diseases and preventive
+              medicine.
             </p>
             <div className="rounded-2xl overflow-hidden shadow-xl bg-black relative">
               <video

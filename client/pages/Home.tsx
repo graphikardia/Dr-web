@@ -1106,8 +1106,7 @@ export default function Home() {
                     CME Programme — 23rd May 2026
                   </span>
                   <h3 className="text-lg md:text-xl font-bold text-primary">
-                    Addressing over 100 doctors on lifestyle diseases &
-                    preventive medicine
+                    Of the many CME programs — Addressing hundreds of Doctors
                   </h3>
                 </div>
                 <Link

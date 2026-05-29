@@ -4,12 +4,9 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Newspaper,
   Award,
-  BookOpen,
   Stethoscope,
   Calendar,
-  FileText,
   ZoomIn,
 } from "lucide-react";
 
@@ -422,33 +419,6 @@ export default function Articles() {
         </div>
       </section>
 
-      <section className="section-padding bg-white">
-        <div className="container-max">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { value: "20", label: "Newspaper Articles", icon: Newspaper },
-              { value: "5+", label: "News Outlets Featured", icon: FileText },
-              { value: "1", label: "Authored Health Columns", icon: BookOpen },
-              { value: "FICP", label: "National Fellowship", icon: Award },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-gradient-to-br from-accent/10 to-accent/5 p-6 rounded-2xl border border-accent/20 hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 animate-slide-up text-center group"
-                style={{ animationDelay: `${idx * 80}ms` }}
-              >
-                <item.icon className="w-8 h-8 text-accent mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                <h3 className="text-3xl font-bold text-primary mb-1 group-hover:text-accent transition-colors">
-                  {item.value}
-                </h3>
-                <p className="text-sm text-muted-foreground font-medium">
-                  {item.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── Video Highlight ─────────────────────────────── */}
       <section className="section-padding bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
@@ -457,11 +427,10 @@ export default function Articles() {
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
               Video Highlight
             </span>
-            <h2>CME Programme — Addressing Over 100 Doctors</h2>
+            <h2>Of the many CME programs — Addressing hundreds of Doctors</h2>
             <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              23rd May 2026 — Dr. Darshana Reddy delivering a continuing medical
-              education session on lifestyle diseases and preventive medicine to
-              an audience of over 100 fellow physicians.
+              23rd May 2026 — Continuing medical education session on lifestyle
+              diseases and preventive medicine.
             </p>
           </div>
           <div
