@@ -437,12 +437,7 @@ export default function Articles() {
             className="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-accent/20 bg-black animate-slide-up"
             style={{ animationDelay: "100ms" }}
           >
-            <video
-              controls
-              playsInline
-              className="w-full aspect-video"
-              poster="/newspaper/article-1.jpeg"
-            >
+            <video controls playsInline className="w-full aspect-video">
               <source src="/CME-Programme.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
