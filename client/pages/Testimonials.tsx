@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEOHead } from "@/components/SEOHead";
 import { useState } from "react";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -104,6 +105,11 @@ export default function Testimonials() {
 
   return (
     <Layout>
+      <SEOHead
+        title="Patient Testimonials - Dr. Darshana Reddy"
+        description="Read what patients say about Dr. Darshana Reddy. Real reviews and testimonials from patients at Altius Hospital, Bangalore for diabetes care, respiratory treatment, and internal medicine."
+        canonical="/testimonials"
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/90 text-primary-foreground py-12 md:py-16">
         <div className="container-max">

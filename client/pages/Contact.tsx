@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEOHead } from "@/components/SEOHead";
 import { useState } from "react";
 import {
   Phone,
@@ -67,6 +68,11 @@ export default function Contact() {
 
   return (
     <Layout>
+      <SEOHead
+        title="Contact Dr. Darshana Reddy - Book Appointment"
+        description="Book an appointment with Dr. Darshana Reddy at Altius Hospital, HBR Layout, Bangalore. Call +91 8882 799799 or use our online appointment form."
+        canonical="/contact"
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/90 text-primary-foreground py-12 md:py-16">
         <div className="container-max">

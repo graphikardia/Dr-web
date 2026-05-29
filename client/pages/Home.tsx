@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEOHead } from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import {
   Users,
@@ -889,6 +890,108 @@ export default function Home() {
   };
   return (
     <Layout>
+      <SEOHead
+        title="Senior Consultant Internal Medicine & Diabetologist in Bangalore"
+        description="Dr. Darshana Reddy - Senior Consultant Internal Medicine & Diabetologist at Altius Hospital, HBR Layout, Bangalore. 16+ years experience in diabetes management, respiratory care, allergy & asthma treatment."
+        keywords="Dr. Darshana Reddy, Internal Medicine, Diabetologist, Diabetes Doctor, Pulmonologist, Allergy Specialist, Bangalore, HBR Layout, Altius Hospital"
+        canonical="/"
+        ogType="website"
+        jsonLd={[
+          {
+            "@type": "Physician",
+            "@id": "https://drdarshanareddy.com#physician",
+            name: "Dr. Darshana Reddy",
+            image: "https://drdarshanareddy.com/og-image.jpg",
+            url: "https://drdarshanareddy.com",
+            telephone: "+918882799799",
+            email: "info@drdarshanareddy.com",
+            priceRange: "\u20B9\u20B9\u20B9",
+            description:
+              "Senior Consultant Internal Medicine & Diabetologist with 16+ years experience in Bangalore. Expert in diabetes, respiratory care, allergy & asthma.",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Altius Hospital, HBR Layout",
+              addressLocality: "Bangalore",
+              addressRegion: "Karnataka",
+              postalCode: "560043",
+              addressCountry: "IN",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: "13.0358",
+              longitude: "77.5971",
+            },
+            openingHoursSpecification: [
+              {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                ],
+                opens: "09:00",
+                closes: "12:00",
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                ],
+                opens: "15:00",
+                closes: "17:00",
+              },
+            ],
+            sameAs: [
+              "https://www.facebook.com/drdarshanareddy",
+              "https://www.instagram.com/drdarshanareddy",
+            ],
+            medicalSpecialty: [
+              "Internal Medicine",
+              "Diabetology",
+              "Pulmonology",
+              "Endocrinology",
+              "Allergy & Asthma",
+            ],
+            memberOf: {
+              "@type": "Organization",
+              name: "Indian Medical Association",
+            },
+          },
+          {
+            "@type": "MedicalOrganization",
+            name: "Altius Hospital",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "HBR Layout",
+              addressLocality: "Bangalore",
+              addressRegion: "Karnataka",
+              postalCode: "560043",
+              addressCountry: "IN",
+            },
+            telephone: "+918882799799",
+          },
+          {
+            "@type": "LocalBusiness",
+            name: "Dr. Darshana Reddy - Internal Medicine Clinic",
+            image: "https://drdarshanareddy.com/og-image.jpg",
+            telephone: "+918882799799",
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "4.8",
+              reviewCount: "150",
+              bestRating: "5",
+            },
+          },
+        ]}
+      />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary via-primary/95 to-primary/85 text-primary-foreground py-16 md:py-28 relative overflow-hidden">
         <div className="absolute top-10 right-10 w-80 h-80 bg-accent/15 rounded-full blur-3xl animate-pulse" />

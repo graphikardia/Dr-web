@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEOHead } from "@/components/SEOHead";
 import { useState, useEffect } from "react";
 import {
   X,
@@ -388,6 +389,12 @@ export default function Articles() {
 
   return (
     <Layout>
+      <SEOHead
+        title="Articles & Blogs - Dr. Darshana Reddy"
+        description="Medical articles, newspaper features, and health columns by Dr. Darshana Reddy. Expert insights on internal medicine, diabetes, respiratory health, and wellness from leading publications."
+        canonical="/articles"
+        ogType="article"
+      />
       {lightboxIdx !== null && (
         <Lightbox
           images={articleImages}

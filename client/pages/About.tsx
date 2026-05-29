@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEOHead } from "@/components/SEOHead";
 import {
   GraduationCap,
   ChevronLeft,
@@ -156,9 +157,9 @@ function NewspaperCard({
             ? "border-accent ring-4 ring-accent/25 scale-100 z-10 opacity-100 cursor-zoom-in"
             : "border-transparent scale-90 opacity-40 cursor-default"
         }`}
-      style={{ 
-        width: isCenter ? 'min(280px, 70vw)' : 'min(170px, 40vw)', 
-        height: isCenter ? 'min(380px, 90vw)' : 'min(240px, 60vw)' 
+      style={{
+        width: isCenter ? "min(280px, 70vw)" : "min(170px, 40vw)",
+        height: isCenter ? "min(380px, 90vw)" : "min(240px, 60vw)",
       }}
     >
       {errored ? (
@@ -300,9 +301,9 @@ function AwardSlideCard({
             ? "border-accent ring-4 ring-accent/25 scale-100 z-10 cursor-zoom-in"
             : "border-transparent scale-90 opacity-40 cursor-pointer"
         }`}
-      style={{ 
-        width: isCenter ? 'min(310px, 75vw)' : 'min(180px, 40vw)', 
-        height: isCenter ? 'min(280px, 65vw)' : 'min(200px, 45vw)' 
+      style={{
+        width: isCenter ? "min(310px, 75vw)" : "min(180px, 40vw)",
+        height: isCenter ? "min(280px, 65vw)" : "min(200px, 45vw)",
       }}
     >
       {errored ? (
@@ -624,8 +625,10 @@ function JourneyPath() {
                 <p className="text-sm text-muted-foreground mt-1">
                   {stop.location}
                 </p>
-                
-                <div className={`overflow-hidden transition-all duration-500 ${isExpanded ? "max-h-40 mt-4 opacity-100" : "max-h-0 opacity-0"}`}>
+
+                <div
+                  className={`overflow-hidden transition-all duration-500 ${isExpanded ? "max-h-40 mt-4 opacity-100" : "max-h-0 opacity-0"}`}
+                >
                   <p
                     className="text-sm text-muted-foreground/80 italic border-l-2 pl-3"
                     style={{ borderColor: stop.color }}
@@ -709,6 +712,12 @@ const community = [
 export default function About() {
   return (
     <Layout>
+      <SEOHead
+        title="About Dr. Darshana Reddy - Internal Medicine Specialist"
+        description="Learn about Dr. Darshana Reddy's 16+ years of experience in Internal Medicine, Diabetes Care, Respiratory Health, and her journey as a Senior Consultant at Altius Hospital, Bangalore."
+        canonical="/about"
+        ogType="profile"
+      />
       <section className="bg-gradient-to-br from-primary to-primary/85 text-primary-foreground py-14 md:py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 left-0 w-60 h-60 bg-accent/8 rounded-full blur-3xl" />

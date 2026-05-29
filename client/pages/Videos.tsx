@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEOHead } from "@/components/SEOHead";
 import { useState, useRef } from "react";
 import { Play, Instagram } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -137,6 +138,12 @@ export default function Videos() {
 
   return (
     <Layout>
+      <SEOHead
+        title="Health Videos by Dr. Darshana Reddy"
+        description="Watch health awareness videos by Dr. Darshana Reddy on diabetes management, respiratory health, lifestyle wellness, and preventive medicine tips."
+        canonical="/videos"
+        ogType="video.other"
+      />
       <div className="section-padding bg-gray-50 min-h-screen">
         <div className="container-max">
           <div className="text-center mb-16 animate-slide-up">
