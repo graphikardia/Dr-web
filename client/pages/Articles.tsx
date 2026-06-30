@@ -315,6 +315,31 @@ Doctors recommend lifestyle overhauls — sleep discipline, hydration and stress
   },
 ];
 
+const monthMap: Record<string, number> = {
+  january: 0,
+  february: 1,
+  march: 2,
+  april: 3,
+  may: 4,
+  june: 5,
+  july: 6,
+  august: 7,
+  september: 8,
+  october: 9,
+  november: 10,
+  december: 11,
+};
+function sortVal(d: string) {
+  const p = d.split(" ");
+  if (p.length === 2) return +p[1] * 12 + (monthMap[p[0].toLowerCase()] ?? 0);
+  return +p[0] * 12 + 6;
+}
+articleData.sort((a, b) => {
+  if (a.id === 22) return -1;
+  if (b.id === 22) return 1;
+  return sortVal(b.date) - sortVal(a.date);
+});
+
 const articleImages = articleData.map((a) => ({
   src: a.image,
   caption: a.topic,
