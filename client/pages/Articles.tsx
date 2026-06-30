@@ -297,7 +297,7 @@ Doctors note children's immunity is still developing, while older adults — par
     topic:
       "Late nights, skipped meals — Bengaluru's daily routine triggering migraine attacks",
     publication: "Times of India",
-    date: "2025",
+    date: "June 2026",
     text: `Late nights, skipped meals — Bengaluru's daily routine triggering migraine attacks
 Times News Network
 
