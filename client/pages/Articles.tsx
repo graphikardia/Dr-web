@@ -334,11 +334,7 @@ function sortVal(d: string) {
   if (p.length === 2) return +p[1] * 12 + (monthMap[p[0].toLowerCase()] ?? 0);
   return +p[0] * 12 + 6;
 }
-articleData.sort((a, b) => {
-  if (a.id === 22) return -1;
-  if (b.id === 22) return 1;
-  return sortVal(b.date) - sortVal(a.date);
-});
+articleData.sort((a, b) => sortVal(b.date) - sortVal(a.date));
 
 const articleImages = articleData.map((a) => ({
   src: a.image,
