@@ -291,6 +291,28 @@ Doctors note children's immunity is still developing, while older adults — par
     date: "2022",
     text: `"The name 'tomato flu' is a misnomer. It is a rare viral infection of uncertain origin that gets its name from the typical tomato-shaped red rashes that it causes on the body of infected individuals. It is not known if the fever is related to chikungunya or dengue that it mimicks in presentation," Dr. Darshana Reddy, Consultant — Internal Medicine, Altius Hospital, Bangalore told Financial Express.com.`,
   },
+  {
+    id: 22,
+    image: "/newspaper/article-22.jpeg",
+    topic:
+      "Late nights, skipped meals — Bengaluru's daily routine triggering migraine attacks",
+    publication: "Times of India",
+    date: "2025",
+    text: `Late nights, skipped meals — Bengaluru's daily routine triggering migraine attacks
+Times News Network
+
+Bengaluru: Migraine is increasingly being recognised as a lifestyle disorder, not just a physical ailment. Bengaluru's unique environmental pressures — IT shifts, traffic congestion and pollution — act as catalysts that precipitate attacks in genetically or environmentally vulnerable people, doctors say.
+
+Globally, migraines affect 12-15% of adults, but a Karnataka-based study estimates that 14-25% of adults in the state suffer from it. The condition is most common among those aged 20-50, with women 2 to 3 times more likely to get them due to hormonal shifts during menstruation, pregnancy and menopause.
+
+Dr Darshana Reddy, Senior Consultant and Medical Superintendent at Altius Hospital, said the city's grueling urban lifestyle is a major trigger. Late nights, skipped meals and chronic stress are driving a surge in migraine cases among working professionals.
+
+Dr Satishchandra P, neurologist at Apollo Speciality Hospitals, Jayanagar, and Dr Santosh NS, Consultant Neurologist at Manipal Hospital Whitefield, echoed similar concerns. Dr Santosh highlighted that IT professionals working US and UK shifts suffer significantly because their circadian rhythms are completely disrupted.
+
+Common dietary triggers named include MSG, aged cheese, chocolates, artificial sweeteners, alcohol and caffeine fluctuations. Sensory triggers such as strong perfumes and vehicular exhaust also contribute.
+
+Doctors recommend lifestyle overhauls — sleep discipline, hydration and stress management — and maintaining a headache diary over relying solely on painkillers.`,
+  },
 ];
 
 const articleImages = articleData.map((a) => ({
