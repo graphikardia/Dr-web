@@ -299,19 +299,27 @@ Doctors note children's immunity is still developing, while older adults — par
     publication: "Times of India",
     date: "June 2026",
     text: `Late nights, skipped meals — Bengaluru's daily routine triggering migraine attacks
-Times News Network
 
-Bengaluru: Migraine is increasingly being recognised as a lifestyle disorder, not just a physical ailment. Bengaluru's unique environmental pressures — IT shifts, traffic congestion and pollution — act as catalysts that precipitate attacks in genetically or environmentally vulnerable people, doctors say.
+Bengaluru: The city's notorious traffic, endless work calls, late-night shifts, and irregular meal timings are doing more than just causing fatigue. Neurologists say Bengaluru's fast-paced urban lifestyle is leading to migraine attacks in people who are already predisposed to the condition.
 
-Globally, migraines affect 12-15% of adults, but a Karnataka-based study estimates that 14-25% of adults in the state suffer from it. The condition is most common among those aged 20-50, with women 2 to 3 times more likely to get them due to hormonal shifts during menstruation, pregnancy and menopause.
+"Migraine is not merely a headache; it is largely a lifestyle disorder. People today are constantly chasing deadlines, spending hours commuting, working across time zones and getting very little time to relax. This combination of chronic stress, poor sleep, and lack of recovery is what drives migraine attacks," said Dr Satishchandra P, neurologist at Apollo Speciality Hospitals, Jayanagar.
 
-Dr Darshana Reddy, Senior Consultant and Medical Superintendent at Altius Hospital, said the city's grueling urban lifestyle is a major trigger. Late nights, skipped meals and chronic stress are driving a surge in migraine cases among working professionals.
+Migraine affects nearly 12-15% of adults globally, while a recent population-based study in Karnataka estimated that 14-25% of adults in both urban and rural areas suffer from the condition, according to Dr Santosh NS, consultant neurologist at Manipal Hospital Whitefield.
 
-Dr Satishchandra P, neurologist at Apollo Speciality Hospitals, Jayanagar, and Dr Santosh NS, Consultant Neurologist at Manipal Hospital Whitefield, echoed similar concerns. Dr Santosh highlighted that IT professionals working US and UK shifts suffer significantly because their circadian rhythms are completely disrupted.
+He said migraines usually begin between 15 and 20 years of age and are most common among people aged 20-50 years. Diagnosis is clinical and based on the International Headache Society criteria, which includes recurrent headache episodes lasting between four hours and three days, often accompanied by nausea, vomiting, and sensitivity to light or sound.
 
-Common dietary triggers named include MSG, aged cheese, chocolates, artificial sweeteners, alcohol and caffeine fluctuations. Sensory triggers such as strong perfumes and vehicular exhaust also contribute.
+Migraine patients are particularly sensitive to bright lights, loud sounds, hunger, emotional stress and even sudden weather changes, said Dr Santosh.
 
-Doctors recommend lifestyle overhauls — sleep discipline, hydration and stress management — and maintaining a headache diary over relying solely on painkillers.`,
+According to Dr Darshana Reddy, senior consultant and medical superintendent at Altius Hospital, migraine is influenced by a combination of genetic susceptibility and environmental triggers. "Long working hours, shift work resulting in irregular sleep schedules, work-related stress, excessive screen time, dehydration, irregular meal timings, traffic congestion, air pollution and bright sunlight are all common triggers in Bengaluru," she said, adding that a trigger alone does not cause migraine but precipitates an attack in someone who is already susceptible.
+
+Sleep disruption further worsens the problem. "Both inadequate sleep and oversleeping can trigger migraines," Dr Santosh said. "Many IT professionals working in US or UK shifts experience headaches because their circadian rhythm is disturbed."
+
+Women are two to three times more likely than men to develop migraine because of hormonal fluctuations during menstruation, pregnancy and menopause, Dr Santosh added.
+
+Doctors say treatment extends well beyond painkillers. Regular sleep schedules, eating meals on time, staying hydrated, exercising moderately, limiting screen exposure, and managing stress through meditation or relaxation techniques form the cornerstone of migraine management. For people with frequent attacks, preventive medication may also be prescribed.
+
+Food habits also matter
+Chocolates, aged cheese, foods containing monosodium glutamate (MSG), processed meats, artificial sweeteners, alcohol, excessive caffeine or even caffeine withdrawal can trigger migraine in some individuals, according to the doctors. "Strong perfumes, incense sticks, vehicular exhaust, flashing lights and sudden weather changes are among other less-recognised triggers," Dr Darshana said. She recommends maintaining a headache diary to help identify personal triggers.`,
   },
 ];
 
