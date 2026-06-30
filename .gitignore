@@ -350,3 +350,9 @@ buck-out/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,react,reactnative
 .vercel
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
