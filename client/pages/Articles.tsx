@@ -509,19 +509,31 @@ export default function Articles() {
                 </div>
                 
                 <div className="lg:w-2/3 w-full aspect-video md:h-80 relative rounded-2xl overflow-hidden shadow-sm bg-gray-100 group">
-                   <div className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                     <style>{`
-                     .slider-container::-webkit-scrollbar { display: none; }
-                     .slider-track { display: flex; width: 400%; height: 100%; }
-                     `}</style>
-                     <div className="slider-track slider-container animate-[auto-scroll_25s_infinite_ease-in-out]">
-                       <img src="/newspaper/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg' }} alt="Dr. Darshana Reddy speaking at TS APICON 2026, Hyderabad" className="w-1/4 h-full object-cover object-top shrink-0 snap-start" />
-                       <img src="/newspaper/ts-apicon-2026-case-presentation-hyperuricemia.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-case-presentation-hyperuricemia.jpeg' }} alt="Case presentation slide on asymptomatic hyperuricemia, TS APICON 2026" className="w-1/4 h-full object-cover shrink-0 snap-start" />
-                       <img src="/newspaper/ts-apicon-2026-definition-thresholds-slide.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-definition-thresholds-slide.jpeg' }} alt="Slide comparing hyperuricemia diagnostic thresholds across ACR, EULAR, and other guidelines" className="w-1/4 h-full object-cover shrink-0 snap-start" />
-                       <img src="/newspaper/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg' }} alt="Dr. Darshana Reddy being felicitated at TS APICON 2026" className="w-1/4 h-full object-cover shrink-0 snap-start" />
-                     </div>
+                   <style>{`
+                   .slider-track {
+                     display: flex;
+                     width: 400%;
+                     height: 100%;
+                     animation: scroll-slide 16s infinite ease-in-out;
+                   }
+                   .slider-track:hover {
+                     animation-play-state: paused;
+                   }
+                   @keyframes scroll-slide {
+                     0%, 20% { transform: translateX(0); }
+                     25%, 45% { transform: translateX(-25%); }
+                     50%, 70% { transform: translateX(-50%); }
+                     75%, 95% { transform: translateX(-75%); }
+                     100% { transform: translateX(0); }
+                   }
+                   `}</style>
+                   <div className="slider-track">
+                     <img src="/newspaper/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg' }} alt="Dr. Darshana Reddy speaking at TS APICON 2026, Hyderabad" className="w-[25%] h-full object-cover object-top shrink-0" />
+                     <img src="/newspaper/ts-apicon-2026-case-presentation-hyperuricemia.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-case-presentation-hyperuricemia.jpeg' }} alt="Case presentation slide on asymptomatic hyperuricemia, TS APICON 2026" className="w-[25%] h-full object-cover shrink-0" />
+                     <img src="/newspaper/ts-apicon-2026-definition-thresholds-slide.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-definition-thresholds-slide.jpeg' }} alt="Slide comparing hyperuricemia diagnostic thresholds across ACR, EULAR, and other guidelines" className="w-[25%] h-full object-cover shrink-0" />
+                     <img src="/newspaper/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg' }} alt="Dr. Darshana Reddy being felicitated at TS APICON 2026" className="w-[25%] h-full object-cover shrink-0" />
                    </div>
-                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-50 bg-black/40 px-3 py-1.5 rounded-full pointer-events-none">
+                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-50 bg-black/40 px-3 py-1.5 rounded-full pointer-events-none z-10">
                      <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
                      <span className="w-1.5 h-1.5 rounded-full bg-white/50"></span>
                      <span className="w-1.5 h-1.5 rounded-full bg-white/50"></span>
