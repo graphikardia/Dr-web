@@ -528,10 +528,18 @@ export default function Articles() {
                    }
                    `}</style>
                    <div className="slider-track">
-                     <img src="/newspaper/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg' }} alt="Dr. Darshana Reddy speaking at TS APICON 2026, Hyderabad" className="w-[25%] h-full object-cover object-top shrink-0" />
-                     <img src="/newspaper/ts-apicon-2026-case-presentation-hyperuricemia.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-case-presentation-hyperuricemia.jpeg' }} alt="Case presentation slide on asymptomatic hyperuricemia, TS APICON 2026" className="w-[25%] h-full object-cover shrink-0" />
-                     <img src="/newspaper/ts-apicon-2026-definition-thresholds-slide.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-definition-thresholds-slide.jpeg' }} alt="Slide comparing hyperuricemia diagnostic thresholds across ACR, EULAR, and other guidelines" className="w-[25%] h-full object-cover shrink-0" />
-                     <img src="/newspaper/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg' }} alt="Dr. Darshana Reddy being felicitated at TS APICON 2026" className="w-[25%] h-full object-cover shrink-0" />
+                     <div className="w-[25%] h-full flex items-center justify-center bg-gray-100 shrink-0 p-2 md:p-4">
+                       <img src="/newspaper/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg' }} alt="Dr. Darshana Reddy speaking at TS APICON 2026, Hyderabad" className="max-w-full max-h-full object-contain shadow-sm rounded-lg" />
+                     </div>
+                     <div className="w-[25%] h-full flex items-center justify-center bg-gray-100 shrink-0 p-2 md:p-4">
+                       <img src="/newspaper/ts-apicon-2026-case-presentation-hyperuricemia.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-case-presentation-hyperuricemia.jpeg' }} alt="Case presentation slide on asymptomatic hyperuricemia, TS APICON 2026" className="max-w-full max-h-full object-contain shadow-sm rounded-lg" />
+                     </div>
+                     <div className="w-[25%] h-full flex items-center justify-center bg-gray-100 shrink-0 p-2 md:p-4">
+                       <img src="/newspaper/ts-apicon-2026-definition-thresholds-slide.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-definition-thresholds-slide.jpeg' }} alt="Slide comparing hyperuricemia diagnostic thresholds across ACR, EULAR, and other guidelines" className="max-w-full max-h-full object-contain shadow-sm rounded-lg" />
+                     </div>
+                     <div className="w-[25%] h-full flex items-center justify-center bg-gray-100 shrink-0 p-2 md:p-4">
+                       <img src="/newspaper/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg' }} alt="Dr. Darshana Reddy being felicitated at TS APICON 2026" className="max-w-full max-h-full object-contain shadow-sm rounded-lg" />
+                     </div>
                    </div>
                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-50 bg-black/40 px-3 py-1.5 rounded-full pointer-events-none z-10">
                      <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
