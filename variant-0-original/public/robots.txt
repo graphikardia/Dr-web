@@ -1,0 +1,27 @@
+# Robots.txt for Dr. Darshana Reddy Website
+
+# Allow all search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://drdarshanareddy.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow private areas
+Disallow: /api/
+Disallow: /admin/

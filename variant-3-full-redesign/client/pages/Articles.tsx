@@ -477,139 +477,28 @@ export default function Articles() {
         </div>
       </section>
 
-      {/* ── Event Highlights ─────────────────────────────── */}
+      {/* ── Video Highlight ─────────────────────────────── */}
       <section className="section-padding bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
         <div className="container-max relative z-10">
           <div className="mb-10 text-center animate-slide-up">
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Event Highlights
+              Video Highlight
             </span>
-            <h2>Professional Engagements & CME Programs</h2>
+            <h2>Of the many CME programs — Addressing hundreds of Doctors</h2>
             <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              Dr. Reddy regularly speaks at national and regional physician conferences on diabetes, internal medicine, and evidence-based practice.
+              23rd May 2026 — Continuing medical education session on lifestyle
+              diseases and preventive medicine.
             </p>
           </div>
-          
-          <div className="flex flex-col gap-8">
-            {/* TS APICON 2026 Card */}
-            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-accent/10 animate-slide-up hover:shadow-lg transition-all" style={{ animationDelay: "100ms" }}>
-              <div className="flex flex-col lg:flex-row gap-8 items-center">
-                <div className="lg:w-1/3 flex flex-col justify-center">
-                  <span className="text-xs font-bold tracking-wider text-accent uppercase mb-2">Speaker &middot; Invited Talk</span>
-                  <h3 className="text-2xl font-bold text-primary mb-3">10th Annual Conference of API Telangana State</h3>
-                  <div className="flex flex-col gap-2 text-sm text-muted-foreground mb-4 font-medium">
-                    <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-accent" /> 11–12 July 2026</span>
-                    <span className="flex items-center gap-2">📍 ESCI, Gachibowli, Hyderabad</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Organized by Association of Physicians of India – Telangana State, hosted by API Hyderabad Chapter.<br/><br/>
-                    Presented on: <strong className="text-primary/90">"Asymptomatic Hyperuricemia — An Innocent Bystander or a Menacing Foe?"</strong>
-                  </p>
-                </div>
-                
-                <div className="lg:w-2/3 w-full aspect-video md:h-80 relative rounded-2xl overflow-hidden shadow-sm bg-gray-100 group">
-                   <style>{`
-                   .slider-track {
-                     display: flex;
-                     width: 400%;
-                     height: 100%;
-                     animation: scroll-slide 16s infinite ease-in-out;
-                   }
-                   .slider-track:hover {
-                     animation-play-state: paused;
-                   }
-                   @keyframes scroll-slide {
-                     0%, 20% { transform: translateX(0); }
-                     25%, 45% { transform: translateX(-25%); }
-                     50%, 70% { transform: translateX(-50%); }
-                     75%, 95% { transform: translateX(-75%); }
-                     100% { transform: translateX(0); }
-                   }
-                   `}</style>
-                   <div className="slider-track">
-                     <div className="w-[25%] h-full shrink-0 relative bg-[#0a0a0a]">
-                       <img src="/newspaper/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg" alt="Dr. Darshana Reddy speaking at TS APICON 2026, Hyderabad" className="w-full h-full object-contain" />
-                     </div>
-                     <div className="w-[25%] h-full shrink-0 relative bg-[#0a0a0a]">
-                       <img src="/newspaper/ts-apicon-2026-case-presentation-hyperuricemia.jpeg" alt="Case presentation slide on asymptomatic hyperuricemia, TS APICON 2026" className="w-full h-full object-contain" />
-                     </div>
-                     <div className="w-[25%] h-full shrink-0 relative bg-[#0a0a0a]">
-                       <img src="/newspaper/ts-apicon-2026-definition-thresholds-slide.jpeg" alt="Slide comparing hyperuricemia diagnostic thresholds across ACR, EULAR, and other guidelines" className="w-full h-full object-contain" />
-                     </div>
-                     <div className="w-[25%] h-full shrink-0 relative bg-[#0a0a0a]">
-                       <img src="/newspaper/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg" alt="Dr. Darshana Reddy being felicitated at TS APICON 2026" className="w-full h-full object-contain" />
-                     </div>
-                   </div>
-                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-50 bg-black/40 px-3 py-1.5 rounded-full pointer-events-none z-10">
-                     <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
-                     <span className="w-1.5 h-1.5 rounded-full bg-white/50"></span>
-                     <span className="w-1.5 h-1.5 rounded-full bg-white/50"></span>
-                     <span className="w-1.5 h-1.5 rounded-full bg-white/50"></span>
-                   </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-              {/* KAPICON 2026 Card */}
-              <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col animate-slide-up hover:shadow-lg transition-all" style={{ animationDelay: "200ms" }}>
-                <div className="mb-4 flex-1">
-                  <span className="text-xs font-bold tracking-wider text-accent uppercase mb-2 block">Dignitary</span>
-                  <h3 className="text-lg font-bold text-primary mb-2">43rd Annual Conference API Karnataka</h3>
-                  <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground mb-3 font-medium">
-                    <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-accent" /> 8–10 May 2026</span>
-                    <span className="flex items-center gap-1">📍 SIMS, Shivamogga</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    KAPICON 2026 — Theme: "Inspiring Minds, Improving Care".
-                  </p>
-                </div>
-                <div className="relative rounded-2xl overflow-hidden shadow-sm aspect-square bg-[#0a0a0a] flex-shrink-0">
-                   <img src="/newspaper/kapicon-shivamogga-2026-group-photo.jpeg" alt="Group photo of dignitaries at KAPICON Shivamogga 2026" className="w-full h-full object-contain object-center" />
-                </div>
-              </div>
-
-              {/* Fever FM Talk Card */}
-              <div className="bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-950 rounded-3xl p-1 shadow-xl border border-indigo-500/20 h-full flex flex-col animate-slide-up hover:-translate-y-1 transition-all" style={{ animationDelay: "250ms" }}>
-                <div className="bg-white/5 rounded-[22px] p-6 h-full flex flex-col backdrop-blur-sm">
-                  <div className="mb-4 flex-1">
-                    <span className="text-[10px] font-bold tracking-wider text-pink-400 uppercase mb-2 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span>
-                      Radio Talk &middot; On Air
-                    </span>
-                    <h3 className="text-lg font-bold text-white mb-2">Live Session on Fever 94.3 FM</h3>
-                    <p className="text-sm text-indigo-200/80 leading-relaxed mb-4">
-                      A public awareness initiative by Dr. Reddy's on seasonal allergies and congestion for better breathing.
-                    </p>
-                  </div>
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-square flex-shrink-0 bg-white border border-white/10 group">
-                     <img src="/newspaper/fever-fm-dr-reddy.jpeg" alt="Dr. Darshana Reddy live on Fever 94.3 FM talking about allergies" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                     <div className="absolute inset-x-0 bottom-0 p-3 pt-12 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col gap-1 text-white text-xs font-semibold">
-                       <span className="flex items-center gap-1.5">📅 27th June 2026</span>
-                       <span className="flex items-center gap-1.5">⏰ 11 AM - 12 PM & 6 PM - 7 PM</span>
-                     </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* CME Video Card */}
-              <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col animate-slide-up hover:shadow-lg transition-all" style={{ animationDelay: "300ms" }}>
-                <div className="mb-4 flex-1">
-                  <span className="text-xs font-bold tracking-wider text-accent uppercase mb-2 block">CME Session</span>
-                  <h3 className="text-lg font-bold text-primary mb-2">Addressing hundreds of Doctors</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mt-2 block">
-                    23rd May 2026 — Continuing medical education session on lifestyle diseases and preventive medicine.
-                  </p>
-                </div>
-                <div className="rounded-2xl overflow-hidden shadow-sm bg-black aspect-square flex-shrink-0 flex items-center justify-center">
-                  <video controls playsInline className="w-full h-full object-cover outline-none">
-                    <source src="/CME-Programme.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              </div>
-            </div>
+          <div
+            className="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-accent/20 bg-black animate-slide-up"
+            style={{ animationDelay: "100ms" }}
+          >
+            <video controls playsInline className="w-full aspect-video">
+              <source src="/CME-Programme.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
       </section>
