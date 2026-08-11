@@ -70,7 +70,7 @@ export default function Contact() {
     <Layout>
       <SEOHead
         title="Contact Dr. Darshana Reddy - Book Appointment"
-        description="Book an appointment with Dr. Darshana Reddy at Altius Hospital, HBR Layout, Bangalore. Call 080-47284123, +91 9900004527 or use our online appointment form."
+        description="Book an appointment with Dr. Darshana Reddy at Altius Hospital, HBR Layout, Bangalore. Call 080-47284123 ; 9900004527 or use our online appointment form."
         canonical="/contact"
       />
       {/* Hero Section */}

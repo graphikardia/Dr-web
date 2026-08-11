@@ -477,7 +477,7 @@ export default function Articles() {
         </div>
       </section>
 
-      {/* ── Video & Conference Highlight ─────────────────────────────── */}
+      {/* ── Event Highlights ─────────────────────────────── */}
       <section className="section-padding bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
         <div className="container-max relative z-10">
@@ -486,63 +486,76 @@ export default function Articles() {
               Event Highlights
             </span>
             <h2>Professional Engagements & CME Programs</h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
+              Dr. Reddy regularly speaks at national and regional physician conferences on diabetes, internal medicine, and evidence-based practice.
+            </p>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            {/* Left side: Conference Slider */}
-            <div className="animate-slide-up" style={{ animationDelay: "100ms" }}>
-              <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col justify-between">
-                <div className="mb-6">
-                  <h3 className="text-lg font-bold text-primary mb-2">10th Annual Conference of API Telangana State</h3>
-                  <p className="text-xs text-muted-foreground mb-1 leading-relaxed">
-                    <strong className="text-primary/80">Organized by:</strong> Association of Physicians of India Telangana State & 6th South Mid Zone<br />
-                    <strong className="text-primary/80">Hosted by:</strong> Association of Physicians of India - Hyderabad Chapter
-                  </p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    <strong className="text-primary/80">Venue:</strong> Engineering Staff College (ESCI), Gachibowli, Hyderabad, Telangana
+          
+          <div className="flex flex-col gap-8">
+            {/* TS APICON 2026 Card */}
+            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-accent/10 animate-slide-up hover:shadow-lg transition-all" style={{ animationDelay: "100ms" }}>
+              <div className="flex flex-col lg:flex-row gap-8 items-center">
+                <div className="lg:w-1/3 flex flex-col justify-center">
+                  <span className="text-xs font-bold tracking-wider text-accent uppercase mb-2">Speaker &middot; Invited Talk</span>
+                  <h3 className="text-2xl font-bold text-primary mb-3">10th Annual Conference of API Telangana State</h3>
+                  <div className="flex flex-col gap-2 text-sm text-muted-foreground mb-4 font-medium">
+                    <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-accent" /> 11–12 July 2026</span>
+                    <span className="flex items-center gap-2">📍 ESCI, Gachibowli, Hyderabad</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Organized by Association of Physicians of India – Telangana State, hosted by API Hyderabad Chapter.<br/><br/>
+                    Presented on: <strong className="text-primary/90">"Asymptomatic Hyperuricemia — An Innocent Bystander or a Menacing Foe?"</strong>
                   </p>
                 </div>
                 
-                <div className="relative rounded-2xl overflow-hidden shadow-sm aspect-video bg-gray-100 flex items-center justify-center group">
+                <div className="lg:w-2/3 w-full aspect-video md:h-80 relative rounded-2xl overflow-hidden shadow-sm bg-gray-100 group">
                    <div className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                      <style>{`
-                     .auto-scroll-carousel::-webkit-scrollbar { display: none; }
-                     .auto-scroll-track {
-                       display: flex;
-                       width: 500%;
-                       height: 100%;
-                       animation: auto-scroll 20s infinite ease-in-out;
-                     }
-                     .auto-scroll-track:hover {
-                       animation-play-state: paused;
-                     }
-                     @keyframes auto-scroll {
-                       0%, 15% { transform: translateX(0); }
-                       20%, 35% { transform: translateX(-20%); }
-                       40%, 55% { transform: translateX(-40%); }
-                       60%, 75% { transform: translateX(-60%); }
-                       80%, 95% { transform: translateX(-80%); }
-                       100% { transform: translateX(0); }
-                     }
+                     .slider-container::-webkit-scrollbar { display: none; }
+                     .slider-track { display: flex; width: 400%; height: 100%; }
                      `}</style>
-                     <div className="auto-scroll-track">
-                       {/* Ensure user places their 5 renamed images inside public/conference/ folder */}
-                       <img src="/conference/1.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+1' }} alt="Conference 1" className="w-1/5 h-full object-cover shrink-0 snap-start" />
-                       <img src="/conference/2.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+2' }} alt="Conference 2" className="w-1/5 h-full object-cover shrink-0 snap-start" />
-                       <img src="/conference/3.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+3' }} alt="Conference 3" className="w-1/5 h-full object-cover shrink-0 snap-start" />
-                       <img src="/conference/4.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+4' }} alt="Conference 4" className="w-1/5 h-full object-cover shrink-0 snap-start" />
-                       <img src="/conference/5.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+5' }} alt="Conference 5" className="w-1/5 h-full object-cover shrink-0 snap-start" />
+                     <div className="slider-track slider-container animate-[auto-scroll_25s_infinite_ease-in-out]">
+                       <img src="/newspaper/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-dr-darshana-reddy-speaking.jpeg' }} alt="Dr. Darshana Reddy speaking at TS APICON 2026, Hyderabad" className="w-1/4 h-full object-cover object-top shrink-0 snap-start" />
+                       <img src="/newspaper/ts-apicon-2026-case-presentation-hyperuricemia.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-case-presentation-hyperuricemia.jpeg' }} alt="Case presentation slide on asymptomatic hyperuricemia, TS APICON 2026" className="w-1/4 h-full object-cover shrink-0 snap-start" />
+                       <img src="/newspaper/ts-apicon-2026-definition-thresholds-slide.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-definition-thresholds-slide.jpeg' }} alt="Slide comparing hyperuricemia diagnostic thresholds across ACR, EULAR, and other guidelines" className="w-1/4 h-full object-cover shrink-0 snap-start" />
+                       <img src="/newspaper/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg" onError={(e) => { e.currentTarget.src = '/ts-apicon-2026-felicitation-dr-darshana-reddy.jpeg' }} alt="Dr. Darshana Reddy being felicitated at TS APICON 2026" className="w-1/4 h-full object-cover shrink-0 snap-start" />
                      </div>
+                   </div>
+                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-50 bg-black/40 px-3 py-1.5 rounded-full pointer-events-none">
+                     <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+                     <span className="w-1.5 h-1.5 rounded-full bg-white/50"></span>
+                     <span className="w-1.5 h-1.5 rounded-full bg-white/50"></span>
+                     <span className="w-1.5 h-1.5 rounded-full bg-white/50"></span>
                    </div>
                 </div>
               </div>
             </div>
 
-            {/* Right side: CME Video */}
-            <div className="animate-slide-up" style={{ animationDelay: "200ms" }}>
-              <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col justify-between">
-                <div className="mb-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+              {/* KAPICON 2026 Card */}
+              <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col animate-slide-up hover:shadow-lg transition-all" style={{ animationDelay: "200ms" }}>
+                <div className="mb-4 flex-1">
+                  <span className="text-xs font-bold tracking-wider text-accent uppercase mb-2 block">Dignitary</span>
+                  <h3 className="text-lg font-bold text-primary mb-2">43rd Annual Conference API Karnataka</h3>
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground mb-3 font-medium">
+                    <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-accent" /> 8–10 May 2026</span>
+                    <span className="flex items-center gap-1">📍 SIMS, Shivamogga</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    KAPICON 2026 — Theme: "Inspiring Minds, Improving Care".
+                  </p>
+                </div>
+                <div className="relative rounded-2xl overflow-hidden shadow-sm aspect-video bg-gray-100 flex-shrink-0">
+                   <img src="/newspaper/kapicon-shivamogga-2026-group-photo.jpeg" onError={(e) => { e.currentTarget.src = '/kapicon-shivamogga-2026-group-photo.jpeg' }} alt="Group photo of dignitaries at KAPICON Shivamogga 2026" className="w-full h-full object-cover object-center" />
+                </div>
+              </div>
+
+              {/* CME Video Card */}
+              <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col animate-slide-up hover:shadow-lg transition-all" style={{ animationDelay: "300ms" }}>
+                <div className="mb-4 flex-1">
+                  <span className="text-xs font-bold tracking-wider text-accent uppercase mb-2 block">CME Session</span>
                   <h3 className="text-lg font-bold text-primary mb-2">Addressing hundreds of Doctors</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed mt-2 block">
                     23rd May 2026 — Continuing medical education session on lifestyle diseases and preventive medicine.
                   </p>
                 </div>

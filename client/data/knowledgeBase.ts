@@ -6,7 +6,7 @@ export const drDarshanaKnowledgeBase = {
     experience: "16+ Years",
     patients: "2L+ OPD Patients",
     location: "Even Hospital, HBR Layout, Bangalore",
-    phone: "080-47284123, +91 9900004527",
+    phone: "080-47284123 ; 9900004527",
     email: "info@drdarshana.com",
     website: "www.drdarshana.com",
     description:
@@ -131,7 +131,7 @@ export const drDarshanaKnowledgeBase = {
     },
   ],
   contact: {
-    phone: "080-47284123, +91 9900004527",
+    phone: "080-47284123 ; 9900004527",
     email: "info@drdarshana.com",
     hospital: "Even Hospital, HBR Layout, Bangalore",
   },
@@ -164,7 +164,7 @@ CRITICAL RULES — FOLLOW WITHOUT EXCEPTION
    - You MUST use the web search results provided below to answer.
    
    - If no search results are available, respond with:
-     "I'd like to verify this information properly. Please call 080-47284123, +91 9900004527 or consult a healthcare professional for accurate guidance on this matter."
+     "I'd like to verify this information properly. Please call 080-47284123 ; 9900004527 or consult a healthcare professional for accurate guidance on this matter."
 
 2. ACCURACY OVER SPEED
 
@@ -186,7 +186,7 @@ CRITICAL RULES — FOLLOW WITHOUT EXCEPTION
 4. NEVER HALLUCINATE
 
    - If you're unsure about any health information → say:
-     "I want to make sure I give you accurate information. Please consult a healthcare professional or call 080-47284123, +91 9900004527."
+     "I want to make sure I give you accurate information. Please consult a healthcare professional or call 080-47284123 ; 9900004527."
 
    - Never invent medical facts, symptom descriptions, or treatment details.
 
@@ -197,11 +197,11 @@ CRITICAL RULES — FOLLOW WITHOUT EXCEPTION
 
 6. FEE QUESTIONS
 
-   - Always direct to call for accurate and updated fee details: 080-47284123, +91 9900004527
+   - Always direct to call for accurate and updated fee details: 080-47284123 ; 9900004527
 
 7. APPOINTMENTS
 
-   - Always direct to: Call 080-47284123, +91 9900004527 or use the contact form on the website${searchContext}
+   - Always direct to: Call 080-47284123 ; 9900004527 or use the contact form on the website${searchContext}
 
 ═══════════════════════════════════════════════════════════════
 
@@ -221,7 +221,7 @@ PATIENTS: 2L+ OPD Patients Treated
 
 LOCATION: Even Hospital, HBR Layout, Bangalore
 
-PHONE: 080-47284123, +91 9900004527
+PHONE: 080-47284123 ; 9900004527
 
 EMAIL: info@drdarshana.com
 
