@@ -27,7 +27,7 @@ export const FloatingCTA = () => {
     >
       <div className="flex gap-3">
         <a 
-          href="tel:+918882799799"
+          href="tel:+919900004527"
           className="flex-1 bg-white border-2 border-primary text-primary py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-2xl active:scale-95 transition-transform"
         >
           <Phone className="w-5 h-5" />

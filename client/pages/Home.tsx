@@ -549,7 +549,7 @@ const faqs = [
   {
     question: "How do I book an appointment with Dr. Darshana?",
     answer:
-      "You can book an appointment by calling us at 8882799799, using the appointment form on our Contact page, or filling out the form below.",
+      "You can book an appointment by calling us at 9900004527, using the appointment form on our Contact page, or filling out the form below.",
   },
   {
     question: "What should I bring for my first consultation?",
@@ -574,7 +574,7 @@ const faqs = [
   {
     question: "Does Dr. Darshana offer online consultations?",
     answer:
-      "Yes, we offer both in-person and teleconsultation services. Please contact us at 8882799799 to schedule a virtual appointment.",
+      "Yes, we offer both in-person and teleconsultation services. Please contact us at 9900004527 to schedule a virtual appointment.",
   },
   {
     question: "What are Dr. Darshana's professional memberships?",
@@ -903,7 +903,7 @@ export default function Home() {
             name: "Dr. Darshana Reddy",
             image: "https://drdarshanareddy.com/og-image.jpg",
             url: "https://drdarshanareddy.com",
-            telephone: "+918882799799",
+            telephone: "+919900004527",
             email: "info@drdarshanareddy.com",
             priceRange: "\u20B9\u20B9\u20B9",
             description:
@@ -976,13 +976,13 @@ export default function Home() {
               postalCode: "560043",
               addressCountry: "IN",
             },
-            telephone: "+918882799799",
+            telephone: "+919900004527",
           },
           {
             "@type": "LocalBusiness",
             name: "Dr. Darshana Reddy - Internal Medicine Clinic",
             image: "https://drdarshanareddy.com/og-image.jpg",
-            telephone: "+918882799799",
+            telephone: "+919900004527",
             aggregateRating: {
               "@type": "AggregateRating",
               ratingValue: "4.8",
@@ -1568,7 +1568,7 @@ export default function Home() {
             </p>
             <p className="text-primary-foreground/80">
               For appointments call:{" "}
-              <strong className="text-accent">+91 8882 799 799</strong>
+              <strong className="text-accent">+91 990 000 4527</strong>
             </p>
           </div>
         </div>
@@ -1621,10 +1621,10 @@ export default function Home() {
                   <div>
                     <p className="font-semibold text-primary">Phone</p>
                     <a
-                      href="tel:+918882799799"
+                      href="tel:+919900004527"
                       className="text-muted-foreground hover:text-accent"
                     >
-                      +91 8882 799 799
+                      +91 990 000 4527
                     </a>
                   </div>
                 </div>

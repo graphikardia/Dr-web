@@ -477,28 +477,83 @@ export default function Articles() {
         </div>
       </section>
 
-      {/* ── Video Highlight ─────────────────────────────── */}
+      {/* ── Video & Conference Highlight ─────────────────────────────── */}
       <section className="section-padding bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
         <div className="container-max relative z-10">
           <div className="mb-10 text-center animate-slide-up">
             <span className="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-3">
-              Video Highlight
+              Event Highlights
             </span>
-            <h2>Of the many CME programs — Addressing hundreds of Doctors</h2>
-            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              23rd May 2026 — Continuing medical education session on lifestyle
-              diseases and preventive medicine.
-            </p>
+            <h2>Professional Engagements & CME Programs</h2>
           </div>
-          <div
-            className="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-accent/20 bg-black animate-slide-up"
-            style={{ animationDelay: "100ms" }}
-          >
-            <video controls playsInline className="w-full aspect-video">
-              <source src="/CME-Programme.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            {/* Left side: Conference Slider */}
+            <div className="animate-slide-up" style={{ animationDelay: "100ms" }}>
+              <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col justify-between">
+                <div className="mb-6">
+                  <h3 className="text-lg font-bold text-primary mb-2">10th Annual Conference of API Telangana State</h3>
+                  <p className="text-xs text-muted-foreground mb-1 leading-relaxed">
+                    <strong className="text-primary/80">Organized by:</strong> Association of Physicians of India Telangana State & 6th South Mid Zone<br />
+                    <strong className="text-primary/80">Hosted by:</strong> Association of Physicians of India - Hyderabad Chapter
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    <strong className="text-primary/80">Venue:</strong> Engineering Staff College (ESCI), Gachibowli, Hyderabad, Telangana
+                  </p>
+                </div>
+                
+                <div className="relative rounded-2xl overflow-hidden shadow-sm aspect-video bg-gray-100 flex items-center justify-center group">
+                   <div className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                     <style>{`
+                     .auto-scroll-carousel::-webkit-scrollbar { display: none; }
+                     .auto-scroll-track {
+                       display: flex;
+                       width: 500%;
+                       height: 100%;
+                       animation: auto-scroll 20s infinite ease-in-out;
+                     }
+                     .auto-scroll-track:hover {
+                       animation-play-state: paused;
+                     }
+                     @keyframes auto-scroll {
+                       0%, 15% { transform: translateX(0); }
+                       20%, 35% { transform: translateX(-20%); }
+                       40%, 55% { transform: translateX(-40%); }
+                       60%, 75% { transform: translateX(-60%); }
+                       80%, 95% { transform: translateX(-80%); }
+                       100% { transform: translateX(0); }
+                     }
+                     `}</style>
+                     <div className="auto-scroll-track">
+                       {/* Ensure user places their 5 renamed images inside public/conference/ folder */}
+                       <img src="/conference/1.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+1' }} alt="Conference 1" className="w-1/5 h-full object-cover shrink-0 snap-start" />
+                       <img src="/conference/2.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+2' }} alt="Conference 2" className="w-1/5 h-full object-cover shrink-0 snap-start" />
+                       <img src="/conference/3.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+3' }} alt="Conference 3" className="w-1/5 h-full object-cover shrink-0 snap-start" />
+                       <img src="/conference/4.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+4' }} alt="Conference 4" className="w-1/5 h-full object-cover shrink-0 snap-start" />
+                       <img src="/conference/5.jpg" onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/101827/ffffff?text=Image+5' }} alt="Conference 5" className="w-1/5 h-full object-cover shrink-0 snap-start" />
+                     </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right side: CME Video */}
+            <div className="animate-slide-up" style={{ animationDelay: "200ms" }}>
+              <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col justify-between">
+                <div className="mb-6">
+                  <h3 className="text-lg font-bold text-primary mb-2">Addressing hundreds of Doctors</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    23rd May 2026 — Continuing medical education session on lifestyle diseases and preventive medicine.
+                  </p>
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-sm bg-black aspect-video flex-shrink-0">
+                  <video controls playsInline className="w-full h-full object-cover outline-none">
+                    <source src="/CME-Programme.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

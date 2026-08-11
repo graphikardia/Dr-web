@@ -34,7 +34,7 @@ const localFAQs = [
   },
   {
     q: ["fever", "febrile"],
-    a: "Fever is usually a sign that your body is fighting an infection. It can be caused by viral or bacterial infections. Rest, hydration, and paracetamol can help. However, if fever persists for more than 3 days or is accompanied by severe symptoms, please consult a doctor. Call +91 8882 799799 to book an appointment.",
+    a: "Fever is usually a sign that your body is fighting an infection. It can be caused by viral or bacterial infections. Rest, hydration, and paracetamol can help. However, if fever persists for more than 3 days or is accompanied by severe symptoms, please consult a doctor. Call 080-47284123, +91 9900004527 to book an appointment.",
   },
   {
     q: ["cold", "cough", "flu"],
@@ -46,7 +46,7 @@ const localFAQs = [
   },
   {
     q: ["blood pressure", "hypertension", "bp"],
-    a: "High blood pressure (hypertension) often has no symptoms but can lead to serious health issues if untreated. Regular monitoring, low-salt diet, exercise, and medication help manage it. Dr. Darshana can help you manage blood pressure effectively. Call +91 8882 799799.",
+    a: "High blood pressure (hypertension) often has no symptoms but can lead to serious health issues if untreated. Regular monitoring, low-salt diet, exercise, and medication help manage it. Dr. Darshana can help you manage blood pressure effectively. Call 080-47284123, +91 9900004527.",
   },
   {
     q: ["thyroid"],
@@ -54,19 +54,19 @@ const localFAQs = [
   },
   {
     q: ["appointment", "book", "consultation", "schedule"],
-    a: "To book an appointment with Dr. Darshana:\n\n📞 Call: +91 8882 799799\n\n🏥 Location: Even Hospital, HBR Layout, Bangalore\n\n🕐 Timing: 9 AM - 12 PM & 3 PM - 5 PM (Closed Sunday)\n\nWould you like me to help you book an appointment?",
+    a: "To book an appointment with Dr. Darshana:\n\n📞 Call: 080-47284123, +91 9900004527\n\n🏥 Location: Even Hospital, HBR Layout, Bangalore\n\n🕐 Timing: 9 AM - 12 PM & 3 PM - 5 PM (Closed Sunday)\n\nWould you like me to help you book an appointment?",
   },
   {
     q: ["timing", "hours", "open", "closed"],
-    a: "Dr. Darshana's consultation hours:\n\n🏥 Even Hospital, HBR Layout, Bangalore\n\n⏰ Morning: 9:00 AM - 12:00 PM\n⏰ Evening: 3:00 PM - 5:00 PM\n\n📅 Closed on Sunday\n\nCall +91 8882 799799 to book an appointment.",
+    a: "Dr. Darshana's consultation hours:\n\n🏥 Even Hospital, HBR Layout, Bangalore\n\n⏰ Morning: 9:00 AM - 12:00 PM\n⏰ Evening: 3:00 PM - 5:00 PM\n\n📅 Closed on Sunday\n\nCall 080-47284123, +91 9900004527 to book an appointment.",
   },
   {
     q: ["fee", "cost", "charges", "price"],
-    a: "Dr. Darshana offers quality healthcare at affordable rates. Consultation fees are reasonable compared to other specialists. For accurate fee details, please call +91 8882 799799.",
+    a: "Dr. Darshana offers quality healthcare at affordable rates. Consultation fees are reasonable compared to other specialists. For accurate fee details, please call 080-47284123, +91 9900004527.",
   },
   {
     q: ["location", "address", "hospital"],
-    a: "Dr. Darshana consults at:\n\n🏥 Even Hospital\n📍 HBR Layout, Bangalore\n\nFor directions or to book an appointment, call +91 8882 799799.",
+    a: "Dr. Darshana consults at:\n\n🏥 Even Hospital\n📍 HBR Layout, Bangalore\n\nFor directions or to book an appointment, call 080-47284123, +91 9900004527.",
   },
   {
     q: ["who are you", "what are you", "chatbot", "assistant"],
@@ -313,7 +313,7 @@ export default function ChatWidget() {
           id: (Date.now() + 1).toString(),
           role: "assistant",
           content:
-            "For specific medical concerns, I recommend consulting Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Even Hospital, HBR Layout\n\nFor general health tips, feel free to ask!",
+            "For specific medical concerns, I recommend consulting Dr. Darshana directly.\n\n📞 Call: 080-47284123, +91 9900004527\n🏥 Even Hospital, HBR Layout\n\nFor general health tips, feel free to ask!",
         };
         setMessages((prev) => [...prev, userMsg, botMsg]);
         setInput("");
@@ -397,7 +397,7 @@ export default function ChatWidget() {
               id: Date.now().toString(),
               role: "assistant",
               content:
-                "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Even Hospital, HBR Layout",
+                "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: 080-47284123, +91 9900004527\n🏥 Even Hospital, HBR Layout",
             },
           ]);
         }
@@ -418,7 +418,7 @@ export default function ChatWidget() {
             id: Date.now().toString(),
             role: "assistant",
             content:
-              "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: +91 8882 799799\n🏥 Even Hospital, HBR Layout",
+              "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: 080-47284123, +91 9900004527\n🏥 Even Hospital, HBR Layout",
           },
         ]);
       }
@@ -606,7 +606,7 @@ export default function ChatWidget() {
           {collectionStep === "done" && (
             <div className="px-4 py-3 bg-gray-50 border-t border-gray-100 flex justify-center gap-6">
               <a
-                href="tel:+918882799799"
+                href="tel:+919900004527"
                 className="flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors"
               >
                 <Phone className="w-4 h-4" />

@@ -70,7 +70,7 @@ export default function Contact() {
     <Layout>
       <SEOHead
         title="Contact Dr. Darshana Reddy - Book Appointment"
-        description="Book an appointment with Dr. Darshana Reddy at Altius Hospital, HBR Layout, Bangalore. Call +91 8882 799799 or use our online appointment form."
+        description="Book an appointment with Dr. Darshana Reddy at Altius Hospital, HBR Layout, Bangalore. Call 080-47284123, +91 9900004527 or use our online appointment form."
         canonical="/contact"
       />
       {/* Hero Section */}
@@ -98,10 +98,10 @@ export default function Contact() {
                 <div>
                   <h4 className="font-bold text-primary mb-1">Phone</h4>
                   <a
-                    href="tel:+918882799799"
+                    href="tel:+919900004527"
                     className="text-muted-foreground hover:text-accent transition-colors"
                   >
-                    +91 8882 799 799
+                    +91 990 000 4527
                   </a>
                   <p className="text-sm text-muted-foreground/70 mt-1">
                     Call to schedule
@@ -180,7 +180,7 @@ export default function Contact() {
                   <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-800 font-semibold">
                       Something went wrong. Please try again or call us directly
-                      at +91 8882 799 799.
+                      at +91 990 000 4527.
                     </p>
                   </div>
                 )}
@@ -322,7 +322,7 @@ export default function Contact() {
               schedule
             </p>
           </div>
-          <a href="tel:+918882799799" className="inline-block btn-primary">
+          <a href="tel:+919900004527" className="inline-block btn-primary">
             Call to Register for Camp
           </a>
         </div>

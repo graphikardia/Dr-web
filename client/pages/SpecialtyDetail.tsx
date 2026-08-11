@@ -239,8 +239,8 @@ export default function SpecialtyDetail() {
                   Book Now
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <a href="tel:+918882799799" className="bg-white/10 hover:bg-white/20 text-white px-10 py-4 rounded-lg font-bold transition-all border border-white/20">
-                  Call: +91 8882 799 799
+                <a href="tel:+919900004527" className="bg-white/10 hover:bg-white/20 text-white px-10 py-4 rounded-lg font-bold transition-all border border-white/20">
+                  Call: +91 990 000 4527
                 </a>
               </div>
 

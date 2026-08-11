@@ -6,7 +6,7 @@ export const JsonLd = () => {
     "image": "https://cdn.builder.io/api/v1/image/assets%2F25125c27db8e4312bad1ed13783208b5%2F5541045c8f37402690c453b2a605f8a5?format=webp&width=800&height=1200",
     "@id": "https://drdarshanareddy.com",
     "url": "https://drdarshanareddy.com",
-    "telephone": "+918882799799",
+    "telephone": "+919900004527",
     "medicalSpecialty": [
       "InternalMedicine",
       "Diabetology",
