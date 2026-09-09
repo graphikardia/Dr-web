@@ -336,8 +336,8 @@ function AwardSlider() {
 const stats = [
   { label: "Years of Experience", value: "16+", icon: Stethoscope },
   { label: "Patients Treated", value: "2L+", icon: Users },
-  { label: "Expertise", value: "MBBS, MD, DNB, FICP, DAA, FID", icon: Heart },
-  { label: "Specializations", value: "Internal Medicine", icon: Wind },
+  { label: "Expertise", value: "MBBS, MD, DNB, FID, DAA, FICP", icon: Heart },
+  { label: "Specializations", value: "Internal Medicine & Metabolic Diseases", icon: Wind },
 ];
 
 const expertise = [
@@ -891,8 +891,8 @@ export default function Home() {
   return (
     <Layout>
       <SEOHead
-        title="Senior Consultant Internal Medicine & Diabetologist in Bangalore"
-        description="Dr. Darshana Reddy - Senior Consultant Internal Medicine & Diabetologist at Altius Hospital, HBR Layout, Bangalore. 16+ years experience in diabetes management, respiratory care, allergy & asthma treatment."
+        title="Senior Consultant Internal Medicine & Metabolic Diseases Specialist in Bangalore"
+        description="Dr. Darshana Reddy - Senior Consultant Internal Medicine & Metabolic Diseases, Former Medical Superintendent at Altius Hospital, HBR Layout, Bangalore. 16+ years experience, Certified Obesity Specialist (Harvard, 2026). Diabetes, respiratory care, allergy & asthma treatment."
         keywords="Dr. Darshana Reddy, Internal Medicine, Diabetologist, Diabetes Doctor, Pulmonologist, Allergy Specialist, Bangalore, HBR Layout, Altius Hospital"
         canonical="/"
         ogType="website"
@@ -906,8 +906,8 @@ export default function Home() {
             telephone: "+919900004527",
             email: "info@drdarshanareddy.com",
             priceRange: "\u20B9\u20B9\u20B9",
-            description:
-              "Senior Consultant Internal Medicine & Diabetologist with 16+ years experience in Bangalore. Expert in diabetes, respiratory care, allergy & asthma.",
+description:
+                "Senior Consultant Internal Medicine & Metabolic Diseases, Certified Obesity Specialist (Harvard), Former Medical Superintendent with 16+ years experience in Bangalore. Expert in diabetes, respiratory care, allergy & asthma.",
             address: {
               "@type": "PostalAddress",
               streetAddress: "Altius Hospital, HBR Layout",
@@ -951,7 +951,7 @@ export default function Home() {
             ],
             sameAs: [
               "https://www.facebook.com/drdarshanareddy",
-              "https://www.instagram.com/drdarshanareddy",
+              "https://www.instagram.com/your_lifestyle_doctor",
             ],
             medicalSpecialty: [
               "Internal Medicine",
@@ -1037,7 +1037,7 @@ export default function Home() {
               <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/40 text-accent px-5 py-2 rounded-full text-sm font-semibold mb-6 backdrop-blur-sm">
                 <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
                 <span className="tracking-wider">
-                  MBBS, MD, DNB, FICP, DAA, FID
+                  MBBS, MD, DNB, FID, DAA, FICP, Certified Obesity Specialist
                 </span>
               </div>
               <h1
@@ -1050,7 +1050,8 @@ export default function Home() {
                 className="text-xl text-primary-foreground/90 mb-3 font-semibold animate-slide-up"
                 style={{ animationDelay: "200ms" }}
               >
-                Senior Consultant — Internal Medicine | Medical Superintendent
+                Senior Consultant — Internal Medicine | Former Medical
+                Superintendent
               </p>
               <p
                 className="text-base text-primary-foreground/75 mb-8 leading-relaxed animate-slide-up max-w-lg"
@@ -1351,9 +1352,10 @@ export default function Home() {
               <h2 className="mb-6">About Dr. Darshana</h2>
               <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
                 Dr. Darshana Reddy is a highly respected Internal Medicine
-                Consultant and Medical Superintendent at Even Hospital with over
-                16 years of clinical experience in managing acute and chronic
-                medical conditions.
+                &amp; Metabolic Diseases specialist — a Former Medical
+                Superintendent and Senior Consultant with over 16 years of
+                clinical experience in managing acute and chronic medical
+                conditions.
               </p>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 She has successfully treated over 2 lakh patients, including

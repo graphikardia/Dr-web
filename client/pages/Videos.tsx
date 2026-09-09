@@ -33,28 +33,42 @@ const categories = [
 ];
 
 const videos: Video[] = [
-  { id: 1, title: "Health Awareness Reel 1", category: "lifestyle", url: "https://www.instagram.com/reel/DZZ0DFToL0O/", thumbnail: "", views: "1K+" },
-  { id: 2, title: "Health Awareness Reel 2", category: "lifestyle", url: "https://www.instagram.com/reel/DZInGWgyoBS/", thumbnail: "", views: "1K+" },
-  { id: 3, title: "Health Awareness Reel 3", category: "health-tips", url: "https://www.instagram.com/reel/DYxM1nbsjN1/", thumbnail: "", views: "1K+" },
-  { id: 4, title: "Health Awareness Reel 4", category: "lifestyle", url: "https://www.instagram.com/reel/DYRb5Lhofvu/", thumbnail: "", views: "1K+" },
-  { id: 5, title: "Health Awareness Reel 5", category: "diabetes", url: "https://www.instagram.com/reel/DXreAAxiLUK/", thumbnail: "", views: "1K+" },
-  { id: 6, title: "Health Awareness Reel 6", category: "respiratory", url: "https://www.instagram.com/reel/DXOCpZ3jH2s/", thumbnail: "", views: "1K+" },
-  { id: 7, title: "Health Awareness Reel 7", category: "health-tips", url: "https://www.instagram.com/reel/DXG1OTnCLv2/", thumbnail: "", views: "1K+" },
-  { id: 8, title: "Health Awareness Reel 8", category: "lifestyle", url: "https://www.instagram.com/reel/DW3Ib_rEaaJ/", thumbnail: "", views: "1K+" },
-  { id: 9, title: "Health Awareness Reel 9", category: "diabetes", url: "https://www.instagram.com/reel/DWzVtx7EuJP/", thumbnail: "", views: "1K+" },
-  { id: 10, title: "Health Awareness Reel 10", category: "health-tips", url: "https://www.instagram.com/reel/DWlqguqCFo7/", thumbnail: "", views: "1K+" },
-  { id: 11, title: "Health Awareness Reel 11", category: "lifestyle", url: "https://www.instagram.com/reel/DWQa8fVieG7/", thumbnail: "", views: "1K+" },
-  { id: 12, title: "Health Awareness Reel 12", category: "respiratory", url: "https://www.instagram.com/reel/DWGdL_6CbAk/", thumbnail: "", views: "1K+" },
+  { id: 1, title: "Health Awareness Reel 1", category: "lifestyle", url: "https://www.instagram.com/reel/DcoC1dSMDCd/", thumbnail: "", views: "2.9K+" },
+  { id: 2, title: "Health Awareness Reel 2", category: "health-tips", url: "https://www.instagram.com/reel/DclK4mboKPs/", thumbnail: "", views: "46K+" },
+  { id: 3, title: "Health Awareness Reel 3", category: "diabetes", url: "https://www.instagram.com/reel/DcJJmw9J1TD/", thumbnail: "", views: "40K+" },
+  { id: 4, title: "Health Awareness Reel 4", category: "lifestyle", url: "https://www.instagram.com/reel/DZZ0DFToL0O/", thumbnail: "", views: "21K+" },
+  { id: 5, title: "Health Awareness Reel 5", category: "lifestyle", url: "https://www.instagram.com/reel/DZInGWgyoBS/", thumbnail: "", views: "35K+" },
+  { id: 6, title: "Health Awareness Reel 6", category: "health-tips", url: "https://www.instagram.com/reel/DYxM1nbsjN1/", thumbnail: "", views: "1.1K+" },
+  { id: 7, title: "Health Awareness Reel 7", category: "lifestyle", url: "https://www.instagram.com/reel/DYRb5Lhofvu/", thumbnail: "", views: "55K+" },
+  { id: 8, title: "Health Awareness Reel 8", category: "diabetes", url: "https://www.instagram.com/reel/DXreAAxiLUK/", thumbnail: "", views: "7K+" },
+  { id: 9, title: "Health Awareness Reel 9", category: "respiratory", url: "https://www.instagram.com/reel/DXOCpZ3jH2s/", thumbnail: "", views: "1.2K+" },
+  { id: 10, title: "Health Awareness Reel 10", category: "health-tips", url: "https://www.instagram.com/reel/DXG1OTnCLv2/", thumbnail: "", views: "3.9K+" },
+  { id: 11, title: "Health Awareness Reel 11", category: "lifestyle", url: "https://www.instagram.com/reel/DW3Ib_rEaaJ/", thumbnail: "", views: "3.6K+" },
+  { id: 12, title: "Health Awareness Reel 12", category: "diabetes", url: "https://www.instagram.com/reel/DWzVtx7EuJP/", thumbnail: "", views: "3.5K+" },
+  { id: 13, title: "Health Awareness Reel 13", category: "health-tips", url: "https://www.instagram.com/reel/DWlqguqCFo7/", thumbnail: "", views: "3K+" },
+  { id: 14, title: "Health Awareness Reel 14", category: "lifestyle", url: "https://www.instagram.com/reel/DWQa8fVieG7/", thumbnail: "", views: "2.7K+" },
+  { id: 15, title: "Health Awareness Reel 15", category: "respiratory", url: "https://www.instagram.com/reel/DWGdL_6CbAk/", thumbnail: "", views: "3.9K+" },
+  { id: 16, title: "Health Awareness Reel 16", category: "health-tips", url: "https://www.instagram.com/reel/DWAtzsFEyqH/", thumbnail: "", views: "1.3K+" },
+  { id: 17, title: "Health Awareness Reel 17", category: "lifestyle", url: "https://www.instagram.com/reel/DV0tZC4ieKr/", thumbnail: "", views: "9.5K+" },
+  { id: 18, title: "Health Awareness Reel 18", category: "diabetes", url: "https://www.instagram.com/reel/DVX-p39Etqm/", thumbnail: "", views: "3.5K+" },
 ];
 
 export default function Videos() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [isMuted, setIsMuted] = useState(true);
+  const [isReelMuted, setIsReelMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const reelVideoRef = useRef<HTMLVideoElement>(null);
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
+    }
+  };
+  const toggleReelMute = () => {
+    if (reelVideoRef.current) {
+      reelVideoRef.current.muted = !reelVideoRef.current.muted;
+      setIsReelMuted(reelVideoRef.current.muted);
     }
   };
   const [selectedVideo, setSelectedVideo] = useState<{
@@ -163,6 +177,75 @@ export default function Videos() {
                   </svg>
                 )}
               </button>
+            </div>
+          </div>
+
+          {/* Latest Insight — Featured Vertical Reel */}
+          <div className="mb-16 bg-gradient-to-br from-accent/5 via-primary/5 to-accent/5 rounded-3xl p-6 md:p-8 border border-primary/20 shadow-lg animate-slide-up">
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
+                Featured · Latest Insight
+              </span>
+            </div>
+            <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
+              Newest Video — Health Insight by Dr. Darshana
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              The latest health awareness short from Dr. Darshana Reddy — watch
+              now and share your questions on Instagram.
+            </p>
+            <div className="flex justify-center">
+              <div className="rounded-3xl overflow-hidden shadow-2xl bg-black relative max-w-sm w-full">
+                <video
+                  ref={reelVideoRef}
+                  className="w-full aspect-[9/16] object-cover"
+                  playsInline
+                  muted={isReelMuted}
+                  loop
+                  autoPlay
+                  preload="auto"
+                >
+                  <source src="/latest-insight-reel.mp4" type="video/mp4" />
+                </video>
+                <button
+                  onClick={toggleReelMute}
+                  className="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/20"
+                  aria-label={isReelMuted ? "Unmute" : "Mute"}
+                >
+                  {isReelMuted ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <line x1="23" y1="9" x2="17" y2="15" />
+                      <line x1="17" y1="9" x2="23" y2="15" />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
 

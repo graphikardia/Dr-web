@@ -11,8 +11,8 @@ export const Footer = () => {
               Dr. Darshana Reddy
             </h3>
             <p className="text-sm opacity-90 mb-4">
-              Senior Consultant - Internal Medicine & Diabetologist at Even
-              Hospital
+              Senior Consultant - Internal Medicine & Metabolic Diseases |
+              Former Medical Superintendent
             </p>
             <div className="flex gap-4">
               <a

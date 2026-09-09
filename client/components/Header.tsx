@@ -212,7 +212,7 @@ export const Header = () => {
                     scrolled ? "text-[10px]" : "text-xs",
                   )}
                 >
-                  FICP · MD · DNB · Internal Medicine & Diabetologist
+                  FICP · MD · DNB · Internal Medicine & Metabolic Diseases
                 </p>
               </div>
             </Link>

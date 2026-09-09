@@ -12,6 +12,11 @@ import {
 import { useState, useEffect, useRef } from "react";
 
 const awardImages = [
+  {
+    src: "/harvard-obesity-certificate.jpg",
+    caption:
+      "Harvard Medical School — Certificate in Advanced Management of Obesity & Type 2 Diabetes (2026)",
+  },
   { src: "/awards-speech/award-1.jpeg", caption: "Award Ceremony" },
   { src: "/awards-speech/award-2.jpeg", caption: "Medical Conference" },
   { src: "/awards-speech/award-3.jpeg", caption: "FICP Felicitation" },
@@ -676,14 +681,19 @@ const education = [
     year: "2015",
   },
   {
-    degree: "Fellowship in Diabetes",
+    degree: "Fellowship in Diabetes (FID)",
     institution: "Medvarsity, affiliated to Liverpool UK",
     year: "2015",
   },
   {
-    degree: "Diploma in Allergy & Asthma (DAA)",
+    degree: "Diploma in Allergy, Asthma & Immunology (DAA)",
     institution: "C.M.C, Vellore",
     year: "2015",
+  },
+  {
+    degree: "Certified in Advanced Management of Obesity & Type 2 Diabetes",
+    institution: "Harvard Medical School",
+    year: "2026",
   },
   {
     degree: "FICP — Fellow of Indian College of Physicians",
@@ -693,18 +703,22 @@ const education = [
 ];
 
 const affiliations = [
-  "Executive Committee Member — API (2023–2026)",
-  "Current Executive Committee Member — API (2025–26)",
-  "Internal Audit Committee Member — API (2026–27)",
-  "Life Member — Research Society for the Study of Diabetes in India(RSSDI)",
+  "Executive Committee Member — API (consecutively since 2023)",
   "Life Member — Indian Medical Association (IMA)",
+  "Life Member — Research Society for the Study of Diabetes in India (RSSDI)",
+  "Life Member — Indian College of Physicians (ICP)",
+  "Life Member — Indian Chest Society",
+  "Member — American Diabetes Association (ADA)",
   "Life Member — European Respiratory Society (ERS)",
+  "Internal Audit Committee Member — API (2026–27)",
 ];
 
 const community = [
-  "Conducts free diabetes camps twice a month for the past 5+ years",
+  "Conducts free diabetes camps twice a month since 2021 for underserved communities",
+  "Delivers public medical education through print, television, and social media",
+  "Actively promotes adult vaccination across Bangalore",
+  "Served on the frontlines as a COVID warrior during the pandemic",
   "Regular columnist in Times of India, Bangalore Mirror, and Deccan Herald",
-  "Active participant in national scientific forums and seminars",
   "Mentors young medical professionals in internal medicine",
 ];
 
@@ -729,8 +743,13 @@ export default function About() {
             className="text-lg text-primary-foreground/85 max-w-2xl animate-slide-up"
             style={{ animationDelay: "100ms" }}
           >
-            FICP · MD · DNB · Senior Consultant, Internal Medicine &
-            Diabetologist
+            MBBS · MD · DNB · FID · DAA · FICP · Certified Obesity Specialist
+          </p>
+          <p
+            className="text-sm text-primary-foreground/70 max-w-2xl mt-2 animate-slide-up"
+            style={{ animationDelay: "150ms" }}
+          >
+            Department of Internal Medicine &amp; Metabolic Diseases
           </p>
         </div>
       </section>
@@ -746,9 +765,9 @@ export default function About() {
               },
               { value: "2L+", label: "OPD Patients Treated", icon: "👥" },
               {
-                value: "FICP",
-                label: "Fellow of Indian College of Physicians",
-                icon: "🎓",
+                value: "Harvard",
+                label: "Certified Obesity Specialist (2026)",
+                icon: "🏅",
               },
             ].map((item, idx) => (
               <div
@@ -767,23 +786,29 @@ export default function About() {
             ))}
           </div>
           <p className="text-lg text-muted-foreground leading-relaxed mb-6 animate-slide-up">
-            Dr. Darshana Reddy is a distinguished physician with 16 years of
-            progressive experience in internal medicine, commanding a reputation
-            for clinical excellence and patient-centric care. Having treated
-            over 2 lakh OPD patients — in addition to countless ICU and
-            in-patient cases — she has become one of the most trusted healthcare
-            providers in Bangalore.
+            Dr. Darshana Reddy is a distinguished physician with 16+ years of
+            progressive experience — a renowned Internal Medicine &amp;
+            Metabolic Diseases specialist in Bangalore since 2010. A former
+            Medical Superintendent and Senior Consultant, she holds the
+            credentials MBBS, MD, DNB (Internal Medicine), FID, DAA, FICP, and
+            is a Certified Obesity Specialist. Her practice is defined by
+            compassionate, patient-centric, evidence-based and ethical care,
+            and she is trusted by over 2 lakh OPD patients — in addition to
+            countless ICU and in-patient cases.
           </p>
           <p
             className="text-lg text-muted-foreground leading-relaxed animate-slide-up"
             style={{ animationDelay: "100ms" }}
           >
-            She holds the prestigious FICP (Fellow of Indian College of
-            Physicians) designation, earned through demonstrated excellence in
-            internal medicine. Dr. Reddy has worked at Bangalore's most
-            respected institutions — from St. John's Medical College to Apollo
-            Hospitals — bringing academic rigour and clinical expertise to every
-            patient encounter.
+            Dr. Reddy is a Harvard Medical School Certified Specialist in the
+            Advanced Management of Obesity &amp; Type 2 Diabetes (2026) and is
+            the author of textbook chapters for API &amp; ICP. She has
+            presented papers at national and international conferences, is an
+            invited speaker and judge, and lectures medical students. Serving
+            consecutively on the API Executive Committee since 2023 and a
+            dedicated COVID warrior who educates the public through print,
+            television, and social media — she brings academic rigour and
+            clinical expertise to every patient encounter.
           </p>
         </div>
       </section>
