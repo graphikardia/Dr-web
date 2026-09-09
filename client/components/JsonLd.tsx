@@ -10,8 +10,9 @@ export const JsonLd = () => {
     "medicalSpecialty": [
       "InternalMedicine",
       "Diabetology",
-      "Allergy",
-      "Endocrinology"
+      "Endocrinology",
+      "Nutrition",
+      "Allergy"
     ],
     "address": {
       "@type": "PostalAddress",

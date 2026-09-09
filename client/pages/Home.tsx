@@ -893,7 +893,7 @@ export default function Home() {
       <SEOHead
         title="Senior Consultant Internal Medicine & Metabolic Diseases Specialist in Bangalore"
         description="Dr. Darshana Reddy - Senior Consultant Internal Medicine & Metabolic Diseases, Former Medical Superintendent at Altius Hospital, HBR Layout, Bangalore. 16+ years experience, Certified Obesity Specialist (Harvard, 2026). Diabetes, respiratory care, allergy & asthma treatment."
-        keywords="Dr. Darshana Reddy, Internal Medicine, Diabetologist, Diabetes Doctor, Pulmonologist, Allergy Specialist, Bangalore, HBR Layout, Altius Hospital"
+        keywords="Dr. Darshana Reddy, Internal Medicine, Metabolic Diseases, Diabetologist, Diabetes Doctor, Certified Obesity Specialist, Obesity Doctor, Pulmonologist, Allergy Specialist, Bangalore, HBR Layout, Altius Hospital"
         canonical="/"
         ogType="website"
         jsonLd={[
