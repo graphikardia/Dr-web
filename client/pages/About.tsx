@@ -691,14 +691,15 @@ const education = [
     year: "2015",
   },
   {
-    degree: "Certified in Advanced Management of Obesity & Type 2 Diabetes",
-    institution: "Harvard Medical School",
-    year: "2026",
-  },
-  {
-    degree: "FICP — Fellow of Indian College of Physicians",
+    degree:
+      "FICP — Fellow of Indian College of Physicians (highest Indian degree in Internal Medicine)",
     institution: "Indian College of Physicians",
     year: "2024",
+  },
+  {
+    degree: "Harvard Medical School Certificate — Advanced Management of Obesity & Type 2 Diabetes",
+    institution: "Harvard Medical School",
+    year: "2026",
   },
 ];
 
@@ -800,15 +801,31 @@ export default function About() {
             className="text-lg text-muted-foreground leading-relaxed animate-slide-up"
             style={{ animationDelay: "100ms" }}
           >
-            Dr. Reddy is a Harvard Medical School Certified Specialist in the
-            Advanced Management of Obesity &amp; Type 2 Diabetes (2026) and is
-            the author of textbook chapters for API &amp; ICP. She has
-            presented papers at national and international conferences, is an
-            invited speaker and judge, and lectures medical students. Serving
-            consecutively on the API Executive Committee since 2023 and a
-            dedicated COVID warrior who educates the public through print,
-            television, and social media — she brings academic rigour and
-            clinical expertise to every patient encounter.
+            Dr. Reddy completed her MBBS, MD and DNB in Internal Medicine,
+            followed by a Fellowship in Diabetes from Liverpool, UK, and a
+            Diploma in Allergy, Asthma &amp; Immunology from CMC, Vellore —
+            where she trained extensively in allergy testing and allergen
+            immunotherapy. She holds the prestigious FICP from the Indian
+            College of Physicians, the highest Indian degree in Internal
+            Medicine, and is a Harvard Medical School Certified Specialist in
+            the Advanced Management of Obesity &amp; Type 2 Diabetes (2026),
+            helping patients with obesity and metabolic diseases tide over their
+            illnesses.
+          </p>
+          <p
+            className="text-lg text-muted-foreground leading-relaxed animate-slide-up"
+            style={{ animationDelay: "200ms" }}
+          >
+            Deeply interested in academics, she is the author of several
+            textbook chapters of the API and ICP and has presented papers at
+            national and international conferences. She is often invited as a
+            speaker and to judge paper and poster presentations at national and
+            state conferences, and is a lectern for medical students guiding
+            them in medicine and metabolic diseases. Serving consecutively on
+            the API Executive Committee since 2023 and a dedicated COVID
+            warrior who educates the public through print, television, and
+            social media, she brings academic rigour and clinical expertise to
+            every patient encounter.
           </p>
         </div>
       </section>
