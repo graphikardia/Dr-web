@@ -28,9 +28,9 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
-const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL || "";
-const SAVE_LEAD_ENABLED =
-  GOOGLE_SHEET_URL.startsWith("https://script.google.com");
+const GOOGLE_SHEET_URL =
+  import.meta.env.VITE_GOOGLE_SHEET_URL ||
+  "https://script.google.com/macros/s/AKfycbzTLEzt8Isngldw4gjNaGI7lgyu9xWGc4Ocu6-2bRbFzl33g5VjL0jSv05f7qxyPw3dyQ/exec";
 
 const awardImages = [
   { src: "/awards-speech/award-1.jpeg", caption: "Award Ceremony" },
@@ -775,12 +775,6 @@ function HelpForm() {
     setStatus("loading");
 
     try {
-      if (!SAVE_LEAD_ENABLED) {
-        setStatus("success");
-        setFormData({ name: "", email: "", message: "", company: "" });
-        setTimeout(() => setStatus("idle"), 6000);
-        return;
-      }
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         mode: "no-cors",

@@ -13,9 +13,9 @@ import {
   Loader2,
 } from "lucide-react";
 
-const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL || "";
-const SAVE_LEAD_ENABLED =
-  GOOGLE_SHEET_URL.startsWith("https://script.google.com");
+const GOOGLE_SHEET_URL =
+  import.meta.env.VITE_GOOGLE_SHEET_URL ||
+  "https://script.google.com/macros/s/AKfycbzTLEzt8Isngldw4gjNaGI7lgyu9xWGc4Ocu6-2bRbFzl33g5VjL0jSv05f7qxyPw3dyQ/exec";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -73,20 +73,6 @@ export default function Contact() {
     };
 
     try {
-      if (!SAVE_LEAD_ENABLED) {
-        setStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          condition: "",
-          preferredDate: "",
-          message: "",
-          website: "",
-        });
-        setTimeout(() => setStatus("idle"), 6000);
-        return;
-      }
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
