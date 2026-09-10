@@ -1,4 +1,28 @@
-import { Mail, Phone, MapPin, Instagram, Heart } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Instagram,
+  Heart,
+  Clock,
+} from "lucide-react";
+import { SITE, LEGAL_PATHS } from "@/data/site";
+
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Videos", href: "/videos" },
+  { label: "Articles", href: "/articles" },
+  { label: "Testimonials", href: "/testimonials" },
+  { label: "Contact", href: "/contact" },
+];
+
+const legalLinks = [
+  { label: "Privacy Policy", href: LEGAL_PATHS.privacy },
+  { label: "Terms & Conditions", href: LEGAL_PATHS.terms },
+  { label: "Cookie Policy", href: LEGAL_PATHS.cookies },
+  { label: "Refund Policy", href: LEGAL_PATHS.refunds },
+];
 
 export const Footer = () => {
   return (
@@ -8,76 +32,52 @@ export const Footer = () => {
           {/* About */}
           <div>
             <h3 className="text-lg font-bold mb-4 text-accent">
-              Dr. Darshana Reddy
+              {SITE.title}
             </h3>
-            <p className="text-sm opacity-90 mb-4">
-              Senior Consultant - Internal Medicine & Metabolic Diseases |
-              Former Medical Superintendent
-            </p>
-            <div className="flex gap-4">
-              <a
-                href="https://instagram.com/your_lifestyle_doctor"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-accent transition-colors"
-              >
-                <Instagram size={20} />
-              </a>
-            </div>
+            <p className="text-sm opacity-90 mb-4">{SITE.tagline}</p>
+            <a
+              href={SITE.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Instagram: @${SITE.instagramHandle}`}
+              className="hover:text-accent transition-colors inline-flex items-center gap-2 text-sm"
+            >
+              <Instagram size={20} />
+              @{SITE.instagramHandle}
+            </a>
           </div>
 
           {/* Quick Links */}
           <div>
             <h4 className="text-base font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <a href="/" className="hover:text-accent transition-colors">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/about"
-                  className="hover:text-accent transition-colors"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/videos"
-                  className="hover:text-accent transition-colors"
-                >
-                  Videos
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/testimonials"
-                  className="hover:text-accent transition-colors"
-                >
-                  Testimonials
-                </a>
-              </li>
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="hover:text-accent transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Legal */}
           <div>
-            <h4 className="text-base font-bold mb-4">Expertise</h4>
+            <h4 className="text-base font-bold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm">
-              <li className="hover:text-accent transition-colors cursor-pointer">
-                General Medicine
-              </li>
-              <li className="hover:text-accent transition-colors cursor-pointer">
-                Diabetes Management
-              </li>
-              <li className="hover:text-accent transition-colors cursor-pointer">
-                Allergy & Asthma
-              </li>
-              <li className="hover:text-accent transition-colors cursor-pointer">
-                Respiratory Diseases
-              </li>
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="hover:text-accent transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -88,10 +88,19 @@ export const Footer = () => {
               <div className="flex gap-2 items-start">
                 <Phone size={16} className="flex-shrink-0 mt-0.5 text-accent" />
                 <a
-                  href="tel:+919900004527"
+                  href={`tel:${SITE.phonePrimary}`}
                   className="hover:text-accent transition-colors"
                 >
-                  +91 990 000 4527
+                  {SITE.phoneDisplay}
+                </a>
+              </div>
+              <div className="flex gap-2 items-start">
+                <Mail size={16} className="flex-shrink-0 mt-0.5 text-accent" />
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className="hover:text-accent transition-colors"
+                >
+                  {SITE.email}
                 </a>
               </div>
               <div className="flex gap-2 items-start">
@@ -99,22 +108,32 @@ export const Footer = () => {
                   size={16}
                   className="flex-shrink-0 mt-0.5 text-accent"
                 />
-                <p>HBR Layout, Bangalore</p>
+                <p>
+                  {SITE.hospitalName}, HBR Layout, Bangalore
+                </p>
               </div>
               <div className="flex gap-2 items-start">
-                <Mail size={16} className="flex-shrink-0 mt-0.5 text-accent" />
-                <p>dr.darshana@gmail.com</p>
+                <Clock
+                  size={16}
+                  className="flex-shrink-0 mt-0.5 text-accent"
+                />
+                <p>{SITE.hoursShort}</p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-primary-foreground/20 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-sm opacity-80">
-              © 2026 graphikardia. All rights reserved.
+              © {new Date().getFullYear()} Dr. Darshana Reddy. All rights
+              reserved.
             </p>
-            <div className="flex items-center gap-2 mt-4 md:mt-0 text-sm">
+            <p className="text-xs opacity-70 max-w-md text-center md:text-right">
+              This website is for information only and is not a substitute for
+              professional medical advice. In an emergency, call 108.
+            </p>
+            <div className="flex items-center gap-2 text-sm opacity-80">
               <span>Made with</span>
               <Heart size={16} className="text-accent fill-accent" />
               <span>by Graphikardia</span>

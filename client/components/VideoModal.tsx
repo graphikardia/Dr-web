@@ -89,6 +89,7 @@ export const VideoModal = ({
           ) : null}
           <iframe
             src={`https://www.instagram.com/reel/${videoId}/embed`}
+            title={`Instagram reel: ${videoTitle}`}
             frameBorder="0"
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
             allowFullScreen

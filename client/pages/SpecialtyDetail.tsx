@@ -1,5 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { SEOHead } from "@/components/SEOHead";
+import { SITE } from "@/data/site";
 import { 
   ChevronLeft, 
   Stethoscope, 
@@ -38,10 +40,10 @@ const specialtiesData: Record<string, any> = {
     title: "Diabetology",
     icon: Activity,
     image: "https://images.pexels.com/photos/7579165/pexels-photo-7579165.jpeg",
-    description: "Precision diabetes management and reversal programs focused on glycemic control and complication prevention.",
+    description: "Precision diabetes management programs focused on glycemic control and complication prevention.",
     fullContent: [
       "Diabetes management requires a holistic approach beyond just sugar control. Dr. Darshana specializes in tailoring treatment plans for Type 1, Type 2, and Gestational Diabetes.",
-      "We focus on 'Diabetes Reversal' for early-stage patients through intensive lifestyle modification, medical nutrition therapy, and optimized pharmacological intervention.",
+      "For eligible early-stage patients, the focus is on comprehensive management — including remission support where this is clinically appropriate — through intensive lifestyle modification, medical nutrition therapy, and optimized pharmacological intervention.",
     ],
     features: [
       "Continuous Glucose Monitoring (CGM) interpretation",
@@ -76,11 +78,11 @@ const specialtiesData: Record<string, any> = {
     image: "https://images.pexels.com/photos/5998511/pexels-photo-5998511.jpeg",
     description: "Specialized identification and treatment of environmental and food allergies through advanced testing.",
     fullContent: [
-      "Allergies can significantly impact quality of life. We utilize the 'Allergen Skin Prick Test' (the gold standard) to identify specific triggers for allergic rhinitis, asthma, and skin allergies.",
+      "We use the 'Allergen Skin Prick Test', the internationally accepted reference method, to identify specific triggers for allergic rhinitis, asthma, and skin allergies.",
       "Our immunotherapy programs aim to modify the immune system's response to allergens, potentially providing long-term relief without lifelong medication.",
     ],
     features: [
-      "Skin Prick Testing for 50+ common allergens",
+      "Skin Prick Testing with a comprehensive panel of common allergens",
       "Sublingual and Subcutaneous Immunotherapy",
       "Management of Allergic Rhinitis and Sinusitis",
       "Food and drug allergy evaluations",
@@ -133,8 +135,13 @@ export default function SpecialtyDetail() {
   if (!data) {
     return (
       <Layout>
+        <SEOHead
+          title="Specialty Not Found"
+          description="The specialty you are looking for does not exist."
+          noIndex
+        />
         <div className="container-max py-20 text-center">
-          <h2 className="text-2xl font-bold mb-4">Specialty not found</h2>
+          <h1 className="text-2xl font-bold mb-4">Specialty not found</h1>
           <Link to="/" className="btn-accent">Return Home</Link>
         </div>
       </Layout>
@@ -142,9 +149,24 @@ export default function SpecialtyDetail() {
   }
 
   const Icon = data.icon;
+  const canonicalPath = `/specialties/${slug}`;
 
   return (
     <Layout>
+      <SEOHead
+        title={`${data.title} Treatment in Bangalore`}
+        description={`${data.description} Consult Dr. Darshana Reddy, ${data.title} specialist in Bangalore, for ${data.title.toLowerCase()} treatment.`}
+        canonical={canonicalPath}
+        jsonLd={[
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: `${SITE.url}/` },
+              { "@type": "ListItem", position: 2, name: data.title, item: `${SITE.url}${canonicalPath}` },
+            ],
+          },
+        ]}
+      />
       {/* Hero */}
       <section className="bg-primary text-primary-foreground py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -197,7 +219,8 @@ export default function SpecialtyDetail() {
               <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-video relative group">
                 <img 
                   src={data.image} 
-                  alt={data.title} 
+                  alt={`${data.title} treatment by Dr. Darshana Reddy`} 
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -239,8 +262,8 @@ export default function SpecialtyDetail() {
                   Book Now
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <a href="tel:+919900004527" className="bg-white/10 hover:bg-white/20 text-white px-10 py-4 rounded-lg font-bold transition-all border border-white/20">
-                  Call: +91 990 000 4527
+                <a href={`tel:${SITE.phonePrimary}`} className="bg-white/10 hover:bg-white/20 text-white px-10 py-4 rounded-lg font-bold transition-all border border-white/20">
+                  Call: {SITE.phonePrimaryDisplay}
                 </a>
               </div>
 
@@ -251,6 +274,7 @@ export default function SpecialtyDetail() {
                     href={`https://wa.me/?text=Check out ${data.title} specialty by Dr. Darshana Reddy: ${window.location.href}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Share on WhatsApp"
                     className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:scale-110 transition-transform"
                   >
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -259,6 +283,7 @@ export default function SpecialtyDetail() {
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Share on LinkedIn"
                     className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center hover:scale-110 transition-transform"
                   >
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>

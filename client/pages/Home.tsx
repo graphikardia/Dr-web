@@ -1,6 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { Link } from "react-router-dom";
+import { LEGAL_PATHS } from "@/data/site";
 import {
   Users,
   Stethoscope,
@@ -27,9 +28,9 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
-const GOOGLE_SHEET_URL =
-  import.meta.env.VITE_GOOGLE_SHEET_URL ||
-  "https://script.google.com/macros/s/AKfycbzTLEzt8Isngldw4gjNaGI7lgyu9xWGc4Ocu6-2bRbFzl33g5VjL0jSv05f7qxyPw3dyQ/exec";
+const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL || "";
+const SAVE_LEAD_ENABLED =
+  GOOGLE_SHEET_URL.startsWith("https://script.google.com");
 
 const awardImages = [
   { src: "/awards-speech/award-1.jpeg", caption: "Award Ceremony" },
@@ -335,7 +336,7 @@ function AwardSlider() {
 // ── Static data ───────────────────────────────────────────────────────────────
 const stats = [
   { label: "Years of Experience", value: "16+", icon: Stethoscope },
-  { label: "Patients Treated", value: "2L+", icon: Users },
+  { label: "Free Diabetes Camps", value: "Since 2021", icon: Users },
   { label: "Expertise", value: "MBBS, MD, DNB, FID, DAA, FICP", icon: Heart },
   { label: "Specializations", value: "Internal Medicine & Metabolic Diseases", icon: Wind },
 ];
@@ -401,9 +402,9 @@ const careerHighlights = [
   {
     year: "2022 - Present",
     title: "Senior Consultant",
-    subtitle: "Altius/Even Hospital, Bangalore",
+    subtitle: "Even Hospital, Bangalore",
     description:
-      "Leading internal medicine department with focus on diabetes and respiratory care",
+      "Focused on diabetes, obesity, and respiratory care with a preventive approach",
     icon: Stethoscope,
     color: "from-amber-500 to-orange-500",
     flyFrom: "right",
@@ -564,7 +565,7 @@ const faqs = [
   {
     question: "Does Dr. Darshana conduct free health camps?",
     answer:
-      "Yes! Dr. Darshana has been conducting free health camps twice every month for the past 5 years at Even Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
+      "Yes! Dr. Darshana has been conducting free health camps twice every month, since 2021, at Even Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
   },
   {
     question: "What makes Dr. Darshana's treatment approach unique?",
@@ -748,7 +749,9 @@ function HelpForm() {
     name: "",
     email: "",
     message: "",
+    company: "",
   });
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -762,17 +765,34 @@ function HelpForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consent) return;
+    if (formData.company !== "") {
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "", company: "" });
+      setTimeout(() => setStatus("idle"), 6000);
+      return;
+    }
     setStatus("loading");
 
     try {
+      if (!SAVE_LEAD_ENABLED) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "", company: "" });
+        setTimeout(() => setStatus("idle"), 6000);
+        return;
+      }
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, sheet: "Sheet2" }),
+        body: JSON.stringify({
+          ...formData,
+          sheet: "Sheet2",
+          consent: "agreed",
+        }),
       });
       setStatus("success");
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", message: "", company: "" });
       setTimeout(() => setStatus("idle"), 6000);
     } catch (err) {
       console.error("Form submission error:", err);
@@ -809,10 +829,14 @@ function HelpForm() {
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-primary mb-2">
+          <label
+            htmlFor="help-name"
+            className="block text-sm font-semibold text-primary mb-2"
+          >
             Name *
           </label>
           <input
+            id="help-name"
             type="text"
             name="name"
             value={formData.name}
@@ -825,10 +849,14 @@ function HelpForm() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-primary mb-2">
+          <label
+            htmlFor="help-email"
+            className="block text-sm font-semibold text-primary mb-2"
+          >
             Email ID *
           </label>
           <input
+            id="help-email"
             type="email"
             name="email"
             value={formData.email}
@@ -841,10 +869,14 @@ function HelpForm() {
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-semibold text-primary mb-2">
+          <label
+            htmlFor="help-message"
+            className="block text-sm font-semibold text-primary mb-2"
+          >
             Let us know how we can help you! *
           </label>
           <textarea
+            id="help-message"
             name="message"
             value={formData.message}
             onChange={handleChange}
@@ -856,9 +888,50 @@ function HelpForm() {
           />
         </div>
 
+        <div className="mb-4" aria-hidden="true">
+          <label className="block text-sm font-semibold text-primary mb-2">
+            Company
+          </label>
+          <input
+            type="text"
+            name="company"
+            value={formData.company}
+            onChange={handleChange}
+            autoComplete="off"
+            tabIndex={-1}
+            className="hidden"
+          />
+        </div>
+
+        <div className="mb-6">
+          <label
+            htmlFor="help-consent"
+            className="flex items-start gap-3 text-sm text-muted-foreground cursor-pointer"
+          >
+            <input
+              id="help-consent"
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              className="mt-0.5 rounded border-gray-300 text-accent focus:ring-accent"
+            />
+            <span>
+              I agree to the storage and processing of my personal information
+              by this practice as described in the{" "}
+              <Link
+                to={LEGAL_PATHS.privacy}
+                className="text-primary underline underline-offset-2 hover:text-accent"
+              >
+                Privacy Policy
+              </Link>
+              . *
+            </span>
+          </label>
+        </div>
+
         <button
           type="submit"
-          disabled={status === "loading"}
+          disabled={status === "loading" || !consent}
           className="w-full btn-accent font-bold py-3 text-lg flex items-center justify-center gap-2 disabled:opacity-70"
         >
           {status === "loading" ? (
@@ -892,105 +965,10 @@ export default function Home() {
     <Layout>
       <SEOHead
         title="Senior Consultant Internal Medicine & Metabolic Diseases Specialist in Bangalore"
-        description="Dr. Darshana Reddy - Senior Consultant Internal Medicine & Metabolic Diseases, Former Medical Superintendent at Altius Hospital, HBR Layout, Bangalore. 16+ years experience, Certified Obesity Specialist (Harvard, 2026). Diabetes, respiratory care, allergy & asthma treatment."
-        keywords="Dr. Darshana Reddy, Internal Medicine, Metabolic Diseases, Diabetologist, Diabetes Doctor, Certified Obesity Specialist, Obesity Doctor, Pulmonologist, Allergy Specialist, Bangalore, HBR Layout, Altius Hospital"
+        description="Dr. Darshana Reddy - Senior Consultant Internal Medicine & Metabolic Diseases, Former Medical Superintendent at Even Hospital, HBR Layout, Bangalore. 16+ years experience, Certified Obesity Specialist (Harvard, 2026). Diabetes, respiratory care, allergy & asthma treatment."
+        keywords="Dr. Darshana Reddy, Internal Medicine, Metabolic Diseases, Diabetologist, Diabetes Doctor, Certified Obesity Specialist, Obesity Doctor, Pulmonologist, Allergy Specialist, Bangalore, HBR Layout, Even Hospital"
         canonical="/"
         ogType="website"
-        jsonLd={[
-          {
-            "@type": "Physician",
-            "@id": "https://drdarshanareddy.com#physician",
-            name: "Dr. Darshana Reddy",
-            image: "https://drdarshanareddy.com/og-image.jpg",
-            url: "https://drdarshanareddy.com",
-            telephone: "+919900004527",
-            email: "info@drdarshanareddy.com",
-            priceRange: "\u20B9\u20B9\u20B9",
-description:
-                "Senior Consultant Internal Medicine & Metabolic Diseases, Certified Obesity Specialist (Harvard), Former Medical Superintendent with 16+ years experience in Bangalore. Expert in diabetes, respiratory care, allergy & asthma.",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "Altius Hospital, HBR Layout",
-              addressLocality: "Bangalore",
-              addressRegion: "Karnataka",
-              postalCode: "560043",
-              addressCountry: "IN",
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: "13.0358",
-              longitude: "77.5971",
-            },
-            openingHoursSpecification: [
-              {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                ],
-                opens: "09:00",
-                closes: "12:00",
-              },
-              {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                ],
-                opens: "15:00",
-                closes: "17:00",
-              },
-            ],
-            sameAs: [
-              "https://www.facebook.com/drdarshanareddy",
-              "https://www.instagram.com/your_lifestyle_doctor",
-            ],
-            medicalSpecialty: [
-              "Internal Medicine",
-              "Diabetology",
-              "Pulmonology",
-              "Endocrinology",
-              "Allergy & Asthma",
-            ],
-            memberOf: {
-              "@type": "Organization",
-              name: "Indian Medical Association",
-            },
-          },
-          {
-            "@type": "MedicalOrganization",
-            name: "Altius Hospital",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "HBR Layout",
-              addressLocality: "Bangalore",
-              addressRegion: "Karnataka",
-              postalCode: "560043",
-              addressCountry: "IN",
-            },
-            telephone: "+919900004527",
-          },
-          {
-            "@type": "LocalBusiness",
-            name: "Dr. Darshana Reddy - Internal Medicine Clinic",
-            image: "https://drdarshanareddy.com/og-image.jpg",
-            telephone: "+919900004527",
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "4.8",
-              reviewCount: "150",
-              bestRating: "5",
-            },
-          },
-        ]}
       />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary via-primary/95 to-primary/85 text-primary-foreground py-16 md:py-28 relative overflow-hidden">
@@ -1088,7 +1066,7 @@ description:
                 style={{ animationDelay: "500ms" }}
               >
                 <p className="text-xs text-primary-foreground/50 mb-3 uppercase tracking-widest">
-                  Trusted By Patients At
+                  Care Provided Across
                 </p>
                 <div className="flex flex-wrap gap-6 opacity-60">
                   {[
@@ -1210,7 +1188,7 @@ description:
                     CME Programme — 23rd May 2026
                   </span>
                   <h3 className="text-lg md:text-xl font-bold text-primary">
-                    Of the many CME programs — Addressing hundreds of Doctors
+                    CME Programme — 23rd May 2026
                   </h3>
                 </div>
                 <Link
@@ -1292,6 +1270,7 @@ description:
                     <img
                       src={item.image}
                       alt={item.title}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = "none";
@@ -1358,14 +1337,13 @@ description:
                 conditions.
               </p>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                She has successfully treated over 2 lakh patients, including
-                OPD, IPD, and ICU cases, and has played a critical role in
-                saving numerous lives through timely diagnosis and
-                evidence-based care. Altius Hospital : trusted by Dr. Darshana
-                for her clinical practice. Known for her compassionate and
-                holistic approach, she treats patients as individuals—not just
-                diseases—focusing on prevention, long-term wellness, and
-                sustainable lifestyle changes.
+                Over the course of her career she has managed a wide spectrum of
+                OPD, IPD, and ICU cases, with a focus on timely, evidence-based
+                diagnosis and compassionate care. She currently practises at
+                Even Hospital, HBR Layout, Bangalore. Known for her
+                compassionate and holistic approach, she treats patients as
+                individuals—not just diseases—focusing on prevention,
+                long-term wellness, and sustainable lifestyle changes.
               </p>
               <Link
                 to="/about"
@@ -1409,10 +1387,10 @@ description:
             </span>
             <h2>Our Clinics & Programs</h2>
             <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              Comprehensive clinical services including Allergy Clinic with skin
-              prick testing, Diabetes Reversal programs, Obesity clinic, Adult
-              Immunisation, and Preventive Health clinics.
-            </p>
+                Comprehensive clinical services including Allergy Clinic with
+                skin prick testing, comprehensive diabetes management, Obesity
+                Clinic, Adult Immunisation, and Preventive Health Clinics.
+              </p>
           </div>
           <div className="relative">
             <div
@@ -1426,6 +1404,7 @@ description:
                 >
                   <img
                     src={`/checkups/checkup-${i}.jpg`}
+                    loading="lazy"
                     alt={`Check-up ${i}`}
                     className="w-full h-full object-cover"
                     onError={(e) => {

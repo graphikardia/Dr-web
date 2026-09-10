@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
+import { breadcrumbJsonLd } from "@/data/site";
 import { useState, useEffect } from "react";
 import {
   X,
@@ -445,6 +446,7 @@ export default function Articles() {
         description="Medical articles, newspaper features, and health columns by Dr. Darshana Reddy. Expert insights on internal medicine, diabetes, respiratory health, and wellness from leading publications."
         canonical="/articles"
         ogType="article"
+        jsonLd={breadcrumbJsonLd([{ name: "Articles", path: "/articles" }])}
       />
       {lightboxIdx !== null && (
         <Lightbox
@@ -597,7 +599,7 @@ export default function Articles() {
               <div className="bg-white rounded-3xl p-6 shadow-md border border-accent/10 h-full flex flex-col animate-slide-up hover:shadow-lg transition-all" style={{ animationDelay: "300ms" }}>
                 <div className="mb-4 flex-1">
                   <span className="text-xs font-bold tracking-wider text-accent uppercase mb-2 block">CME Session</span>
-                  <h3 className="text-lg font-bold text-primary mb-2">Addressing hundreds of Doctors</h3>
+                  <h3 className="text-lg font-bold text-primary mb-2">CME Programme — Lifestyle Diseases &amp; Preventive Medicine</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed mt-2 block">
                     23rd May 2026 — Continuing medical education session on lifestyle diseases and preventive medicine.
                   </p>

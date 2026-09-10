@@ -1,12 +1,17 @@
+import { SITE } from "@/data/site";
+
 export const JsonLd = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Physician",
     "name": "Dr. Darshana Reddy",
-    "image": "https://cdn.builder.io/api/v1/image/assets%2F25125c27db8e4312bad1ed13783208b5%2F5541045c8f37402690c453b2a605f8a5?format=webp&width=800&height=1200",
-    "@id": "https://drdarshanareddy.com",
-    "url": "https://drdarshanareddy.com",
-    "telephone": "+919900004527",
+    "image": `${SITE.url}/og-image.jpg`,
+    "@id": SITE.url,
+    "url": SITE.url,
+    "telephone": SITE.phonePrimary,
+    "email": SITE.email,
+    "description":
+      "Dr. Darshana Reddy is a Senior Consultant in Internal Medicine and Metabolic Diseases with 16+ years of experience in Bangalore. Former Medical Superintendent; MBBS, MD, DNB (Internal Medicine), FID, DAA, FICP; Harvard-certified Obesity Specialist.",
     "medicalSpecialty": [
       "InternalMedicine",
       "Diabetology",
@@ -16,24 +21,24 @@ export const JsonLd = () => {
     ],
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "HBR Layout",
-      "addressLocality": "Bangalore",
-      "addressRegion": "KA",
-      "postalCode": "560043",
-      "addressCountry": "IN"
+      "streetAddress": SITE.streetAddress,
+      "addressLocality": SITE.addressLocality,
+      "addressRegion": SITE.addressRegion,
+      "postalCode": SITE.postalCode,
+      "addressCountry": SITE.addressCountry
     },
-    "hasHospitalAffiliation": [
+    "hasCredential": [
       {
-        "@type": "Hospital",
-        "name": "Altius Hospital",
-        "address": "HBR Layout, Bangalore"
-      },
-      {
-        "@type": "Hospital",
-        "name": "Even Hospital",
-        "address": "Bangalore"
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "degree",
+        "name": "MBBS, MD, DNB (Internal Medicine), FID, DAA, FICP; Certified Obesity Specialist (Harvard Medical School)"
       }
     ],
+    "hasHospitalAffiliation": {
+      "@type": "Hospital",
+      "name": SITE.hospitalName,
+      "address": `${SITE.streetAddress}, ${SITE.addressLocality}, ${SITE.addressRegion} ${SITE.postalCode}`
+    },
     "priceRange": "$$",
     "openingHoursSpecification": [
       {
@@ -66,7 +71,7 @@ export const JsonLd = () => {
   };
 
   return (
-    <script 
+    <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />

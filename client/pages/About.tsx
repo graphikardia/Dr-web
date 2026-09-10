@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
+import { breadcrumbJsonLd } from "@/data/site";
 import {
   GraduationCap,
   ChevronLeft,
@@ -514,10 +515,10 @@ const experienceStops = [
     ),
   },
   {
-    role: "Senior Consultant & HOD",
-    hospital: "Altius/Even Hospital",
+    role: "Senior Consultant",
+    hospital: "Even Hospital",
     location: "HBR Layout, Bangalore",
-    note: "Head of Dept — Internal Medicine; Medical Superintendent",
+    note: "Internal Medicine & Metabolic Diseases",
     color: "#DC2626",
     bg: "#FEE2E2",
     icon: (
@@ -729,9 +730,10 @@ export default function About() {
     <Layout>
       <SEOHead
         title="About Dr. Darshana Reddy - Internal Medicine Specialist"
-        description="Learn about Dr. Darshana Reddy's 16+ years of experience in Internal Medicine, Diabetes Care, Respiratory Health, and her journey as a Senior Consultant at Altius Hospital, Bangalore."
+        description="Learn about Dr. Darshana Reddy's 16+ years of experience in Internal Medicine, Diabetes Care, Respiratory Health, and her journey as a Senior Consultant, Internal Medicine & Metabolic Diseases at Even Hospital, HBR Layout, Bangalore."
         canonical="/about"
         ogType="profile"
+        jsonLd={breadcrumbJsonLd([{ name: "About", path: "/about" }])}
       />
       <section className="bg-gradient-to-br from-primary to-primary/85 text-primary-foreground py-14 md:py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-pulse" />
@@ -764,7 +766,11 @@ export default function About() {
                 label: "Years of Clinical Experience",
                 icon: "🏥",
               },
-              { value: "2L+", label: "OPD Patients Treated", icon: "👥" },
+              {
+                value: "Since 2021",
+                label: "Free Community Health Camps",
+                icon: "👥",
+              },
               {
                 value: "Harvard",
                 label: "Certified Obesity Specialist (2026)",
@@ -788,14 +794,14 @@ export default function About() {
           </div>
           <p className="text-lg text-muted-foreground leading-relaxed mb-6 animate-slide-up">
             Dr. Darshana Reddy is a distinguished physician with 16+ years of
-            progressive experience — a renowned Internal Medicine &amp;
+            progressive experience — a respected Internal Medicine &amp;
             Metabolic Diseases specialist in Bangalore since 2010. A former
             Medical Superintendent and Senior Consultant, she holds the
             credentials MBBS, MD, DNB (Internal Medicine), FID, DAA, FICP, and
             is a Certified Obesity Specialist. Her practice is defined by
             compassionate, patient-centric, evidence-based and ethical care,
-            and she is trusted by over 2 lakh OPD patients — in addition to
-            countless ICU and in-patient cases.
+            spanning OPD, ICU and in-patient medicine across leading hospitals
+            in Bangalore.
           </p>
           <p
             className="text-lg text-muted-foreground leading-relaxed animate-slide-up"

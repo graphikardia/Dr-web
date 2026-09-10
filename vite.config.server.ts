@@ -38,8 +38,8 @@ export default defineConfig({
         entryFileNames: "[name].mjs",
       },
     },
-    minify: false, // Keep readable for debugging
-    sourcemap: true,
+    minify: true, // Minify the server bundle
+    sourcemap: false, // Never ship source maps to production
   },
   resolve: {
     alias: {

@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
+import { breadcrumbJsonLd } from "@/data/site";
 import { useState, useRef } from "react";
 import { Play, Instagram } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -97,6 +98,7 @@ export default function Videos() {
         description="Watch health awareness videos by Dr. Darshana Reddy on diabetes management, respiratory health, lifestyle wellness, and preventive medicine tips."
         canonical="/videos"
         ogType="video.other"
+        jsonLd={breadcrumbJsonLd([{ name: "Videos", path: "/videos" }])}
       />
       <div className="section-padding bg-gray-50 min-h-screen">
         <div className="container-max">
@@ -121,7 +123,7 @@ export default function Videos() {
               </span>
             </div>
             <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
-              Of the many CME programs — Addressing hundreds of Doctors
+              CME Programme — Lifestyle Diseases &amp; Preventive Medicine
             </h3>
             <p className="text-sm text-muted-foreground mb-6">
               23rd May 2026 — CME Programme on lifestyle diseases and preventive

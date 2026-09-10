@@ -1,5 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
+import { Link } from "react-router-dom";
+import { SITE, LEGAL_PATHS, breadcrumbJsonLd } from "@/data/site";
 import { useState } from "react";
 import {
   Phone,
@@ -11,9 +13,9 @@ import {
   Loader2,
 } from "lucide-react";
 
-const GOOGLE_SHEET_URL =
-  import.meta.env.VITE_GOOGLE_SHEET_URL ||
-  "https://script.google.com/macros/s/AKfycbzTLEzt8Isngldw4gjNaGI7lgyu9xWGc4Ocu6-2bRbFzl33g5VjL0jSv05f7qxyPw3dyQ/exec";
+const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL || "";
+const SAVE_LEAD_ENABLED =
+  GOOGLE_SHEET_URL.startsWith("https://script.google.com");
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -23,7 +25,10 @@ export default function Contact() {
     condition: "",
     preferredDate: "",
     message: "",
+    website: "",
   });
+
+  const [consent, setConsent] = useState(false);
 
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -40,14 +45,53 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consent) return;
+    if (formData.website !== "") {
+      setStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        condition: "",
+        preferredDate: "",
+        message: "",
+        website: "",
+      });
+      setTimeout(() => setStatus("idle"), 6000);
+      return;
+    }
     setStatus("loading");
 
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      condition: formData.condition,
+      preferredDate: formData.preferredDate,
+      message: formData.message,
+      consent: consent ? "agreed" : "not agreed",
+    };
+
     try {
+      if (!SAVE_LEAD_ENABLED) {
+        setStatus("success");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          condition: "",
+          preferredDate: "",
+          message: "",
+          website: "",
+        });
+        setTimeout(() => setStatus("idle"), 6000);
+        return;
+      }
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       setStatus("success");
       setFormData({
@@ -57,6 +101,7 @@ export default function Contact() {
         condition: "",
         preferredDate: "",
         message: "",
+        website: "",
       });
       setTimeout(() => setStatus("idle"), 6000);
     } catch (err) {
@@ -70,8 +115,9 @@ export default function Contact() {
     <Layout>
       <SEOHead
         title="Contact Dr. Darshana Reddy - Book Appointment"
-        description="Book an appointment with Dr. Darshana Reddy at Altius Hospital, HBR Layout, Bangalore. Call 080-47284123 ; 9900004527 or use our online appointment form."
+        description={`Book an appointment with Dr. Darshana Reddy at ${SITE.hospitalName}, HBR Layout, Bangalore. Call ${SITE.phoneDisplay} or use our online appointment form.`}
         canonical="/contact"
+        jsonLd={breadcrumbJsonLd([{ name: "Contact", path: "/contact" }])}
       />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/90 text-primary-foreground py-12 md:py-16">
@@ -96,12 +142,12 @@ export default function Contact() {
                   <Phone className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-primary mb-1">Phone</h4>
+                  <h3 className="font-bold text-primary mb-1">Phone</h3>
                   <a
-                    href="tel:+919900004527"
+                    href={`tel:${SITE.phonePrimary}`}
                     className="text-muted-foreground hover:text-accent transition-colors"
                   >
-                    +91 990 000 4527
+                    {SITE.phoneDisplay}
                   </a>
                   <p className="text-sm text-muted-foreground/70 mt-1">
                     Call to schedule
@@ -114,12 +160,12 @@ export default function Contact() {
                   <Mail className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-primary mb-1">Email</h4>
+                  <h3 className="font-bold text-primary mb-1">Email</h3>
                   <a
-                    href="mailto:info@altiushospital.com"
+                    href={`mailto:${SITE.email}`}
                     className="text-muted-foreground hover:text-accent transition-colors"
                   >
-                    info@altiushospital.com
+                    {SITE.email}
                   </a>
                   <p className="text-sm text-muted-foreground/70 mt-1">
                     We'll respond within 24 hours
@@ -132,13 +178,13 @@ export default function Contact() {
                   <MapPin className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-primary mb-1">Location</h4>
+                  <h3 className="font-bold text-primary mb-1">Location</h3>
                   <p className="text-muted-foreground">
-                    Even Hospital
+                    {SITE.hospitalName}
                     <br />
                     HBR Layout, Bangalore
                     <br />
-                    Karnataka 560043
+                    Karnataka {SITE.postalCode}
                   </p>
                 </div>
               </div>
@@ -146,9 +192,9 @@ export default function Contact() {
               <div className="flex gap-4 p-6 bg-accent/10 rounded-lg border border-accent/20">
                 <Clock className="w-6 h-6 text-accent flex-shrink-0" />
                 <div>
-                  <h4 className="font-bold text-primary mb-2">
+                  <h3 className="font-bold text-primary mb-2">
                     Consultation Hours
-                  </h4>
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     Monday - Saturday: 9:00 AM - 12:00 PM
                     <br />
@@ -170,8 +216,8 @@ export default function Contact() {
                   <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <p className="text-green-800 font-semibold">
-                      Thank you! Your appointment request has been received and
-                      saved. We'll contact you within 24 hours to confirm.
+                      Thank you! Your appointment request has been submitted.
+                      Our team will contact you to confirm.
                     </p>
                   </div>
                 )}
@@ -180,18 +226,38 @@ export default function Contact() {
                   <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-800 font-semibold">
                       Something went wrong. Please try again or call us directly
-                      at +91 990 000 4527.
+                      at {SITE.phoneDisplay}.
                     </p>
                   </div>
                 )}
 
+                <div className="mb-6" aria-hidden="true">
+                  <label htmlFor="website" className="sr-only">
+                    Website (leave blank)
+                  </label>
+                  <input
+                    type="text"
+                    name="website"
+                    id="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="hidden"
+                  />
+                </div>
+
                 <div className="mb-6">
-                  <label className="block text-sm font-semibold text-primary mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-semibold text-primary mb-2"
+                  >
                     Full Name *
                   </label>
                   <input
                     type="text"
                     name="name"
+                    id="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -203,12 +269,16 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-semibold text-primary mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-semibold text-primary mb-2"
+                    >
                       Email Address *
                     </label>
                     <input
                       type="email"
                       name="email"
+                      id="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
@@ -218,15 +288,20 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-primary mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-semibold text-primary mb-2"
+                    >
                       Phone Number *
                     </label>
                     <input
                       type="tel"
                       name="phone"
+                      id="phone"
                       value={formData.phone}
                       onChange={handleChange}
                       required
+                      minLength={10}
                       disabled={status === "loading"}
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
                       placeholder="+91 XXXXX XXXXX"
@@ -236,11 +311,15 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-semibold text-primary mb-2">
+                    <label
+                      htmlFor="condition"
+                      className="block text-sm font-semibold text-primary mb-2"
+                    >
                       Primary Concern *
                     </label>
                     <select
                       name="condition"
+                      id="condition"
                       value={formData.condition}
                       onChange={handleChange}
                       required
@@ -256,12 +335,16 @@ export default function Contact() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-primary mb-2">
+                    <label
+                      htmlFor="preferredDate"
+                      className="block text-sm font-semibold text-primary mb-2"
+                    >
                       Preferred Date
                     </label>
                     <input
                       type="date"
                       name="preferredDate"
+                      id="preferredDate"
                       value={formData.preferredDate}
                       onChange={handleChange}
                       disabled={status === "loading"}
@@ -272,11 +355,15 @@ export default function Contact() {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-sm font-semibold text-primary mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-semibold text-primary mb-2"
+                  >
                     Additional Message (Optional)
                   </label>
                   <textarea
                     name="message"
+                    id="message"
                     value={formData.message}
                     onChange={handleChange}
                     rows={4}
@@ -286,9 +373,39 @@ export default function Contact() {
                   />
                 </div>
 
+                <div className="mb-6">
+                  <label className="flex items-start gap-3 text-sm text-muted-foreground">
+                    <input
+                      type="checkbox"
+                      name="consent"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      required
+                      disabled={status === "loading"}
+                      className="mt-0.5 h-4 w-4 accent-accent"
+                    />
+                    <span>
+                      I agree to the{" "}
+                      <Link
+                        to={LEGAL_PATHS.privacy}
+                        className="font-medium text-primary underline underline-offset-2"
+                      >
+                        Privacy Policy
+                      </Link>{" "}
+                      and consent to being contacted regarding my appointment
+                      request. *
+                    </span>
+                  </label>
+                  <p className="text-xs text-muted-foreground/70 mt-3">
+                    Your details are used only to schedule your appointment and
+                    are not shared for marketing. For medical emergencies, do
+                    not use this form — call 108 or visit a hospital.
+                  </p>
+                </div>
+
                 <button
                   type="submit"
-                  disabled={status === "loading"}
+                  disabled={status === "loading" || !consent}
                   className="w-full btn-accent font-bold py-4 text-lg flex items-center justify-center gap-2 disabled:opacity-70"
                 >
                   {status === "loading" ? (
@@ -322,7 +439,7 @@ export default function Contact() {
               schedule
             </p>
           </div>
-          <a href="tel:+919900004527" className="inline-block btn-primary">
+          <a href={`tel:${SITE.phonePrimary}`} className="inline-block btn-primary">
             Call to Register for Camp
           </a>
         </div>
@@ -337,7 +454,8 @@ export default function Contact() {
               width="100%"
               height="100%"
               frameBorder="0"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.0185706671273!2d77.62660041142576!3d13.034489313441748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae175a83f3f40d%3A0xa1e557900cd7b67c!2sAltius%20Multi-speciality%20Hospital%2C%20HBR%20Layout!5e0!3m2!1sen!2sin!4v1771857450345!5m2!1sen!2sin"
+              title={`Map showing ${SITE.hospitalName}, HBR Layout, Bangalore`}
+              src="https://www.google.com/maps?q=Even+Hospital+HBR+Layout+Bangalore&output=embed"
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -345,7 +463,7 @@ export default function Contact() {
           </div>
           <div className="text-center mt-4">
             <a
-              href="https://maps.app.goo.gl/B6csSdqyacrhLHkP7"
+              href="https://www.google.com/maps/search/?api=1&query=Even+Hospital+HBR+Layout+Bangalore"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-accent hover:underline font-semibold"

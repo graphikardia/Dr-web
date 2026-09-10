@@ -8,8 +8,8 @@ import {
   Phone,
   Loader2,
   Calendar,
-  MessageSquare,
 } from "lucide-react";
+import { SITE, LEGAL_PATHS } from "@/data/site";
 
 interface Message {
   id: string;
@@ -19,9 +19,8 @@ interface Message {
 
 type CollectionStep = "greeting" | "name" | "phone" | "reason" | "done";
 
-const GOOGLE_SHEET_URL =
-  import.meta.env.VITE_GOOGLE_SHEET_URL ||
-  "https://script.google.com/macros/s/AKfycbzXXXXXXXXXXXXX";
+const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL || "";
+const SAVE_LEAD_ENABLED = GOOGLE_SHEET_URL.startsWith("https://script.google.com");
 
 const localFAQs = [
   {
@@ -143,12 +142,13 @@ const saveLeadToSheet = async (data: {
   phone: string;
   reason: string;
 }) => {
+  if (!SAVE_LEAD_ENABLED) return;
   try {
     await fetch(GOOGLE_SHEET_URL, {
       method: "POST",
       mode: "no-cors" as RequestMode,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, source: "chatbot" }),
+      body: JSON.stringify({ ...data, source: "chatbot", consent: "agreed" }),
     });
   } catch (e) {
     console.error("Failed to save lead:", e);
@@ -463,6 +463,7 @@ export default function ChatWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
+          aria-label="Open chat with Dr. Darshana's AI assistant"
           className="fixed bottom-24 right-6 md:bottom-6 z-[99998] flex items-center gap-3 bg-gradient-to-r from-primary to-[#1a3a5c] px-5 py-3 rounded-full shadow-2xl hover:scale-105 transition-transform duration-300 border-2 border-white"
         >
           <div className="relative">
@@ -477,7 +478,11 @@ export default function ChatWidget() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 md:bottom-20 right-6 z-[99999] w-[380px] max-w-[calc(100vw-32px)] bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col max-h-[calc(100vh-120px)] md:max-h-[560px]">
+        <div
+          role="dialog"
+          aria-label="Chat with Dr. Darshana's AI assistant"
+          className="fixed bottom-6 md:bottom-20 right-6 z-[99999] w-[380px] max-w-[calc(100vw-32px)] bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col max-h-[calc(100vh-120px)] md:max-h-[560px]"
+        >
           {/* Header */}
           <div className="bg-gradient-to-r from-primary to-[#1a3a5c] px-5 py-4 flex items-center gap-3">
             <div className="relative">
@@ -491,11 +496,12 @@ export default function ChatWidget() {
                 Dr. Darshana Reddy
               </h3>
               <p className="text-white/70 text-xs">
-                Internal Medicine & Diabetology
+                Internal Medicine & Metabolic Diseases
               </p>
             </div>
             <button
               onClick={() => setIsOpen(false)}
+              aria-label="Close chat"
               className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
             >
               <X className="w-5 h-5 text-white" />
@@ -509,7 +515,10 @@ export default function ChatWidget() {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-3">
+          <div
+            aria-live="polite"
+            className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-3"
+          >
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -592,6 +601,7 @@ export default function ChatWidget() {
             <button
               onClick={() => sendMessage(input)}
               disabled={loading || !input.trim()}
+              aria-label="Send message"
               className="w-12 h-12 bg-gradient-to-r from-accent to-[#e65a2a] rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
@@ -606,7 +616,7 @@ export default function ChatWidget() {
           {collectionStep === "done" && (
             <div className="px-4 py-3 bg-gray-50 border-t border-gray-100 flex justify-center gap-6">
               <a
-                href="tel:+919900004527"
+                href={`tel:${SITE.phonePrimary}`}
                 className="flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors"
               >
                 <Phone className="w-4 h-4" />
@@ -626,6 +636,18 @@ export default function ChatWidget() {
           <div className="px-4 py-2 bg-gradient-to-r from-primary to-[#1a3a5c] text-center">
             <p className="text-white/60 text-xs">
               Powered by AI • Not for emergencies
+            </p>
+            <p className="text-white/45 text-[10px] mt-1">
+              This assistant provides general information only and is not a
+              substitute for professional medical advice. By sharing details
+              you agree to our{" "}
+              <a
+                href={LEGAL_PATHS.privacy}
+                className="underline underline-offset-2 hover:text-white/70"
+              >
+                Privacy Policy
+              </a>
+              .
             </p>
           </div>
         </div>

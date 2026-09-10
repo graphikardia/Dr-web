@@ -1,14 +1,14 @@
 export const drDarshanaKnowledgeBase = {
   about: {
     name: "Dr. Darshana Reddy",
-    title: "Senior Consultant — Internal Medicine & Diabetologist",
+    title: "Senior Consultant — Internal Medicine & Metabolic Diseases",
     qualifications: "MBBS | MD | DNB | FICP | DAA | FID",
     experience: "16+ Years",
-    patients: "2L+ OPD Patients",
+    patients: "Community health camps twice a month since 2021",
     location: "Even Hospital, HBR Layout, Bangalore",
     phone: "080-47284123 ; 9900004527",
-    email: "info@drdarshana.com",
-    website: "www.drdarshana.com",
+    email: "dr.darshana@gmail.com",
+    website: "www.drdarshanareddy.com",
     description:
       "A distinguished physician with 16+ years of progressive experience in internal medicine and diabetology. Holds the prestigious FICP (Fellow of Indian College of Physicians) designation.",
   },
@@ -37,10 +37,10 @@ export const drDarshanaKnowledgeBase = {
   },
   treatmentApproach:
     "Dr. Darshana is known for her conservative treatment approach — she prescribes only necessary medicines and tests. She focuses on identifying the root cause of health issues and emphasizes lifestyle modifications for long-term wellness.",
-  fees: "Affordable consultation rates — significantly lower compared to other physicians and diabetologists, making expert care accessible to all patients.",
+  fees: "Consultation fees are set and collected by the hospital where services are provided. Please call 080-47284123 or 9900004527 for the current fee details.",
   career: [
     {
-      role: "Senior Consultant & HOD",
+      role: "Senior Consultant",
       hospital: "Even Hospital",
       period: "2022 - Present",
       location: "Bangalore",
@@ -115,7 +115,7 @@ export const drDarshanaKnowledgeBase = {
     },
     {
       q: "Does Dr. Darshana conduct free health camps?",
-      a: "Yes! Dr. Darshana has been conducting free health camps twice every month for the past 5 years at Even Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
+      a: "Yes! Dr. Darshana has been conducting free health camps twice every month since 2021 at Even Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
     },
     {
       q: "What makes Dr. Darshana's treatment approach unique?",
@@ -127,12 +127,12 @@ export const drDarshanaKnowledgeBase = {
     },
     {
       q: "What are Dr. Darshana's professional memberships?",
-      a: "Dr. Darshana is an Executive Committee Member of the Association of Physicians of India (2022–2026), Internal Audit Committee Member of API (2025–2026), Member of Indian Medical Association, Member of Research Society for the Study of Diabetes in India, Member of European Respiratory Society, and Member of Allergy Asthma Network India.",
+      a: "Dr. Darshana is an Executive Committee Member of the Association of Physicians of India (2022–2027), Internal Audit Committee Member of API (2025–2027), Member of Indian Medical Association, Member of Research Society for the Study of Diabetes in India, Member of European Respiratory Society, and Member of Allergy Asthma Network India.",
     },
   ],
   contact: {
     phone: "080-47284123 ; 9900004527",
-    email: "info@drdarshana.com",
+    email: "dr.darshana@gmail.com",
     hospital: "Even Hospital, HBR Layout, Bangalore",
   },
 };
@@ -211,19 +211,19 @@ VERIFIED DR. DARSHANA FACTS (use as base context)
 
 DOCTOR: Dr. Darshana Reddy
 
-TITLE: Senior Consultant — Internal Medicine & Diabetologist
+TITLE: Senior Consultant — Internal Medicine & Metabolic Diseases
 
 QUALIFICATIONS: MBBS | MD | DNB | FICP | DAA | FID
 
 EXPERIENCE: 16+ Years
 
-PATIENTS: 2L+ OPD Patients Treated
+COMMUNITY CAMPS: Free health camps twice a month since 2021 (First and Third Tuesday, from 9 AM to 12 PM, at Even Hospital)
 
 LOCATION: Even Hospital, HBR Layout, Bangalore
 
 PHONE: 080-47284123 ; 9900004527
 
-EMAIL: info@drdarshana.com
+EMAIL: dr.darshana@gmail.com
 
 SPECIALIZATIONS:
 - General Medicine
@@ -250,7 +250,7 @@ TREATMENT APPROACH:
 - Empathetic listening and honest diagnosis
 
 CAREER:
-- Senior Consultant & HOD, Even Hospital (2022 - Present)
+- Senior Consultant, Even Hospital (2022 - Present)
 - Consultant, K C Raju Multispeciality Hospital (2018 - 2022)
 - Consultant, Apollo Hospitals (2015 - 2018)
 - Senior Resident, St. John's Medical College (2012 - 2015)

@@ -11,9 +11,11 @@ interface SEOProps {
   jsonLd?: Record<string, unknown>[];
 }
 
-const BASE_URL = "https://drdarshanareddy.com";
-const DEFAULT_IMAGE = "https://drdarshanareddy.com/og-image.jpg";
-const SITE_NAME = "Dr. Darshana Reddy";
+import { SITE } from "@/data/site";
+
+const BASE_URL = SITE.url;
+const DEFAULT_IMAGE = SITE.ogImage;
+const SITE_NAME = SITE.title;
 
 export function SEOHead({
   title,
@@ -70,8 +72,10 @@ export function SEOHead({
     }
     canonicalEl.setAttribute("href", url);
 
+    const existingJsonLd = document.querySelector("#seo-jsonld");
+
     if (jsonLd) {
-      let script = document.querySelector("#seo-jsonld");
+      let script = existingJsonLd as HTMLScriptElement | null;
       if (!script) {
         script = document.createElement("script");
         script.id = "seo-jsonld";
@@ -83,6 +87,8 @@ export function SEOHead({
         null,
         2,
       );
+    } else if (existingJsonLd) {
+      existingJsonLd.remove();
     }
   }, [fullTitle, description, url, ogImage, ogType, keywords, noIndex, jsonLd]);
 
