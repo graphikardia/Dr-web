@@ -41,7 +41,7 @@ export const drDarshanaKnowledgeBase = {
   career: [
     {
       role: "Senior Consultant",
-      hospital: "Even Hospital",
+      hospital: "Altius → Even Hospital",
       period: "2022 - Present",
       location: "Bangalore",
     },
@@ -250,7 +250,7 @@ TREATMENT APPROACH:
 - Empathetic listening and honest diagnosis
 
 CAREER:
-- Senior Consultant, Even Hospital (2022 - Present)
+- Senior Consultant, Altius → Even Hospital (2022 - Present)
 - Consultant, K C Raju Multispeciality Hospital (2018 - 2022)
 - Consultant, Apollo Hospitals (2015 - 2018)
 - Senior Resident, St. John's Medical College (2012 - 2015)

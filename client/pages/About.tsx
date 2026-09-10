@@ -516,7 +516,7 @@ const experienceStops = [
   },
   {
     role: "Senior Consultant",
-    hospital: "Even Hospital",
+    hospital: "Altius → Even Hospital",
     location: "HBR Layout, Bangalore",
     note: "Internal Medicine & Metabolic Diseases",
     color: "#DC2626",
