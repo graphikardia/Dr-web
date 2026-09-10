@@ -402,7 +402,7 @@ const careerHighlights = [
   {
     year: "2022 - Present",
     title: "Senior Consultant",
-    subtitle: "Altius Hospital → Even Hospital (Current), Bangalore",
+    subtitle: "Even Hospital, Bangalore",
     description:
       "Focused on diabetes, obesity, and respiratory care with a preventive approach",
     icon: Stethoscope,

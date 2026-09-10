@@ -516,7 +516,27 @@ const experienceStops = [
   },
   {
     role: "Senior Consultant",
-    hospital: "Altius → Even Hospital",
+    hospital: "Altius Hospital",
+    location: "HBR Layout, Bangalore",
+    note: "Internal Medicine — also served as Medical Superintendent",
+    color: "#F4742B",
+    bg: "#FEE2D0",
+    icon: (
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#F4742B"
+        strokeWidth="2"
+      >
+        <path d="M12 21s-7-4.5-9.5-8.5C.8 9.6 2.6 6 6 6c2 0 3.2 1.2 4 2.4C10.8 7.2 12 6 14 6c3.4 0 5.2 3.6 3.5 6.5C15 16.5 12 21 12 21z" />
+      </svg>
+    ),
+  },
+  {
+    role: "Senior Consultant",
+    hospital: "Even Hospital",
     location: "HBR Layout, Bangalore",
     note: "Internal Medicine & Metabolic Diseases",
     color: "#DC2626",
