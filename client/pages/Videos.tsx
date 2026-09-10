@@ -4,7 +4,6 @@ import { breadcrumbJsonLd } from "@/data/site";
 import { useState, useRef } from "react";
 import { Play, Instagram } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { VideoModal } from "@/components/VideoModal";
 
 const categoryGradients: Record<string, string> = {
   diabetes: "from-blue-600 to-blue-400",
@@ -72,23 +71,15 @@ export default function Videos() {
       setIsReelMuted(reelVideoRef.current.muted);
     }
   };
-  const [selectedVideo, setSelectedVideo] = useState<{
-    url: string;
-    title: string;
-    thumbnail: string;
-  } | null>(null);
 
   const filteredVideos =
     activeCategory === "all"
       ? videos
       : videos.filter((v) => v.category === activeCategory);
 
-  const getInstagramThumbnail = (url: string) => {
+  const extractShortcode = (url: string) => {
     const match = url.match(/(?:reel|reels|p)\/([A-Za-z0-9_-]+)/);
-    if (match && match[1]) {
-      return `https://www.instagram.com/p/${match[1]}/media/?size=l`;
-    }
-    return "";
+    return match && match[1] ? match[1] : "";
   };
 
   return (
@@ -277,63 +268,17 @@ export default function Videos() {
                 className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 animate-slide-up"
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
-                {/* Thumbnail Container */}
-                <div
-                  className="relative aspect-[9/16] overflow-hidden cursor-pointer bg-gray-200"
-                  onClick={() =>
-                    setSelectedVideo({
-                      url: video.url,
-                      title: video.title,
-                      thumbnail: getInstagramThumbnail(video.url),
-                    })
-                  }
-                >
-                  {/* Loading Skeleton */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
-
-                  <img
-                    src={getInstagramThumbnail(video.url)}
-                    alt={video.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-10"
-                    onLoad={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      const skeleton = target.previousElementSibling;
-                      if (skeleton) skeleton.classList.add("hidden");
-                    }}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                      const skeleton = target.previousElementSibling;
-                      if (skeleton) {
-                        skeleton.classList.remove(
-                          "animate-pulse",
-                          "from-gray-200",
-                          "to-gray-100",
-                        );
-                        skeleton.classList.add(
-                          "bg-gradient-to-br",
-                          "from-primary/40",
-                          "to-accent/40",
-                        );
-                        skeleton.classList.remove("hidden");
-                      }
-                    }}
+                {/* Inline Video Player */}
+                <div className="relative aspect-[9/16] overflow-hidden bg-gray-200">
+                  <iframe
+                    src={`https://www.instagram.com/reel/${extractShortcode(video.url)}/embed`}
+                    title={video.title}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="w-full h-full border-0"
                   />
-
-                  {/* Play Overlay */}
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center z-20">
-                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 shadow-xl">
-                      <Play className="w-8 h-8 text-primary group-hover:text-white fill-current" />
-                    </div>
-                  </div>
-
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-30">
-                    <span className="bg-black/40 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded-md font-bold flex items-center gap-1 border border-white/20">
-                      <Instagram className="w-3 h-3" />
-                      WATCH REEL
-                    </span>
-                  </div>
                 </div>
 
                 {/* Content */}
@@ -349,6 +294,16 @@ export default function Videos() {
                   <h3 className="text-lg font-bold text-primary group-hover:text-accent transition-colors line-clamp-2 leading-tight">
                     {video.title}
                   </h3>
+                  <a
+                    href={video.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-accent transition-colors"
+                  >
+                    <Instagram className="w-3.5 h-3.5" />
+                    Open on Instagram
+                    <span aria-hidden="true">↗</span>
+                  </a>
                 </div>
               </div>
             ))}
@@ -384,14 +339,6 @@ export default function Videos() {
           </a>
         </div>
       </section>
-
-      <VideoModal
-        isOpen={!!selectedVideo}
-        videoUrl={selectedVideo?.url || ""}
-        videoTitle={selectedVideo?.title || ""}
-        thumbnail={selectedVideo?.thumbnail}
-        onClose={() => setSelectedVideo(null)}
-      />
     </Layout>
   );
 }
