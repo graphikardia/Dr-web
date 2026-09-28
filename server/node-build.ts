@@ -1,3 +1,4 @@
+import fs from "fs";
 import path from "path";
 import { createServer } from "./index";
 import * as express from "express";
@@ -12,7 +13,12 @@ const distPath = path.join(__dirname, "../spa");
 // Serve static files
 app.use(express.static(distPath));
 
-// Handle React Router - serve index.html for all non-API routes.
+// Handle React Router - every real route is pre-rendered to
+// dist/spa/<route>/index.html by scripts/prerender.mjs and is already served by
+// express.static above. Anything reaching here is a genuinely unknown path, so
+// it gets the pre-rendered 404 page and a real 404 status. Falling back to
+// index.html here would serve the homepage body with a 200, which Google
+// treats as a soft 404 (the same content at unlimited URLs).
 // Registered via app.use() (no path pattern) because Express 5 / path-to-regexp
 // v8 rejects the old app.get("*") wildcard syntax.
 app.use((req, res, next) => {
@@ -26,6 +32,10 @@ app.use((req, res, next) => {
     return next();
   }
 
+  const notFound = path.join(distPath, "404.html");
+  if (fs.existsSync(notFound)) {
+    return res.status(404).sendFile(notFound);
+  }
   res.sendFile(path.join(distPath, "index.html"));
 });
 

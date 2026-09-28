@@ -12,7 +12,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://drdarshanareddy.com/"/>
     <image:image>
       <image:loc>https://drdarshanareddy.com/og-image.jpg</image:loc>
-      <image:title>Dr. Darshana Reddy - Senior Consultant Internal Medicine & Metabolic Diseases</image:title>
+      <image:title>Dr. Darshana Reddy - Senior Consultant Internal Medicine &amp; Metabolic Diseases</image:title>
     </image:image>
   </url>
 
@@ -96,6 +96,13 @@
   <url>
     <loc>https://drdarshanareddy.com/specialties/endocrinology</loc>
     <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://drdarshanareddy.com/specialties/adult-immunisation</loc>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

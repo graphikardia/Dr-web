@@ -21,7 +21,7 @@ import { CookieConsent, getConsent } from "@/components/CookieConsent";
 import { FloatingCTA } from "@/components/FloatingCTA";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
-function App() {
+function AppShell() {
   // The chat panel and the mobile Call / Book Now bar are both fixed to the
   // bottom of the screen and would overlap, so the panel's state is lifted here
   // and the bar hides while the chat is open.
@@ -36,7 +36,7 @@ function App() {
   );
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -58,8 +58,17 @@ function App() {
       )}
       <FloatingCTA hidden={chatOpen} />
       <CookieConsent onDecide={() => setConsentPending(false)} />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppShell />
     </BrowserRouter>
   );
 }
 
+export { AppShell };
 export default App;

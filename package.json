@@ -12,13 +12,15 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client && npm run build:server",
+    "build": "pnpm build:client && pnpm build:ssr && pnpm prerender && pnpm build:server",
     "build:client": "vite build",
+    "build:ssr": "vite build --config vite.config.ssr.ts",
     "build:server": "vite build --config vite.config.server.ts",
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "prerender": "node scripts/prerender.mjs"
   },
   "dependencies": {
     "dotenv": "^17.2.1",

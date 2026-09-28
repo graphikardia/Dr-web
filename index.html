@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--seo:start-->
+    <!-- Per-page title, description, keywords, robots, Open Graph, Twitter and
+         canonical. These defaults below are what the dev server and any
+         un-prerendered path serve; scripts/prerender.mjs overwrites this whole
+         region per route at build time, so keep it free of site-wide tags. -->
     <!-- Primary Meta Tags -->
     <title>
       Dr. Darshana Reddy | Internal Medicine &amp; Metabolic Diseases
@@ -21,14 +26,14 @@
       name="keywords"
       content="Dr. Darshana Reddy, Internal Medicine, Metabolic Diseases, Diabetologist, Diabetes Doctor, Certified Obesity Specialist, Allergy Specialist, Bangalore, HBR Layout, Altius Hospital, Diabetes Management, Respiratory Care, Asthma Treatment"
     />
-    <meta name="author" content="Dr. Darshana Reddy" />
+    
     <meta
       name="robots"
       content="index, follow, max-image-preview:large, max-snippet:-1"
     />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="theme-color" content="#0B2545" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    
+    
+    
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://drdarshanareddy.com/" />
@@ -70,6 +75,13 @@
     />
 
     <!-- Geo Tags for Local SEO -->
+    <!--seo:end-->
+
+    <!-- Site-wide tags. Not per-page, so deliberately outside the region above. -->
+    <meta name="author" content="Dr. Darshana Reddy" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#0B2545" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="geo.region" content="IN-KA" />
     <meta name="geo.placename" content="Bangalore" />
 
@@ -90,7 +102,7 @@
       <meta name="google-site-verification" content="VERIFICATION_CODE" />
     -->
 
-    <!-- JSON-LD Structured Data -->
+    <!--jsonld:start-->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -238,10 +250,11 @@
         ]
       }
     </script>
+    <!--jsonld:end-->
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app:start--><!--app:end--></div>
 
     <script type="module" src="/client/main.tsx"></script>
   </body>

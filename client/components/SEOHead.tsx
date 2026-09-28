@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 interface SEOProps {
   title: string;
@@ -17,6 +17,23 @@ const BASE_URL = SITE.url;
 const DEFAULT_IMAGE = SITE.ogImage;
 const SITE_NAME = SITE.title;
 
+export interface HeadData {
+  title: string;
+  description: string;
+  url: string;
+  ogImage: string;
+  ogType: string;
+  keywords?: string;
+  noIndex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+
+// Populated only by the build-time pre-render, which has no DOM to write to.
+// Last write wins, so React's dev-mode double render is harmless.
+export const SEOCollectorContext = createContext<{
+  push: (data: HeadData) => void;
+} | null>(null);
+
 export function SEOHead({
   title,
   description,
@@ -30,7 +47,29 @@ export function SEOHead({
   const fullTitle = `${title} | ${SITE_NAME}`;
   const url = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
 
+  const collector = useContext(SEOCollectorContext);
+
+  // Build-time pre-render: hand the head tags to the collector instead of
+  // touching the DOM. This runs during render rather than in an effect
+  // because renderToStaticMarkup never flushes effects, and the tags have to
+  // exist before the markup is serialised into the static HTML.
+  if (collector) {
+    collector.push({
+      title: fullTitle,
+      description,
+      url,
+      ogImage,
+      ogType,
+      keywords,
+      noIndex,
+      jsonLd,
+    });
+  }
+
   useEffect(() => {
+    // The pre-render already wrote these into the served HTML.
+    if (collector) return;
+
     document.title = fullTitle;
 
     const setMeta = (name: string, content: string, property = false) => {
@@ -49,7 +88,10 @@ export function SEOHead({
     if (noIndex) {
       setMeta("robots", "noindex, nofollow");
     } else {
-      setMeta("robots", "index, follow");
+      setMeta(
+        "robots",
+        "index, follow, max-image-preview:large, max-snippet:-1",
+      );
     }
     setMeta("title", fullTitle);
     setMeta("og:title", fullTitle, true);
