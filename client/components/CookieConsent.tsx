@@ -22,7 +22,11 @@ export function setConsent(value: ConsentValue) {
   }
 }
 
-export const CookieConsent = () => {
+export const CookieConsent = ({
+  onDecide,
+}: {
+  onDecide?: () => void;
+}) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -37,13 +41,16 @@ export const CookieConsent = () => {
   const handleChoice = (value: ConsentValue) => {
     setConsent(value);
     setOpen(false);
+    onDecide?.();
   };
 
   return (
     <div
       role="region"
       aria-label="Cookie consent"
-      className="fixed bottom-20 md:bottom-6 inset-x-0 z-50 flex justify-center px-4"
+      // Sits above the chat widget, which is z-[99999]. Consent must never be
+      // the thing that is unreachable.
+      className="fixed bottom-20 md:bottom-6 inset-x-0 z-[100000] flex justify-center px-4"
     >
       <div className="bg-card shadow-lg border rounded-xl p-4 sm:p-5 max-w-2xl w-full">
         <p className="text-sm text-foreground/80 leading-relaxed">

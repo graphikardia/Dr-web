@@ -17,7 +17,7 @@ import {
   RefundPolicy,
 } from "./pages/Legal";
 import ChatWidget from "@/components/ChatWidget";
-import { CookieConsent } from "@/components/CookieConsent";
+import { CookieConsent, getConsent } from "@/components/CookieConsent";
 import { FloatingCTA } from "@/components/FloatingCTA";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
@@ -26,6 +26,14 @@ function App() {
   // bottom of the screen and would overlap, so the panel's state is lifted here
   // and the bar hides while the chat is open.
   const [chatOpen, setChatOpen] = useState(false);
+
+  // The chatbot collects a name and phone number, so it stays out of the way
+  // until consent has been given either way. It also stops the launcher and
+  // panel from sitting on top of the Accept / Decline buttons, which it did on
+  // mobile and tablet because it renders at a far higher z-index.
+  const [consentPending, setConsentPending] = useState(
+    () => getConsent() === null,
+  );
 
   return (
     <BrowserRouter>
@@ -45,9 +53,11 @@ function App() {
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <ChatWidget open={chatOpen} onOpenChange={setChatOpen} />
+      {!consentPending && (
+        <ChatWidget open={chatOpen} onOpenChange={setChatOpen} />
+      )}
       <FloatingCTA hidden={chatOpen} />
-      <CookieConsent />
+      <CookieConsent onDecide={() => setConsentPending(false)} />
     </BrowserRouter>
   );
 }
