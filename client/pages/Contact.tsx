@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import { SITE, LEGAL_PATHS, breadcrumbJsonLd } from "@/data/site";
+import { ObesityClinicBooking } from "@/components/ObesityClinicBooking";
 import { useState } from "react";
 import {
   Phone,
@@ -115,6 +116,9 @@ export default function Contact() {
         </div>
       </section>
 
+      {/* Obesity Clinic Booking */}
+      <ObesityClinicBooking variant="contact" />
+
       {/* Main Content */}
       <section className="section-padding bg-white">
         <div className="container-max">
@@ -195,6 +199,7 @@ export default function Contact() {
             {/* Booking Form */}
             <div className="lg:col-span-2">
               <form
+                id="appointment-form"
                 onSubmit={handleSubmit}
                 className="bg-gray-50 p-8 rounded-xl"
               >
@@ -313,9 +318,13 @@ export default function Contact() {
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50 bg-white"
                     >
                       <option value="">Select a concern</option>
+                      <option value="obesity">
+                        Obesity &amp; Metabolic Health
+                      </option>
+                      <option value="weight-management">Weight Management</option>
                       <option value="diabetes">Diabetes Management</option>
                       <option value="respiratory">Respiratory Issues</option>
-                      <option value="allergy">Allergy & Asthma</option>
+                      <option value="allergy">Allergy &amp; Asthma</option>
                       <option value="general">General Checkup</option>
                       <option value="other">Other</option>
                     </select>

@@ -2,6 +2,8 @@ import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import { LEGAL_PATHS } from "@/data/site";
+import { ObesityClinicBooking } from "@/components/ObesityClinicBooking";
+import { HealthInsightSlider } from "@/components/HealthInsightSlider";
 import {
   Users,
   Stethoscope,
@@ -1120,6 +1122,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Obesity Clinic Booking */}
+      <ObesityClinicBooking />
+
       {/* CME Video Highlight */}
       <section className="py-10 md:py-14 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 relative overflow-hidden">
         <div className="container-max">
@@ -1451,7 +1456,7 @@ export default function Home() {
               </div>
               <h3 className="font-bold text-primary mb-2">Obesity Clinic</h3>
               <p className="text-sm text-muted-foreground mb-2">
-                Wednesday & Friday
+                Every Wednesday &amp; Saturday
               </p>
               <p className="text-sm text-blue-600 font-semibold">
                 9:00 AM - 12:00 PM & 3:00 PM - 5:00 PM

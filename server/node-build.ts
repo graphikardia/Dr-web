@@ -12,11 +12,18 @@ const distPath = path.join(__dirname, "../spa");
 // Serve static files
 app.use(express.static(distPath));
 
-// Handle React Router - serve index.html for all non-API routes
-app.get("*", (req, res) => {
-  // Don't serve index.html for API routes
-  if (req.path.startsWith("/api/") || req.path.startsWith("/health")) {
+// Handle React Router - serve index.html for all non-API routes.
+// Registered via app.use() (no path pattern) because Express 5 / path-to-regexp
+// v8 rejects the old app.get("*") wildcard syntax.
+app.use((req, res, next) => {
+  // Don't serve index.html for API routes. Matched exactly (not by prefix)
+  // so asset directories like /health-videos/ are not swallowed.
+  if (req.path.startsWith("/api/") || req.path === "/health") {
     return res.status(404).json({ error: "API endpoint not found" });
+  }
+
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    return next();
   }
 
   res.sendFile(path.join(distPath, "index.html"));

@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
+import { HealthInsightSlider } from "@/components/HealthInsightSlider";
 import { breadcrumbJsonLd } from "@/data/site";
 import { useState, useRef } from "react";
 import { Play, Instagram } from "lucide-react";
@@ -56,19 +57,11 @@ const videos: Video[] = [
 export default function Videos() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [isMuted, setIsMuted] = useState(true);
-  const [isReelMuted, setIsReelMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const reelVideoRef = useRef<HTMLVideoElement>(null);
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
-    }
-  };
-  const toggleReelMute = () => {
-    if (reelVideoRef.current) {
-      reelVideoRef.current.muted = !reelVideoRef.current.muted;
-      setIsReelMuted(reelVideoRef.current.muted);
     }
   };
 
@@ -173,73 +166,26 @@ export default function Videos() {
             </div>
           </div>
 
-          {/* Latest Insight — Featured Vertical Reel */}
+          {/* Latest Insight — Auto-playing Health Insight Slider */}
           <div className="mb-16 bg-gradient-to-br from-accent/5 via-primary/5 to-accent/5 rounded-3xl p-6 md:p-8 border border-primary/20 shadow-lg animate-slide-up">
             <div className="flex flex-wrap items-center gap-3 mb-4">
               <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
                 Featured · Latest Insight
               </span>
+              <span className="text-xs text-muted-foreground">
+                Auto-plays every 7 seconds
+              </span>
             </div>
             <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
               Newest Video — Health Insight by Dr. Darshana
             </h3>
-            <p className="text-sm text-muted-foreground mb-6">
-              The latest health awareness short from Dr. Darshana Reddy — watch
-              now and share your questions on Instagram.
+            <p className="text-sm text-muted-foreground mb-8 max-w-3xl">
+              Dr. Darshana Reddy's latest health awareness series — the Obesity
+              &amp; Metabolic Health episodes, plus our dengue awareness reel.
+              Watch now, then book the Obesity Clinic to turn it into a plan
+              built around your body.
             </p>
-            <div className="flex justify-center">
-              <div className="rounded-3xl overflow-hidden shadow-2xl bg-black relative max-w-sm w-full">
-                <video
-                  ref={reelVideoRef}
-                  className="w-full aspect-[9/16] object-cover"
-                  playsInline
-                  muted={isReelMuted}
-                  loop
-                  autoPlay
-                  preload="auto"
-                >
-                  <source src="/latest-insight-reel.mp4" type="video/mp4" />
-                </video>
-                <button
-                  onClick={toggleReelMute}
-                  className="absolute bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/20"
-                  aria-label={isReelMuted ? "Unmute" : "Mute"}
-                >
-                  {isReelMuted ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                      <line x1="23" y1="9" x2="17" y2="15" />
-                      <line x1="17" y1="9" x2="23" y2="15" />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-                    </svg>
-                  )}
-                </button>
-              </div>
-            </div>
+            <HealthInsightSlider />
           </div>
 
           {/* Categories */}

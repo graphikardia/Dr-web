@@ -99,9 +99,14 @@ export function createServer() {
 
   app.post("/api/chat", handleChat);
 
-  // 404 handler
-  app.use((_req: Request, res: Response) => {
-    res.status(404).json({ error: "Not Found" });
+  // 404 handler — scoped to /api/ so that non-API requests fall through to
+  // the SPA fallback (Vite's index.html middleware in dev, the static
+  // handler in production) instead of being swallowed here.
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (req.path.startsWith("/api/")) {
+      return res.status(404).json({ error: "Not Found" });
+    }
+    next();
   });
 
   // Error handler
