@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import { SITE, LEGAL_PATHS, breadcrumbJsonLd } from "@/data/site";
+import { submitLead } from "@/data/leads";
 import { ObesityClinicBooking } from "@/components/ObesityClinicBooking";
 import { useState } from "react";
 import {
@@ -13,10 +14,6 @@ import {
   CheckCircle,
   Loader2,
 } from "lucide-react";
-
-const GOOGLE_SHEET_URL =
-  import.meta.env.VITE_GOOGLE_SHEET_URL ||
-  "https://script.google.com/macros/s/AKfycbzTLEzt8Isngldw4gjNaGI7lgyu9xWGc4Ocu6-2bRbFzl33g5VjL0jSv05f7qxyPw3dyQ/exec";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -63,22 +60,15 @@ export default function Contact() {
     }
     setStatus("loading");
 
-    const payload = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      condition: formData.condition,
-      preferredDate: formData.preferredDate,
-      message: formData.message,
-      consent: consent ? "agreed" : "not agreed",
-    };
-
     try {
-      await fetch(GOOGLE_SHEET_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      await submitLead("contact", {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        condition: formData.condition,
+        preferredDate: formData.preferredDate,
+        message: formData.message,
+        page: window.location.pathname,
       });
       setStatus("success");
       setFormData({

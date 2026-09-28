@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import { LEGAL_PATHS } from "@/data/site";
+import { submitLead } from "@/data/leads";
 import { ObesityClinicBooking } from "@/components/ObesityClinicBooking";
 import { HealthInsightSlider } from "@/components/HealthInsightSlider";
 import {
@@ -29,10 +30,6 @@ import {
   StethoscopeIcon,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-
-const GOOGLE_SHEET_URL =
-  import.meta.env.VITE_GOOGLE_SHEET_URL ||
-  "https://script.google.com/macros/s/AKfycbzTLEzt8Isngldw4gjNaGI7lgyu9xWGc4Ocu6-2bRbFzl33g5VjL0jSv05f7qxyPw3dyQ/exec";
 
 const awardImages = [
   { src: "/awards-speech/award-1.jpeg", caption: "Award Ceremony" },
@@ -777,15 +774,11 @@ function HelpForm() {
     setStatus("loading");
 
     try {
-      await fetch(GOOGLE_SHEET_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          sheet: "Sheet2",
-          consent: "agreed",
-        }),
+      await submitLead("help", {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        page: window.location.pathname,
       });
       setStatus("success");
       setFormData({ name: "", email: "", message: "", company: "" });

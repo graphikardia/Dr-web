@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, Fragment } from "react";
+import { Link } from "react-router-dom";
 import {
   MessageCircle,
   X,
@@ -8,20 +9,31 @@ import {
   Phone,
   Loader2,
   Calendar,
+  ArrowDown,
+  Sparkles,
+  ChevronDown,
+  Minimize2,
+  ShieldCheck,
+  HeartPulse,
+  Stethoscope,
+  Clock,
+  MapPin,
 } from "lucide-react";
 import { SITE, LEGAL_PATHS } from "@/data/site";
+import { submitLead } from "@/data/leads";
+import { OBESITY_CLINIC } from "@/data/obesityClinic";
+import { cn } from "@/lib/utils";
 
 interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
+  at: number;
 }
 
 type CollectionStep = "greeting" | "name" | "phone" | "reason" | "done";
 
-const GOOGLE_SHEET_URL =
-  import.meta.env.VITE_GOOGLE_SHEET_URL ||
-  "https://script.google.com/macros/s/AKfycbzTLEzt8Isngldw4gjNaGI7lgyu9xWGc4Ocu6-2bRbFzl33g5VjL0jSv05f7qxyPw3dyQ/exec";
+const PHONE_HELP = `${SITE.phoneSecondaryDisplay} (front office) or ${SITE.phonePrimaryDisplay}`;
 
 const localFAQs = [
   {
@@ -34,7 +46,7 @@ const localFAQs = [
   },
   {
     q: ["fever", "febrile"],
-    a: "Fever is usually a sign that your body is fighting an infection. It can be caused by viral or bacterial infections. Rest, hydration, and paracetamol can help. However, if fever persists for more than 3 days or is accompanied by severe symptoms, please consult a doctor. Call 080-47284123 ; 9900004527 to book an appointment.",
+    a: `Fever is usually a sign that your body is fighting an infection. It can be caused by viral or bacterial infections. Rest, hydration, and paracetamol can help. However, if fever persists for more than 3 days or is accompanied by severe symptoms, please consult a doctor. Call ${PHONE_HELP} to book an appointment.`,
   },
   {
     q: ["cold", "cough", "flu"],
@@ -42,35 +54,39 @@ const localFAQs = [
   },
   {
     q: ["asthma", "breathing", "respiratory"],
-    a: "Asthma is a chronic condition where the airways narrow and produce excess mucus, causing breathing difficulties. Dr. Darshana has expertise in respiratory care and offers allergy & asthma treatment. We conduct Allergy Check-ups on Monday & Thursday. Would you like to book an consultation?",
+    a: "Asthma is a chronic condition where the airways narrow and produce excess mucus, causing breathing difficulties. Dr. Darshana has expertise in respiratory care and offers allergy & asthma treatment. We conduct Allergy Check-ups on Monday & Thursday. Would you like to book a consultation?",
   },
   {
     q: ["blood pressure", "hypertension", "bp"],
-    a: "High blood pressure (hypertension) often has no symptoms but can lead to serious health issues if untreated. Regular monitoring, low-salt diet, exercise, and medication help manage it. Dr. Darshana can help you manage blood pressure effectively. Call 080-47284123 ; 9900004527.",
+    a: `High blood pressure (hypertension) often has no symptoms but can lead to serious health issues if untreated. Regular monitoring, low-salt diet, exercise, and medication help manage it. Dr. Darshana can help you manage blood pressure effectively. Call ${PHONE_HELP}.`,
   },
   {
     q: ["thyroid"],
     a: "Thyroid disorders affect the thyroid gland which regulates metabolism. Common issues include hypothyroidism (underactive) and hyperthyroidism (overactive). Symptoms vary but can include fatigue, weight changes, and mood swings. Dr. Darshana specializes in endocrinology. Would you like to book an appointment?",
   },
   {
+    q: ["obesity", "overweight", "weight loss", "weight gain", "bmi", "metabolic"],
+    a: `Dr. Darshana is a Harvard Certified Obesity Specialist and runs a dedicated Obesity Clinic for medical weight management.\n\nWhen: ${OBESITY_CLINIC.daysLabel}\nTiming: ${OBESITY_CLINIC.sessionsLabel}\nWhere: ${OBESITY_CLINIC.venue}\n\nThe clinic covers hormonal and metabolic assessment, nutrition and activity planning, and ongoing follow-up on weight-loss medicines. Call ${PHONE_HELP} or book online to reserve a slot.`,
+  },
+  {
     q: ["appointment", "book", "consultation", "schedule"],
-    a: "To book an appointment with Dr. Darshana:\n\n📞 Call: 080-47284123 ; 9900004527\n\n🏥 Location: Even Hospital, HBR Layout, Bangalore\n\n🕐 Timing: 9 AM - 12 PM & 3 PM - 5 PM (Closed Sunday)\n\nWould you like me to help you book an appointment?",
+    a: `To book an appointment with Dr. Darshana:\n\nCall: ${PHONE_HELP}\n\nLocation: ${SITE.hospitalName}, HBR Layout, Bangalore\n\nGeneral timing: 9 AM - 12 PM & 3 PM - 5 PM (closed Sunday)\n\nObesity Clinic: ${OBESITY_CLINIC.daysLabel}, ${OBESITY_CLINIC.sessionsLabel}\n\nWould you like me to help you book an appointment?`,
   },
   {
     q: ["timing", "hours", "open", "closed"],
-    a: "Dr. Darshana's consultation hours:\n\n🏥 Even Hospital, HBR Layout, Bangalore\n\n⏰ Morning: 9:00 AM - 12:00 PM\n⏰ Evening: 3:00 PM - 5:00 PM\n\n📅 Closed on Sunday\n\nCall 080-47284123 ; 9900004527 to book an appointment.",
+    a: `Dr. Darshana's consultation hours:\n\n${SITE.hospitalName}, HBR Layout, Bangalore\n\nMorning: 9:00 AM - 12:00 PM\nEvening: 3:00 PM - 5:00 PM\n\nClosed on Sunday\n\nObesity Clinic: ${OBESITY_CLINIC.daysLabel}\nAllergy Clinic: Monday & Thursday\n\nCall ${PHONE_HELP} to book an appointment.`,
   },
   {
     q: ["fee", "cost", "charges", "price"],
-    a: "Dr. Darshana offers quality healthcare at affordable rates. Consultation fees are reasonable compared to other specialists. For accurate fee details, please call 080-47284123 ; 9900004527.",
+    a: `Dr. Darshana offers quality healthcare at affordable rates. Consultation fees are reasonable compared to other specialists. For accurate fee details, please call ${PHONE_HELP}.`,
   },
   {
     q: ["location", "address", "hospital"],
-    a: "Dr. Darshana consults at:\n\n🏥 Even Hospital\n📍 HBR Layout, Bangalore\n\nFor directions or to book an appointment, call 080-47284123 ; 9900004527.",
+    a: `Dr. Darshana consults at:\n\n${SITE.hospitalName}\nHBR Layout, Bangalore\n\nFor directions or to book an appointment, call ${PHONE_HELP}.`,
   },
   {
     q: ["who are you", "what are you", "chatbot", "assistant"],
-    a: "I'm Dr. Darshana's AI assistant! I can help you with:\n\n• Health-related questions\n• Appointment bookings\n• Information about services\n\nHow can I assist you today?",
+    a: "I'm Dr. Darshana's AI assistant. I can help you with health-related questions, appointment bookings and general information about the clinic. For anything clinical, please speak to Dr. Darshana directly.",
   },
 ];
 
@@ -85,6 +101,7 @@ const findLocalAnswer = (question: string): string | null => {
   }
   return null;
 };
+
 
 const healthKeywords = [
   "symptom",
@@ -138,17 +155,23 @@ const isSeriousHealthQuestion = (question: string): boolean => {
   return healthKeywords.some((keyword) => lowerQ.includes(keyword));
 };
 
+const ESCALATION_TEXT = `For anything specific to your condition, I'd recommend speaking with Dr. Darshana directly rather than relying on a chat assistant.\n\nCall ${PHONE_HELP}\n${SITE.hospitalName}, HBR Layout, Bangalore\n\nI'm happy to help with general health information in the meantime.`;
+
+const FALLBACK_TEXT = `I can help with general health questions, clinic timings and bookings. For specific medical advice, please consult Dr. Darshana directly.\n\nCall ${PHONE_HELP}\n${SITE.hospitalName}, HBR Layout, Bangalore`;
+
+const WELCOME_TEXT = "Namaste! I'm Dr. Darshana's AI assistant. I can answer health questions, share clinic timings, or book you an appointment. What would you like to do?";
+
 const saveLeadToSheet = async (data: {
   name: string;
   phone: string;
   reason: string;
 }) => {
   try {
-    await fetch(GOOGLE_SHEET_URL, {
-      method: "POST",
-      mode: "no-cors" as RequestMode,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, source: "chatbot", consent: "agreed" }),
+    await submitLead("chatbot", {
+      name: data.name,
+      phone: data.phone,
+      reason: data.reason,
+      page: window.location.pathname,
     });
   } catch (e) {
     console.error("Failed to save lead:", e);
@@ -173,6 +196,7 @@ const formatIndianMobile = (phone: string): string => {
 };
 
 const specialties = [
+  "Obesity & Weight Management",
   "General Medicine",
   "Diabetology",
   "Respiratory Care",
@@ -181,8 +205,144 @@ const specialties = [
   "Other",
 ];
 
+const QUICK_REPLIES = [
+  { label: "Book an appointment", text: "How do I book an appointment?", icon: Calendar },
+  { label: "Clinic timings", text: "What are the clinic timings?", icon: Clock },
+  { label: "Obesity clinic", text: "Tell me about the obesity clinic", icon: HeartPulse },
+  { label: "Doctor's fee", text: "What is the consultation fee?", icon: Stethoscope },
+];
+
+const STEP_ORDER: CollectionStep[] = ["name", "phone", "reason"];
+const STEP_META: Record<string, { label: string; hint: string }> = {
+  name: { label: "Your name", hint: "So we know who to greet" },
+  phone: { label: "Mobile number", hint: "For call-back confirmation" },
+  reason: { label: "Reason for visit", hint: "Helps us route you faster" },
+};
+
+const formatTime = (ts: number) =>
+  new Date(ts).toLocaleTimeString("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+/** Turns `**bold**` spans into <strong> elements. */
+const formatInline = (text: string) =>
+  text
+    .split(/(\*\*[^*]+\*\*)/g)
+    .filter(Boolean)
+    .map((part, i) =>
+      part.startsWith("**") && part.endsWith("**") ? (
+        <strong key={i} className="font-semibold">
+          {part.slice(2, -2)}
+        </strong>
+      ) : (
+        <span key={i}>{part}</span>
+      ),
+    );
+
+/** Renders a single non-bullet line as a paragraph. */
+const renderLine = (line: string, key: number) => (
+  <p key={key} className="whitespace-pre-wrap">
+    {formatInline(line)}
+  </p>
+);
+
+function ChatBubble({ msg }: { msg: Message }) {
+  const lines = msg.content.split("\n");
+  const hasBullets = lines.some((l) => /^[-•]\s+/.test(l));
+  const hasText = lines.some((l) => l.trim() && !/^[-•]\s+/.test(l));
+
+  return (
+    <div
+      className={cn(
+        "flex animate-slide-up",
+        msg.role === "user" ? "justify-end" : "justify-start gap-2.5",
+      )}
+    >
+      {msg.role === "assistant" && (
+        <div
+          aria-hidden="true"
+          className="mt-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
+        >
+          DR
+        </div>
+      )}
+
+      <div
+        className={cn(
+          "group/bubble max-w-[80%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed shadow-sm",
+          msg.role === "user"
+            ? "rounded-br-md bg-primary text-primary-foreground"
+            : "rounded-bl-md border border-gray-100 bg-white text-gray-700",
+        )}
+      >
+        {hasBullets ? (
+          <ul className="flex flex-col gap-1.5">
+            {lines
+              .filter((l) => l.trim())
+              .map((l, i) =>
+                /^[-•]\s+/.test(l) ? (
+                  <li key={i} className="flex gap-2">
+                    <span
+                      aria-hidden="true"
+                      className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent"
+                    />
+                    <span className="min-w-0">{formatInline(l.replace(/^[-•]\s+/, ""))}</span>
+                  </li>
+                ) : (
+                  <li key={i} className="whitespace-pre-wrap">
+                    {l}
+                  </li>
+                ),
+              )}
+          </ul>
+        ) : hasText ? (
+          <div className="flex flex-col gap-1.5">
+            {lines.map((l, i) => (l.trim() ? renderLine(l, i) : null))}
+          </div>
+        ) : null}
+
+        <time
+          className={cn(
+            "mt-1.5 block text-[10px] tabular-nums opacity-0 transition-opacity group-hover/bubble:opacity-70",
+            msg.role === "user" ? "text-primary-foreground" : "text-gray-400",
+          )}
+          dateTime={new Date(msg.at).toISOString()}
+        >
+          {formatTime(msg.at)}
+        </time>
+      </div>
+    </div>
+  );
+}
+
+function TypingIndicator() {
+  return (
+    <div className="flex justify-start gap-2.5">
+      <div
+        aria-hidden="true"
+        className="mt-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
+      >
+        DR
+      </div>
+      <div className="flex items-center gap-1.5 rounded-2xl rounded-bl-md border border-gray-100 bg-white px-4 py-3.5 shadow-sm">
+        {[0, 150, 300].map((delay) => (
+          <span
+            key={delay}
+            className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary/40"
+            style={{ animationDelay: `${delay}ms` }}
+          />
+        ))}
+        <span className="sr-only">Assistant is typing</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -194,386 +354,372 @@ export default function ChatWidget() {
     reason: "",
   });
   const [showSpecialtyButtons, setShowSpecialtyButtons] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [atBottom, setAtBottom] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const welcomeMessage =
-    "Namaste! 🙏 I'm Dr. Darshana's AI assistant. I'm here to help you with:\n\n• Health-related questions\n• Appointment bookings\n• General inquiries\n\nHow can I help you today?";
+  const pushMessages = useCallback(
+    (
+      incoming: { role: "user" | "assistant"; content: string }[],
+    ) => {
+      const base = Date.now();
+      setMessages((prev) => [
+        ...prev,
+        ...incoming.map((m, i) => ({
+          id: `${base}-${i}-${Math.random().toString(36).slice(2, 7)}`,
+          role: m.role,
+          content: m.content,
+          at: base + i,
+        })),
+      ]);
+    },
+    [],
+  );
 
-  const askForNameMessage = "May I know your name?";
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
+    messagesEndRef.current?.scrollIntoView({ behavior, block: "end" });
+  }, []);
+
+  const stepIndex = STEP_ORDER.indexOf(collectionStep);
+  const isBooking = stepIndex >= 0;
+  const stepMeta = isBooking ? STEP_META[collectionStep] : null;
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      setMessages([{ id: "1", role: "assistant", content: welcomeMessage }]);
+      setMessages([
+        { id: "welcome", role: "assistant", content: WELCOME_TEXT, at: Date.now() },
+      ]);
     }
   }, [isOpen]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (atBottom) scrollToBottom();
+  }, [messages, loading, atBottom, scrollToBottom]);
 
-  const handleNameSubmit = async (name: string) => {
-    const updatedData = { ...userData, name };
-    setUserData(updatedData);
+  useEffect(() => {
+    if (isOpen) inputRef.current?.focus();
+  }, [isOpen, isMinimized]);
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
+    setAtBottom(distance < 60);
+  };
+
+  const handleNameSubmit = (name: string) => {
+    setUserData((prev) => ({ ...prev, name }));
     setCollectionStep("phone");
 
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now().toString(), role: "user", content: name },
+    pushMessages([
+      { role: "user", content: name },
       {
-        id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `Nice to meet you, ${name}! 📱\n\nCould you please share your 10-digit mobile number? (e.g., 9876543210)`,
+        content: `Nice to meet you, ${name}!\n\nCould you share your 10-digit mobile number? I'll use it only to confirm your appointment.`,
       },
     ]);
   };
 
   const handlePhoneSubmit = async (phone: string) => {
     if (!isValidIndianMobile(phone)) {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), role: "user", content: phone },
+      pushMessages([
+        { role: "user", content: phone },
         {
-          id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: `Please enter a valid 10-digit Indian mobile number (starting with 6, 7, 8, or 9)`,
+          content:
+            "That doesn't look like a valid 10-digit Indian mobile number. It should start with 6, 7, 8 or 9 - for example 9876543210.",
         },
       ]);
       return;
     }
 
     const formattedPhone = formatIndianMobile(phone);
-    const updatedData = { ...userData, phone: formattedPhone };
-    setUserData(updatedData);
+    setUserData((prev) => ({ ...prev, phone: formattedPhone }));
     setCollectionStep("reason");
     setShowSpecialtyButtons(true);
 
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now().toString(), role: "user", content: phone },
+    pushMessages([
+      { role: "user", content: phone },
       {
-        id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `Thank you! 📋\n\nWhat is the reason for your visit? You can select from the options below or type your reason.`,
+        content: "Thank you. What is the reason for your visit? Pick one below, or type it out.",
       },
     ]);
   };
 
-  const handleReasonSubmit = async (reason: string) => {
-    const updatedData = { ...userData, reason };
-    setUserData(updatedData);
+  const handleReasonSubmit = (reason: string) => {
+    const lead = { ...userData, reason };
+    setUserData(lead);
     setCollectionStep("done");
     setShowSpecialtyButtons(false);
 
     saveLeadToSheet({
-      name: userData.name,
-      phone: userData.phone,
-      reason: reason,
+      name: lead.name,
+      phone: lead.phone,
+      reason,
     });
 
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now().toString(), role: "user", content: reason },
+    pushMessages([
+      { role: "user", content: reason },
       {
-        id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `Thank you, ${userData.name}! ✅\n\nOur team will contact you at +91 ${userData.phone} shortly.\n\nIs there anything else I can help you with?`,
+        content: `Thank you, ${lead.name}. Our team will call you on +91 ${lead.phone} shortly to confirm your slot.\n\nIs there anything else I can help you with?`,
       },
     ]);
   };
 
   const sendMessage = async (text: string) => {
-    if (!text.trim()) return;
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    setInput("");
+
+    if (collectionStep === "name") return handleNameSubmit(trimmed);
+    if (collectionStep === "phone") return handlePhoneSubmit(trimmed);
+    if (collectionStep === "reason") return handleReasonSubmit(trimmed);
 
     if (collectionStep === "greeting") {
-      const localAnswer = findLocalAnswer(text);
+      const localAnswer = findLocalAnswer(trimmed);
 
       if (localAnswer) {
-        const userMsg: Message = {
-          id: Date.now().toString(),
-          role: "user",
-          content: text,
-        };
-        const botMsg: Message = {
-          id: (Date.now() + 1).toString(),
-          role: "assistant",
-          content: localAnswer,
-        };
-        setMessages((prev) => [...prev, userMsg, botMsg]);
-        setInput("");
-        return;
+        return pushMessages([
+          { role: "user", content: trimmed },
+          { role: "assistant", content: localAnswer },
+        ]);
       }
 
-      if (isSeriousHealthQuestion(text)) {
-        const userMsg: Message = {
-          id: Date.now().toString(),
-          role: "user",
-          content: text,
-        };
-        const botMsg: Message = {
-          id: (Date.now() + 1).toString(),
-          role: "assistant",
-          content:
-            "For specific medical concerns, I recommend consulting Dr. Darshana directly.\n\n📞 Call: 080-47284123 ; 9900004527\n🏥 Even Hospital, HBR Layout\n\nFor general health tips, feel free to ask!",
-        };
-        setMessages((prev) => [...prev, userMsg, botMsg]);
-        setInput("");
-        return;
+      if (isSeriousHealthQuestion(trimmed)) {
+        return pushMessages([
+          { role: "user", content: trimmed },
+          { role: "assistant", content: ESCALATION_TEXT },
+        ]);
       }
 
+      // Anything else is taken as the start of a booking request.
       setCollectionStep("name");
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), role: "user", content: text },
-        {
-          id: (Date.now() + 1).toString(),
-          role: "assistant",
-          content: askForNameMessage,
-        },
+      return pushMessages([
+        { role: "user", content: trimmed },
+        { role: "assistant", content: "Happy to help you book. May I know your name?" },
       ]);
-      setInput("");
-      return;
     }
 
-    if (collectionStep === "name") {
-      handleNameSubmit(text);
-      setInput("");
-      return;
-    }
-    if (collectionStep === "phone") {
-      handlePhoneSubmit(text);
-      setInput("");
-      return;
-    }
-    if (collectionStep === "reason") {
-      handleReasonSubmit(text);
-      setInput("");
-      return;
-    }
-
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      role: "user",
-      content: text,
-    };
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
+    pushMessages([{ role: "user", content: trimmed }]);
     setLoading(true);
+
+    const history = messages.map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
 
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: text,
-          history: messages.map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
-        }),
+        body: JSON.stringify({ message: trimmed, history }),
       });
 
       const data = await res.json();
 
       if (data.reply && !data.error) {
-        const botMsg: Message = {
-          id: (Date.now() + 1).toString(),
-          role: "assistant",
-          content: data.reply,
-        };
-        setMessages((prev) => [...prev, botMsg]);
+        pushMessages([{ role: "assistant", content: data.reply }]);
       } else {
-        const localAnswer = findLocalAnswer(text);
-        if (localAnswer) {
-          const botMsg: Message = {
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: localAnswer,
-          };
-          setMessages((prev) => [...prev, botMsg]);
-        } else {
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: Date.now().toString(),
-              role: "assistant",
-              content:
-                "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: 080-47284123 ; 9900004527\n🏥 Even Hospital, HBR Layout",
-            },
-          ]);
-        }
-      }
-    } catch (error) {
-      const localAnswer = findLocalAnswer(text);
-      if (localAnswer) {
-        const botMsg: Message = {
-          id: (Date.now() + 1).toString(),
-          role: "assistant",
-          content: localAnswer,
-        };
-        setMessages((prev) => [...prev, botMsg]);
-      } else {
-        setMessages((prev) => [
-          ...prev,
+        pushMessages([
           {
-            id: Date.now().toString(),
             role: "assistant",
-            content:
-              "I can help with general health questions. For specific medical advice, please consult Dr. Darshana directly.\n\n📞 Call: 080-47284123 ; 9900004527\n🏥 Even Hospital, HBR Layout",
+            content: findLocalAnswer(trimmed) ?? FALLBACK_TEXT,
           },
         ]);
       }
+    } catch {
+      pushMessages([
+        {
+          role: "assistant",
+          content: findLocalAnswer(trimmed) ?? FALLBACK_TEXT,
+        },
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
   const getPlaceholder = () => {
-    if (collectionStep === "greeting") return "Ask me anything...";
     if (collectionStep === "name") return "Your name...";
     if (collectionStep === "phone") return "10-digit mobile number...";
     if (collectionStep === "reason") return "Reason for visit...";
-    return "Type your message...";
-  };
-
-  const getProgressText = () => {
-    if (collectionStep === "greeting") return "💬 Free Chat";
-    if (collectionStep === "name") return "Step 1 of 3";
-    if (collectionStep === "phone") return "Step 2 of 3";
-    if (collectionStep === "reason") return "Step 3 of 3";
-    return "";
+    return "Ask about symptoms, timings or booking...";
   };
 
   const skipBooking = () => {
     setCollectionStep("done");
     setShowSpecialtyButtons(false);
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now().toString(), role: "user", content: "Skip booking" },
+    pushMessages([
+      { role: "user", content: "Skip booking" },
       {
-        id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `No problem! Feel free to ask me any health-related questions or let me know if you need help with anything else.`,
+        content:
+          "No problem. Feel free to ask me any health-related questions, or call the clinic if you'd rather speak to someone.",
       },
     ]);
   };
 
   return (
     <>
-      {/* Floating Button - Chat with AI-Doc */}
+      {/* ── Launcher ─────────────────────────────────────────────────────── */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open chat with Dr. Darshana's AI assistant"
-          className="fixed bottom-24 right-6 md:bottom-6 z-[99998] flex items-center gap-3 bg-gradient-to-r from-primary to-[#1a3a5c] px-5 py-3 rounded-full shadow-2xl hover:scale-105 transition-transform duration-300 border-2 border-white"
+          className="group fixed bottom-24 right-5 z-[99998] flex items-center gap-2.5 rounded-full border border-white/20 bg-primary py-3 pl-4 pr-5 text-white shadow-2xl shadow-primary/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 md:bottom-6 md:right-6"
         >
-          <div className="relative">
-            <MessageCircle className="w-6 h-6 text-white" />
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border border-white" />
-          </div>
-          <span className="text-white font-semibold text-sm whitespace-nowrap">
-            Chat with AI-Doc
+          <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/20">
+            <MessageCircle className="h-5 w-5" aria-hidden="true" />
+            <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 ring-2 ring-primary" />
           </span>
+          <span className="text-sm font-semibold">Chat with AI-Doc</span>
         </button>
       )}
 
-      {/* Chat Window */}
+      {/* ── Panel ────────────────────────────────────────────────────────── */}
       {isOpen && (
         <div
           role="dialog"
+          aria-modal="false"
           aria-label="Chat with Dr. Darshana's AI assistant"
-          className="fixed bottom-6 md:bottom-20 right-6 z-[99999] w-[380px] max-w-[calc(100vw-32px)] bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col max-h-[calc(100vh-120px)] md:max-h-[560px]"
+          className={cn(
+            "fixed z-[99999] flex w-[calc(100vw-2rem)] flex-col overflow-hidden border border-gray-200/70 bg-white shadow-2xl shadow-primary/20",
+            "inset-x-4 bottom-4 rounded-2xl sm:inset-x-auto sm:right-6 sm:w-[390px]",
+            "max-h-[min(640px,calc(100dvh-7.5rem))] animate-slide-up",
+            "md:bottom-6 md:max-h-[min(640px,calc(100vh-6rem))]",
+            isMinimized && "sm:w-[300px]",
+          )}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary to-[#1a3a5c] px-5 py-4 flex items-center gap-3">
-            <div className="relative">
-              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
-                <span className="text-white text-xl font-bold">DR</span>
-              </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-400 rounded-full border-2 border-white" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-white font-semibold text-base">
+          <div className="flex items-center gap-3 bg-primary px-4 py-3.5 text-primary-foreground">
+            <span className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-white/10 text-sm font-bold ring-1 ring-white/25">
+              DR
+              <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 ring-2 ring-primary" />
+            </span>
+
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-semibold">
                 Dr. Darshana Reddy
-              </h3>
-              <p className="text-white/70 text-xs">
-                Internal Medicine & Metabolic Diseases
+              </p>
+              <p className="flex items-center gap-1.5 text-[11px] text-primary-foreground/70">
+                <Sparkles className="h-3 w-3" aria-hidden="true" />
+                AI assistant · replies instantly
               </p>
             </div>
+
+            <button
+              onClick={() => setIsMinimized((m) => !m)}
+              aria-label={isMinimized ? "Expand chat" : "Minimize chat"}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+            >
+              <Minimize2 className="h-4 w-4" />
+            </button>
             <button
               onClick={() => setIsOpen(false)}
               aria-label="Close chat"
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
             >
-              <X className="w-5 h-5 text-white" />
+              <X className="h-4 w-4" />
             </button>
           </div>
 
-          {/* Progress */}
-          <div className="bg-amber-50 px-5 py-2 text-xs font-medium text-amber-700 flex items-center justify-between">
-            <span>{getProgressText()}</span>
-            {collectionStep === "done" && <span>✅ Booked</span>}
-          </div>
+          {/* Booking progress */}
+          {collectionStep === "done" ? (
+            <div className="flex items-center gap-2 border-b border-emerald-100 bg-emerald-50 px-4 py-2.5 text-xs font-semibold text-emerald-800">
+              <ShieldCheck className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+              Request received — our team will call you shortly
+            </div>
+          ) : isBooking && stepMeta ? (
+            <div className="border-b border-gray-100 bg-gray-50/80 px-4 py-3">
+              <div className="flex items-center justify-between text-[11px] font-semibold">
+                <span className="text-primary">
+                  Step {stepIndex + 1} of {STEP_ORDER.length} · {stepMeta.label}
+                </span>
+                <span className="text-muted-foreground">{stepMeta.hint}</span>
+              </div>
+              <div className="mt-2 flex gap-1.5" aria-hidden="true">
+                {STEP_ORDER.map((step, i) => (
+                  <span
+                    key={step}
+                    className={cn(
+                      "h-1 flex-1 rounded-full transition-colors duration-500",
+                      i <= stepIndex ? "bg-accent" : "bg-gray-200",
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : null}
 
           {/* Messages */}
-          <div
-            aria-live="polite"
-            className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-3"
-          >
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
-                    msg.role === "user"
-                      ? "bg-gradient-to-r from-primary to-[#1a3a5c] text-white rounded-br-md"
-                      : "bg-white border border-gray-200 text-gray-700 rounded-bl-md shadow-sm"
-                  }`}
-                >
-                  {msg.content.split("\n").map((line, i) => (
-                    <p key={i} className={i > 0 ? "mt-2" : ""}>
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            ))}
-            {loading && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-gray-200 px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
-                  <div className="flex gap-1">
-                    <span
-                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                      style={{ animationDelay: "0ms" }}
-                    />
-                    <span
-                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                      style={{ animationDelay: "150ms" }}
-                    />
-                    <span
-                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                      style={{ animationDelay: "300ms" }}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+          {!isMinimized && (
+            <div
+              ref={scrollRef}
+              onScroll={handleScroll}
+              aria-live="polite"
+              aria-relevant="additions"
+              className="flex-1 space-y-2.5 overflow-y-auto overscroll-contain bg-muted/40 px-4 py-4"
+            >
+              {messages.map((msg) => (
+                <ChatBubble key={msg.id} msg={msg} />
+              ))}
+              {loading && <TypingIndicator />}
 
-          {/* Specialty Buttons */}
-          {collectionStep === "reason" && showSpecialtyButtons && (
-            <div className="px-4 py-3 bg-white border-t border-gray-100">
-              <p className="text-xs text-gray-500 mb-2 font-medium">
-                Select reason for visit:
+              {/* Opening quick replies */}
+              {collectionStep === "greeting" && messages.length <= 1 && (
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  {QUICK_REPLIES.map((reply) => {
+                    const Icon = reply.icon;
+                    return (
+                      <button
+                        key={reply.label}
+                        onClick={() => sendMessage(reply.text)}
+                        className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-left text-xs font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-accent hover:text-accent hover:shadow-md"
+                      >
+                        <Icon className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+                        <span className="min-w-0 leading-tight">{reply.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+          )}
+
+          {/* Scroll to latest */}
+          {!isMinimized && !atBottom && messages.length > 1 && (
+            <div className="relative">
+              <button
+                onClick={() => {
+                  scrollToBottom();
+                  setAtBottom(true);
+                }}
+                className="absolute -top-11 left-1/2 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-primary shadow-lg transition-transform hover:scale-105"
+                aria-label="Scroll to latest message"
+              >
+                <ArrowDown className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+
+          {/* Reason chips */}
+          {!isMinimized && collectionStep === "reason" && showSpecialtyButtons && (
+            <div className="border-t border-gray-100 bg-white px-4 py-3">
+              <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                Reason for visit
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {specialties.map((specialty) => (
                   <button
                     key={specialty}
                     onClick={() => handleReasonSubmit(specialty)}
-                    className="px-3 py-2 bg-primary/5 hover:bg-accent hover:text-white text-primary text-xs font-semibold rounded-full border border-primary/20 hover:border-accent transition-all duration-200 shadow-sm"
+                    className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-semibold text-primary transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
                   >
                     {specialty}
                   </button>
@@ -581,75 +727,127 @@ export default function ChatWidget() {
               </div>
               <button
                 onClick={skipBooking}
-                className="mt-2 text-xs text-gray-400 hover:text-gray-600 underline"
+                className="mt-2.5 text-xs text-muted-foreground underline-offset-2 transition-colors hover:text-primary hover:underline"
               >
                 Skip for now
               </button>
             </div>
           )}
 
-          {/* Input */}
-          <div className="p-4 bg-white border-t border-gray-100 flex gap-3">
-            <input
-              type={collectionStep === "phone" ? "tel" : "text"}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-              placeholder={getPlaceholder()}
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-            />
-            <button
-              onClick={() => sendMessage(input)}
-              disabled={loading || !input.trim()}
-              aria-label="Send message"
-              className="w-12 h-12 bg-gradient-to-r from-accent to-[#e65a2a] rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <Send className="w-5 h-5" />
-              )}
-            </button>
-          </div>
-
-          {/* Quick Actions */}
-          {collectionStep === "done" && (
-            <div className="px-4 py-3 bg-gray-50 border-t border-gray-100 flex justify-center gap-6">
+          {/* Post-booking actions */}
+          {!isMinimized && collectionStep === "done" && (
+            <div className="grid grid-cols-2 gap-2 border-t border-gray-100 bg-white px-4 py-3">
               <a
-                href={`tel:${SITE.phonePrimary}`}
-                className="flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors"
+                href={`tel:${SITE.phoneSecondary}`}
+                className="flex items-center justify-center gap-2 rounded-lg border border-primary/20 py-2.5 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
               >
-                <Phone className="w-4 h-4" />
-                Call Now
+                <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+                Call front office
               </a>
-              <a
-                href="/contact"
-                className="flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors"
+              <Link
+                to={OBESITY_CLINIC.bookPath}
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-center gap-2 rounded-lg bg-accent py-2.5 text-xs font-semibold text-accent-foreground transition-opacity hover:opacity-90"
               >
-                <Calendar className="w-4 h-4" />
-                Book Appointment
-              </a>
+                <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
+                Book online
+              </Link>
             </div>
           )}
 
-          {/* Footer */}
-          <div className="px-4 py-2 bg-gradient-to-r from-primary to-[#1a3a5c] text-center">
-            <p className="text-white/60 text-xs">
-              Powered by AI • Not for emergencies
-            </p>
-            <p className="text-white/45 text-[10px] mt-1">
-              This assistant provides general information only and is not a
-              substitute for professional medical advice. By sharing details
-              you agree to our{" "}
-              <a
-                href={LEGAL_PATHS.privacy}
-                className="underline underline-offset-2 hover:text-white/70"
+          {/* Composer */}
+          {!isMinimized && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendMessage(input);
+              }}
+              className="flex items-center gap-2 border-t border-gray-100 bg-white p-3"
+            >
+              <input
+                ref={inputRef}
+                type={collectionStep === "phone" ? "tel" : "text"}
+                inputMode={collectionStep === "phone" ? "numeric" : "text"}
+                autoComplete={collectionStep === "phone" ? "tel" : "off"}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={getPlaceholder()}
+                aria-label="Message"
+                className="min-w-0 flex-1 rounded-full border border-gray-200 bg-muted/40 px-4 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20"
+              />
+              <button
+                type="submit"
+                disabled={loading || !input.trim()}
+                aria-label="Send message"
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-md transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
               >
-                Privacy Policy
-              </a>
-              .
-            </p>
-          </div>
+                {loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Send className="h-4 w-4" />
+                )}
+              </button>
+            </form>
+          )}
+
+          {/* Footer */}
+          {!isMinimized && (
+            <div className="border-t border-gray-100 bg-gray-50/80">
+              <button
+                onClick={() => setShowDisclaimer((d) => !d)}
+                aria-expanded={showDisclaimer}
+                className="flex w-full items-center gap-2 px-4 py-2 text-left text-[11px] font-medium text-muted-foreground transition-colors hover:text-primary"
+              >
+                <ShieldCheck className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+                <span className="min-w-0 flex-1 truncate">
+                  Not for emergencies. This assistant shares general information only.
+                </span>
+                <ChevronDown
+                  className={cn(
+                    "h-3.5 w-3.5 flex-shrink-0 transition-transform",
+                    showDisclaimer && "rotate-180",
+                  )}
+                  aria-hidden="true"
+                />
+              </button>
+
+              {showDisclaimer && (
+                <div className="space-y-2 border-t border-gray-100 px-4 py-3 text-[11px] leading-relaxed text-muted-foreground">
+                  <p>
+                    This assistant provides general information only and is not a
+                    substitute for professional medical advice. For emergencies,
+                    call 108 or visit the nearest hospital.
+                  </p>
+                  <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <span className="flex items-center gap-1">
+                      <Phone className="h-3 w-3" aria-hidden="true" />
+                      <a
+                        href={`tel:${SITE.phoneSecondary}`}
+                        className="font-semibold text-primary hover:text-accent"
+                      >
+                        {SITE.phoneSecondaryDisplay}
+                      </a>
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="h-3 w-3" aria-hidden="true" />
+                      {SITE.hospitalName}
+                    </span>
+                  </p>
+                  <p>
+                    By chatting you agree to our{" "}
+                    <Link
+                      to={LEGAL_PATHS.privacy}
+                      onClick={() => setIsOpen(false)}
+                      className="font-semibold text-primary underline underline-offset-2 hover:text-accent"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </>

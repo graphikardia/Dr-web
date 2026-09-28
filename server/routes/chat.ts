@@ -1,8 +1,11 @@
 import { RequestHandler } from "express";
 import { generateContextPrompt } from "../../client/data/knowledgeBase";
+import { SITE } from "../../client/data/site";
 
 const MAX_MESSAGE_LENGTH = 1000;
 const MAX_HISTORY_LENGTH = 20;
+
+const CONTACT_LINE = `Call ${SITE.phoneSecondaryDisplay} (Even Hospital front office) or ${SITE.phonePrimaryDisplay}.`;
 
 function sanitizeInput(input: string): string {
   return input
@@ -61,7 +64,7 @@ export const handleChat: RequestHandler = async (req, res) => {
     if (!apiKey) {
       return res.status(503).json({
         reply:
-          "I'm currently unavailable. Please call +91 8882 799799 for assistance.",
+          `I'm currently unavailable. ${CONTACT_LINE} Please call for assistance.`,
       });
     }
 
@@ -148,7 +151,7 @@ export const handleChat: RequestHandler = async (req, res) => {
 
     return res.status(500).json({
       reply:
-        "I apologize, but I'm experiencing technical difficulties. Please call +91 8882 799799 for immediate assistance or try again later.",
+        `I apologize, but I'm experiencing technical difficulties. ${CONTACT_LINE} Please try again later.`,
       success: false,
     });
   }
