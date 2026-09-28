@@ -62,6 +62,17 @@ export default function Videos() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const episodesRef = useRef<HTMLDivElement>(null);
+
+  /** Sends someone from the auto-playing preview to the full-length players. */
+  const goToFullEpisodes = () => {
+    setActiveCategory("obesity");
+    // The section only renders after the filter change, so wait a frame.
+    requestAnimationFrame(() => {
+      episodesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
+
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
@@ -177,27 +188,40 @@ export default function Videos() {
             </div>
           </div>
 
-          {/* Latest Insight — Auto-playing Health Insight Slider */}
-          <div className="mb-16 bg-gradient-to-br from-accent/5 via-primary/5 to-accent/5 rounded-3xl p-6 md:p-8 border border-primary/20 shadow-lg animate-slide-up">
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
-                Featured · Latest Insight
-              </span>
-              <span className="text-xs text-muted-foreground">
-                Auto-plays every 7 seconds
-              </span>
+          {/* Latest Insight — Auto-playing Health Insight Slider.
+              Hidden on the Obesity filter, where these same episodes are listed
+              in full just below and a second copy autoplaying over the top
+              starves the player people are actually trying to watch. */}
+          {activeCategory !== "obesity" && (
+            <div className="mb-16 bg-gradient-to-br from-accent/5 via-primary/5 to-accent/5 rounded-3xl p-6 md:p-8 border border-primary/20 shadow-lg animate-slide-up">
+              <div className="flex flex-wrap items-center gap-3 mb-4">
+                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
+                  Featured · Latest Insight
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  Auto-plays every 7 seconds
+                </span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
+                Obesity &amp; Metabolic Health Series by Dr. Darshana
+              </h3>
+              <p className="text-sm text-muted-foreground mb-6 max-w-3xl">
+                Dr. Darshana Reddy's Obesity &amp; Metabolic Health series — how
+                obesity works as a disease, what GLP-1 medicines really do, and
+                how to set expectations that hold up. These are previews; the
+                complete episodes are below.
+              </p>
+              <button
+                onClick={goToFullEpisodes}
+                className="mb-8 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-md transition-all hover:-translate-y-0.5 hover:opacity-90"
+              >
+                <Play className="w-4 h-4" aria-hidden="true" />
+                Watch the full episodes
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </button>
+              <HealthInsightSlider />
             </div>
-            <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
-              Obesity &amp; Metabolic Health Series by Dr. Darshana
-            </h3>
-            <p className="text-sm text-muted-foreground mb-8 max-w-3xl">
-              Dr. Darshana Reddy's Obesity &amp; Metabolic Health series — how
-              obesity works as a disease, what GLP-1 medicines really do, and
-              how to set expectations that hold up. Watch now, then book the
-              Obesity Clinic to turn it into a plan built around your body.
-            </p>
-            <HealthInsightSlider />
-          </div>
+          )}
 
           {/* Categories */}
           <div className="flex flex-wrap justify-center gap-3 mb-12 animate-slide-up">
@@ -219,7 +243,7 @@ export default function Videos() {
 
           {/* Obesity & Metabolic Health Episodes — full-length players */}
           {filteredEpisodes.length > 0 && (
-            <div className="mb-16">
+            <div className="mb-16" ref={episodesRef}>
               <div className="flex flex-wrap items-center gap-3 mb-5">
                 <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold">
                   Obesity &amp; Metabolic Health
