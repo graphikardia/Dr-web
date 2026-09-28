@@ -350,3 +350,5 @@ buck-out/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,react,reactnative
 .vercel
+api/_bundle/index.mjs
+api/_bundle/index.mjs.map
