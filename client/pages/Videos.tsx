@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { HealthInsightSlider } from "@/components/HealthInsightSlider";
-import { breadcrumbJsonLd } from "@/data/site";
+import { SITE, breadcrumbJsonLd } from "@/data/site";
 import { INSIGHT_VIDEOS, OBESITY_CLINIC } from "@/data/obesityClinic";
 import { useState, useRef } from "react";
 import { Play, Instagram, Clock, ArrowRight } from "lucide-react";
@@ -388,7 +388,7 @@ export default function Videos() {
             latest in internal medicine and lifestyle wellness.
           </p>
           <a
-            href="https://instagram.com/your_lifestyle_doctor"
+            href={SITE.instagram}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-accent text-accent-foreground px-10 py-4 rounded-xl font-bold hover:scale-105 transition-all shadow-xl group"
