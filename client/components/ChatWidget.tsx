@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, Fragment } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import {
   MessageCircle,
@@ -13,6 +13,7 @@ import {
   Sparkles,
   ChevronDown,
   Minimize2,
+  RotateCcw,
   ShieldCheck,
   HeartPulse,
   Stethoscope,
@@ -206,10 +207,12 @@ const specialties = [
 ];
 
 const QUICK_REPLIES = [
-  { label: "Book an appointment", text: "How do I book an appointment?", icon: Calendar },
-  { label: "Clinic timings", text: "What are the clinic timings?", icon: Clock },
-  { label: "Obesity clinic", text: "Tell me about the obesity clinic", icon: HeartPulse },
-  { label: "Doctor's fee", text: "What is the consultation fee?", icon: Stethoscope },
+  // "Book an appointment" jumps straight into the flow; asking it as free text
+  // would just match the booking FAQ and print the phone number instead.
+  { label: "Book an appointment", text: "Book an appointment", icon: Calendar, startsBooking: true },
+  { label: "Clinic timings", text: "What are the clinic timings?", icon: Clock, startsBooking: false },
+  { label: "Obesity clinic", text: "Tell me about the obesity clinic", icon: HeartPulse, startsBooking: false },
+  { label: "Doctor's fee", text: "What is the consultation fee?", icon: Stethoscope, startsBooking: false },
 ];
 
 const STEP_ORDER: CollectionStep[] = ["name", "phone", "reason"];
@@ -248,33 +251,50 @@ const renderLine = (line: string, key: number) => (
   </p>
 );
 
-function ChatBubble({ msg }: { msg: Message }) {
+function ChatBubble({
+  msg,
+  grouped,
+  showTime,
+}: {
+  msg: Message;
+  /** The previous message came from the same speaker. */
+  grouped: boolean;
+  /** This is the last message of a run from the same speaker. */
+  showTime: boolean;
+}) {
   const lines = msg.content.split("\n");
   const hasBullets = lines.some((l) => /^[-•]\s+/.test(l));
   const hasText = lines.some((l) => l.trim() && !/^[-•]\s+/.test(l));
+  const isUser = msg.role === "user";
 
   return (
     <div
       className={cn(
         "flex animate-slide-up",
-        msg.role === "user" ? "justify-end" : "justify-start gap-2.5",
+        isUser ? "justify-end" : "justify-start",
+        grouped ? "mt-0.5" : "mt-2.5",
       )}
     >
-      {msg.role === "assistant" && (
-        <div
-          aria-hidden="true"
-          className="mt-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
-        >
-          DR
-        </div>
-      )}
+      {/* Reserve the avatar column on every assistant bubble so the text edge
+          stays aligned, but only draw the face on the first of a run. */}
+      <div className={cn("w-7 flex-shrink-0", isUser && "hidden")}>
+        {!isUser && !grouped && (
+          <span
+            aria-hidden="true"
+            className="mt-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
+          >
+            DR
+          </span>
+        )}
+      </div>
 
       <div
         className={cn(
           "group/bubble max-w-[80%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed shadow-sm",
-          msg.role === "user"
+          isUser
             ? "rounded-br-md bg-primary text-primary-foreground"
             : "rounded-bl-md border border-gray-100 bg-white text-gray-700",
+          grouped && (isUser ? "rounded-tr-md" : "rounded-tl-md"),
         )}
       >
         {hasBullets ? (
@@ -292,7 +312,7 @@ function ChatBubble({ msg }: { msg: Message }) {
                   </li>
                 ) : (
                   <li key={i} className="whitespace-pre-wrap">
-                    {l}
+                    {formatInline(l)}
                   </li>
                 ),
               )}
@@ -303,10 +323,13 @@ function ChatBubble({ msg }: { msg: Message }) {
           </div>
         ) : null}
 
+        {/* No hover to reveal this on touch, so the last bubble of a run always
+            shows its time; the rest reveal it on hover on pointer devices. */}
         <time
           className={cn(
-            "mt-1.5 block text-[10px] tabular-nums opacity-0 transition-opacity group-hover/bubble:opacity-70",
-            msg.role === "user" ? "text-primary-foreground" : "text-gray-400",
+            "mt-1.5 block text-[10px] tabular-nums transition-opacity",
+            isUser ? "text-primary-foreground/60" : "text-gray-400",
+            showTime ? "opacity-100" : "opacity-0 group-hover/bubble:opacity-70",
           )}
           dateTime={new Date(msg.at).toISOString()}
         >
@@ -340,8 +363,12 @@ function TypingIndicator() {
   );
 }
 
-export default function ChatWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+interface ChatWidgetProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export default function ChatWidget({ open, onOpenChange }: ChatWidgetProps) {
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -382,25 +409,39 @@ export default function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior, block: "end" });
   }, []);
 
+  /** Clears the transcript and every step of the booking flow back to the start. */
+  const restart = useCallback(() => {
+    setMessages([
+      { id: `welcome-${Date.now()}`, role: "assistant", content: WELCOME_TEXT, at: Date.now() },
+    ]);
+    setCollectionStep("greeting");
+    setUserData({ name: "", phone: "", reason: "" });
+    setShowSpecialtyButtons(false);
+    setShowDisclaimer(false);
+    setInput("");
+    setAtBottom(true);
+    scrollToBottom("auto");
+  }, [scrollToBottom]);
+
   const stepIndex = STEP_ORDER.indexOf(collectionStep);
   const isBooking = stepIndex >= 0;
   const stepMeta = isBooking ? STEP_META[collectionStep] : null;
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (open && messages.length === 0) {
       setMessages([
         { id: "welcome", role: "assistant", content: WELCOME_TEXT, at: Date.now() },
       ]);
     }
-  }, [isOpen]);
+  }, [open]);
 
   useEffect(() => {
     if (atBottom) scrollToBottom();
   }, [messages, loading, atBottom, scrollToBottom]);
 
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
-  }, [isOpen, isMinimized]);
+    if (open) inputRef.current?.focus();
+  }, [open, isMinimized]);
 
   const handleScroll = () => {
     const el = scrollRef.current;
@@ -470,6 +511,22 @@ export default function ChatWidget() {
     ]);
   };
 
+  /** Enters the 3-step collection flow. `lead` is an optional user message to
+   *  record first, so a quick-reply chip can jump straight into booking. */
+  const beginBooking = useCallback(
+    (lead?: string) => {
+      setCollectionStep("name");
+      pushMessages([
+        ...(lead ? [{ role: "user" as const, content: lead }] : []),
+        {
+          role: "assistant" as const,
+          content: "Happy to help you book. May I know your name?",
+        },
+      ]);
+    },
+    [pushMessages],
+  );
+
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
     if (!trimmed) return;
@@ -497,11 +554,7 @@ export default function ChatWidget() {
       }
 
       // Anything else is taken as the start of a booking request.
-      setCollectionStep("name");
-      return pushMessages([
-        { role: "user", content: trimmed },
-        { role: "assistant", content: "Happy to help you book. May I know your name?" },
-      ]);
+      beginBooking(trimmed);
     }
 
     pushMessages([{ role: "user", content: trimmed }]);
@@ -566,9 +619,9 @@ export default function ChatWidget() {
   return (
     <>
       {/* ── Launcher ─────────────────────────────────────────────────────── */}
-      {!isOpen && (
+      {!open && (
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => onOpenChange(true)}
           aria-label="Open chat with Dr. Darshana's AI assistant"
           className="group fixed bottom-24 right-5 z-[99998] flex items-center gap-2.5 rounded-full border border-white/20 bg-primary py-3 pl-4 pr-5 text-white shadow-2xl shadow-primary/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 md:bottom-6 md:right-6"
         >
@@ -581,7 +634,7 @@ export default function ChatWidget() {
       )}
 
       {/* ── Panel ────────────────────────────────────────────────────────── */}
-      {isOpen && (
+      {open && (
         <div
           role="dialog"
           aria-modal="false"
@@ -612,6 +665,14 @@ export default function ChatWidget() {
             </div>
 
             <button
+              onClick={restart}
+              aria-label="Start a new conversation"
+              title="Start over"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+            </button>
+            <button
               onClick={() => setIsMinimized((m) => !m)}
               aria-label={isMinimized ? "Expand chat" : "Minimize chat"}
               className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
@@ -619,7 +680,7 @@ export default function ChatWidget() {
               <Minimize2 className="h-4 w-4" />
             </button>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => onOpenChange(false)}
               aria-label="Close chat"
               className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
             >
@@ -664,20 +725,34 @@ export default function ChatWidget() {
               aria-relevant="additions"
               className="flex-1 space-y-2.5 overflow-y-auto overscroll-contain bg-muted/40 px-4 py-4"
             >
-              {messages.map((msg) => (
-                <ChatBubble key={msg.id} msg={msg} />
-              ))}
+              {messages.map((msg, i) => {
+                const prev = messages[i - 1];
+                const next = messages[i + 1];
+                return (
+                  <ChatBubble
+                    key={msg.id}
+                    msg={msg}
+                    grouped={prev?.role === msg.role}
+                    showTime={next?.role !== msg.role}
+                  />
+                );
+              })}
               {loading && <TypingIndicator />}
 
-              {/* Opening quick replies */}
-              {collectionStep === "greeting" && messages.length <= 1 && (
+              {/* Quick replies stay up for the whole question phase, so someone
+                  who typed their own question can still pivot without retyping. */}
+              {collectionStep === "greeting" && !loading && (
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   {QUICK_REPLIES.map((reply) => {
                     const Icon = reply.icon;
                     return (
                       <button
                         key={reply.label}
-                        onClick={() => sendMessage(reply.text)}
+                        onClick={() =>
+                          reply.startsBooking
+                            ? beginBooking(reply.text)
+                            : sendMessage(reply.text)
+                        }
                         className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-left text-xs font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-accent hover:text-accent hover:shadow-md"
                       >
                         <Icon className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
@@ -746,7 +821,7 @@ export default function ChatWidget() {
               </a>
               <Link
                 to={OBESITY_CLINIC.bookPath}
-                onClick={() => setIsOpen(false)}
+                onClick={() => onOpenChange(false)}
                 className="flex items-center justify-center gap-2 rounded-lg bg-accent py-2.5 text-xs font-semibold text-accent-foreground transition-opacity hover:opacity-90"
               >
                 <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
@@ -837,7 +912,7 @@ export default function ChatWidget() {
                     By chatting you agree to our{" "}
                     <Link
                       to={LEGAL_PATHS.privacy}
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => onOpenChange(false)}
                       className="font-semibold text-primary underline underline-offset-2 hover:text-accent"
                     >
                       Privacy Policy

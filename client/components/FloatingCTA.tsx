@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-export const FloatingCTA = () => {
+export const FloatingCTA = ({ hidden = false }: { hidden?: boolean }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -19,10 +19,12 @@ export const FloatingCTA = () => {
   }, []);
 
   return (
-    <div 
+    <div
       className={cn(
         "fixed bottom-6 left-6 right-6 z-40 md:hidden transition-all duration-500 transform",
-        isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0 pointer-events-none"
+        isVisible && !hidden
+          ? "translate-y-0 opacity-100"
+          : "translate-y-20 opacity-0 pointer-events-none"
       )}
     >
       <div className="flex gap-3">

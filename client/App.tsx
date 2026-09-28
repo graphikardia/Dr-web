@@ -1,5 +1,6 @@
 import "./global.css";
 
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -21,6 +22,11 @@ import { FloatingCTA } from "@/components/FloatingCTA";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
 function App() {
+  // The chat panel and the mobile Call / Book Now bar are both fixed to the
+  // bottom of the screen and would overlap, so the panel's state is lifted here
+  // and the bar hides while the chat is open.
+  const [chatOpen, setChatOpen] = useState(false);
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -39,8 +45,8 @@ function App() {
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <ChatWidget />
-      <FloatingCTA />
+      <ChatWidget open={chatOpen} onOpenChange={setChatOpen} />
+      <FloatingCTA hidden={chatOpen} />
       <CookieConsent />
     </BrowserRouter>
   );
