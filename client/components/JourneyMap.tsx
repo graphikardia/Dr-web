@@ -40,10 +40,10 @@ const STOPS = [
     tx: 339.222,
     ty: 137.107,
     role: "Senior Consultant & HOD",
-    org: "Even Hospital",
+    org: "Altius Hospital",
     short: "Even",
     side: "left" as const,
-    accent: "#0055FF", // Even Hospital accent
+    accent: "#0055FF", // Altius Hospital accent
     bg: "#BCE5FF",
   },
 ];

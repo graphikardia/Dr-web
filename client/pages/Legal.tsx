@@ -30,7 +30,7 @@ const legalDocuments: Record<string, LegalDocument> = {
       {
         heading: "Who we are",
         paragraphs: [
-          `This website is operated by Dr. Darshana Reddy, MBBS, MD, DNB (Internal Medicine), FID, DAA, FICP, Certified Obesity Specialist, Department of Internal Medicine and Metabolic Diseases. Dr. Darshana consults at ${SITE.hospitalName}, ${SITE.streetAddress.replace("Even Hospital, ", "")}, ${SITE.addressLocality}, Karnataka. For any privacy-related questions, contact ${SITE.email}.`,
+          `This website is operated by Dr. Darshana Reddy, MBBS, MD, DNB (Internal Medicine), FID, DAA, FICP, Certified Obesity Specialist, Department of Internal Medicine and Metabolic Diseases. Dr. Darshana consults at ${SITE.hospitalName}, ${SITE.streetAddress.replace("Altius Hospital, ", "")}, ${SITE.addressLocality}, Karnataka. For any privacy-related questions, contact ${SITE.email}.`,
         ],
       },
       {
@@ -44,7 +44,7 @@ const legalDocuments: Record<string, LegalDocument> = {
       {
         heading: "How we use your information",
         paragraphs: [
-          "We use the details you share to respond to your enquiry, schedule an appointment with Dr. Darshana at Even Hospital, and, where relevant, coordinate with the hospital for your visit.",
+          "We use the details you share to respond to your enquiry, schedule an appointment with Dr. Darshana at Altius Hospital, and, where relevant, coordinate with the hospital for your visit.",
           "Your information is used only for the purpose you provided it for and is not sold, rented, or shared with third parties for marketing.",
         ],
       },
@@ -221,7 +221,7 @@ const legalDocuments: Record<string, LegalDocument> = {
       {
         heading: "Consultation fees",
         paragraphs: [
-          "Consultation fees are governed by the admission, billing, and refund policy of the facility where you are treated (Even Hospital, HBR Layout, Bangalore). Please contact the hospital's front office regarding fees, cancellations, and refunds.",
+          "Consultation fees are governed by the admission, billing, and refund policy of the facility where you are treated (Altius Hospital, HBR Layout, Bangalore). Please contact the hospital's front office regarding fees, cancellations, and refunds.",
         ],
       },
       {

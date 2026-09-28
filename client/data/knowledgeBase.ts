@@ -5,7 +5,7 @@ export const drDarshanaKnowledgeBase = {
     qualifications: "MBBS | MD | DNB | FICP | DAA | FID",
     experience: "16+ Years",
     patients: "Community health camps twice a month since 2021",
-    location: "Even Hospital, HBR Layout, Bangalore",
+    location: "Altius Hospital, HBR Layout, Bangalore",
     phone: "080-47284123 ; 9900004527",
     email: "dr.darshana@gmail.com",
     website: "www.drdarshanareddy.com",
@@ -21,7 +21,7 @@ export const drDarshanaKnowledgeBase = {
     "Pulmonology",
   ],
   hospital: {
-    name: "Even Hospital",
+    name: "Altius Hospital",
     address: "HBR Layout, Bangalore",
     timing: "9:00 AM - 12:00 PM & 3:00 PM - 5:00 PM",
     closed: "Sunday",
@@ -41,7 +41,7 @@ export const drDarshanaKnowledgeBase = {
   career: [
     {
       role: "Senior Consultant",
-      hospital: "Altius → Even Hospital",
+      hospital: "Altius Hospital",
       period: "2022 - Present",
       location: "Bangalore",
     },
@@ -99,7 +99,7 @@ export const drDarshanaKnowledgeBase = {
   faqs: [
     {
       q: "What are Dr. Darshana's consultation hours?",
-      a: "Dr. Darshana consults at Even Hospital, HBR Layout, Bangalore from Monday to Saturday. Morning: 9:00 AM – 12:00 PM | Afternoon: 3:00 PM – 5:00 PM. Sundays are closed.",
+      a: "Dr. Darshana consults at Altius Hospital, HBR Layout, Bangalore from Monday to Saturday. Morning: 9:00 AM – 12:00 PM | Afternoon: 3:00 PM – 5:00 PM. Sundays are closed.",
     },
     {
       q: "How do I book an appointment with Dr. Darshana?",
@@ -115,7 +115,7 @@ export const drDarshanaKnowledgeBase = {
     },
     {
       q: "Does Dr. Darshana conduct free health camps?",
-      a: "Yes! Dr. Darshana has been conducting free health camps twice every month since 2021 at Even Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
+      a: "Yes! Dr. Darshana has been conducting free health camps twice every month since 2021 at Altius Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
     },
     {
       q: "What makes Dr. Darshana's treatment approach unique?",
@@ -133,7 +133,7 @@ export const drDarshanaKnowledgeBase = {
   contact: {
     phone: "080-47284123 ; 9900004527",
     email: "dr.darshana@gmail.com",
-    hospital: "Even Hospital, HBR Layout, Bangalore",
+    hospital: "Altius Hospital, HBR Layout, Bangalore",
   },
 };
 
@@ -217,9 +217,9 @@ QUALIFICATIONS: MBBS | MD | DNB | FICP | DAA | FID
 
 EXPERIENCE: 16+ Years
 
-COMMUNITY CAMPS: Free health camps twice a month since 2021 (First and Third Tuesday, from 9 AM to 12 PM, at Even Hospital)
+COMMUNITY CAMPS: Free health camps twice a month since 2021 (First and Third Tuesday, from 9 AM to 12 PM, at Altius Hospital)
 
-LOCATION: Even Hospital, HBR Layout, Bangalore
+LOCATION: Altius Hospital, HBR Layout, Bangalore
 
 PHONE: 080-47284123 ; 9900004527
 
@@ -234,7 +234,7 @@ SPECIALIZATIONS:
 - Pulmonology
 
 HOSPITAL TIMINGS:
-- Even Hospital, HBR Layout, Bangalore
+- Altius Hospital, HBR Layout, Bangalore
 - 9:00 AM - 12:00 PM & 3:00 PM - 5:00 PM
 - Closed on Sunday
 
@@ -250,7 +250,7 @@ TREATMENT APPROACH:
 - Empathetic listening and honest diagnosis
 
 CAREER:
-- Senior Consultant, Altius → Even Hospital (2022 - Present)
+- Senior Consultant, Altius Hospital (2022 - Present)
 - Consultant, K C Raju Multispeciality Hospital (2018 - 2022)
 - Consultant, Apollo Hospitals (2015 - 2018)
 - Senior Resident, St. John's Medical College (2012 - 2015)

@@ -536,7 +536,7 @@ const experienceStops = [
   },
   {
     role: "Senior Consultant",
-    hospital: "Even Hospital",
+    hospital: "Altius Hospital",
     location: "HBR Layout, Bangalore",
     note: "Internal Medicine & Metabolic Diseases",
     color: "#DC2626",
@@ -750,7 +750,7 @@ export default function About() {
     <Layout>
       <SEOHead
         title="About Dr. Darshana Reddy - Internal Medicine Specialist"
-        description="Learn about Dr. Darshana Reddy's 16+ years of experience in Internal Medicine, Diabetes Care, Respiratory Health, and her journey as a Senior Consultant, Internal Medicine & Metabolic Diseases at Even Hospital, HBR Layout, Bangalore."
+        description="Learn about Dr. Darshana Reddy's 16+ years of experience in Internal Medicine, Diabetes Care, Respiratory Health, and her journey as a Senior Consultant, Internal Medicine & Metabolic Diseases at Altius Hospital, HBR Layout, Bangalore."
         canonical="/about"
         ogType="profile"
         jsonLd={breadcrumbJsonLd([{ name: "About", path: "/about" }])}

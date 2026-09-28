@@ -430,7 +430,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Map Section — Even Hospital, HBR Layout, Bangalore */}
+      {/* Map Section — Altius Hospital, HBR Layout, Bangalore */}
       <section className="section-padding bg-white">
         <div className="container-max">
           <h2 className="text-center mb-8">Visit Us</h2>

@@ -401,7 +401,7 @@ const careerHighlights = [
   {
     year: "2022 - Present",
     title: "Senior Consultant",
-    subtitle: "Even Hospital, Bangalore",
+    subtitle: "Altius Hospital, Bangalore",
     description:
       "Focused on diabetes, obesity, and respiratory care with a preventive approach",
     icon: Stethoscope,
@@ -544,7 +544,7 @@ const faqs = [
   {
     question: "What are Dr. Darshana's consultation hours?",
     answer:
-      "Dr. Darshana consults at Even Hospital, HBR Layout, Bangalore from Monday to Saturday. Morning: 9:00 AM – 12:00 PM | Afternoon: 3:00 PM – 5:00 PM. Sundays are closed.",
+      "Dr. Darshana consults at Altius Hospital, HBR Layout, Bangalore from Monday to Saturday. Morning: 9:00 AM – 12:00 PM | Afternoon: 3:00 PM – 5:00 PM. Sundays are closed.",
   },
   {
     question: "How do I book an appointment with Dr. Darshana?",
@@ -564,7 +564,7 @@ const faqs = [
   {
     question: "Does Dr. Darshana conduct free health camps?",
     answer:
-      "Yes! Dr. Darshana has been conducting free health camps twice every month, since 2021, at Even Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
+      "Yes! Dr. Darshana has been conducting free health camps twice every month, since 2021, at Altius Hospital. Camp Schedule: First Tuesday and Third Tuesday of every month. Free services include Doctor Consultation, Blood Glucose Testing, HbA1c Testing, Lipid Profile, Renal Function Tests, Thyroid Function Tests, Neuropathy Screening, and Retinopathy Screening.",
   },
   {
     question: "What makes Dr. Darshana's treatment approach unique?",
@@ -1061,7 +1061,7 @@ export default function Home() {
                   {[
                     "Altius Hospital",
                     "Apollo Hospitals",
-                    "Even Hospital",
+                    "Altius Hospital",
                     "St. John's",
                   ].map((hospital, i) => (
                     <span
@@ -1332,7 +1332,7 @@ export default function Home() {
                 Over the course of her career she has managed a wide spectrum of
                 OPD, IPD, and ICU cases, with a focus on timely, evidence-based
                 diagnosis and compassionate care. She currently practises at
-                Even Hospital, HBR Layout, Bangalore. Known for her
+                Altius Hospital, HBR Layout, Bangalore. Known for her
                 compassionate and holistic approach, she treats patients as
                 individuals—not just diseases—focusing on prevention,
                 long-term wellness, and sustainable lifestyle changes.
@@ -1533,7 +1533,7 @@ export default function Home() {
           <div className="mt-10 bg-gradient-to-r from-primary to-primary/85 rounded-xl p-8 text-white text-center">
             <h3 className="text-xl font-bold mb-2">Consultation Timings</h3>
             <p className="text-primary-foreground/90 mb-4">
-              Dr. Darshana consults at <strong>Even Hospital</strong> daily
+              Dr. Darshana consults at <strong>Altius Hospital</strong> daily
               except Sundays
             </p>
             <p className="text-2xl font-bold text-accent mb-2">

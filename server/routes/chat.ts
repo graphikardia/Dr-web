@@ -5,7 +5,7 @@ import { SITE } from "../../client/data/site";
 const MAX_MESSAGE_LENGTH = 1000;
 const MAX_HISTORY_LENGTH = 20;
 
-const CONTACT_LINE = `Call ${SITE.phoneSecondaryDisplay} (Even Hospital front office) or ${SITE.phonePrimaryDisplay}.`;
+const CONTACT_LINE = `Call ${SITE.phoneSecondaryDisplay} (Altius Hospital front office) or ${SITE.phonePrimaryDisplay}.`;
 
 function sanitizeInput(input: string): string {
   return input
