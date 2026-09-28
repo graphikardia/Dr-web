@@ -11,7 +11,7 @@ export const OBESITY_CLINIC = {
   daysLabel: "Every Wednesday & Saturday",
   sessions: ["9:00 AM – 12:00 PM", "3:00 PM – 5:00 PM"],
   sessionsLabel: "9 AM–12 PM | 3 PM–5 PM",
-  venue: "Even Hospital, HBR Layout, Bangalore",
+  venue: "Altius Hospital, HBR Layout, Bangalore",
   frontOfficeDisplay: SITE.phoneSecondaryDisplay,
   frontOffice: SITE.phoneSecondary,
   bookPath: "/contact#obesity-booking",
@@ -74,15 +74,3 @@ export const INSIGHT_VIDEOS: InsightVideo[] = [
     topics: ["Dose titration", "Tolerance", "Weekly dosing"],
   },
 ];
-
-export const LEGACY_INSIGHT_VIDEO: InsightVideo = {
-  id: 0,
-  episode: "Health Awareness Reel",
-  title: "Low Platelet Count in Dengue: When a Transfusion Is Needed",
-  description:
-    "Is it just your platelet count that matters? A count below thirty thousand always carries a bleeding risk — but it is platelet integrity and how fast the count is falling that decide the outcome. Dr. Darshana explains when a platelet transfusion is genuinely needed and why it is not mandatory in every case of dengue.",
-  src: "/latest-insight-reel.mp4",
-  poster: "",
-  duration: "1:09",
-  topics: ["Dengue", "Platelets", "Transfusion"],
-};

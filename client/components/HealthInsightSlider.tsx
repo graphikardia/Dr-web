@@ -12,13 +12,12 @@ import {
 } from "lucide-react";
 import {
   INSIGHT_VIDEOS,
-  LEGACY_INSIGHT_VIDEO,
   OBESITY_CLINIC,
   type InsightVideo,
 } from "@/data/obesityClinic";
 import { cn } from "@/lib/utils";
 
-const SLIDES: InsightVideo[] = [...INSIGHT_VIDEOS, LEGACY_INSIGHT_VIDEO];
+const SLIDES: InsightVideo[] = [...INSIGHT_VIDEOS];
 const AUTOPLAY_MS = 7000;
 
 export function HealthInsightSlider({

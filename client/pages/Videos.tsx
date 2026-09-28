@@ -2,11 +2,14 @@ import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { HealthInsightSlider } from "@/components/HealthInsightSlider";
 import { breadcrumbJsonLd } from "@/data/site";
+import { INSIGHT_VIDEOS, OBESITY_CLINIC } from "@/data/obesityClinic";
 import { useState, useRef } from "react";
-import { Play, Instagram } from "lucide-react";
+import { Play, Instagram, Clock, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const categoryGradients: Record<string, string> = {
+  obesity: "from-accent to-accent/70",
   diabetes: "from-blue-600 to-blue-400",
   respiratory: "from-teal-600 to-teal-400",
   lifestyle: "from-green-600 to-green-400",
@@ -26,6 +29,7 @@ interface Video {
 
 const categories = [
   { id: "all", label: "All Videos" },
+  { id: "obesity", label: "Obesity" },
   { id: "diabetes", label: "Diabetes" },
   { id: "respiratory", label: "Respiratory" },
   { id: "lifestyle", label: "Lifestyle" },
@@ -69,6 +73,13 @@ export default function Videos() {
     activeCategory === "all"
       ? videos
       : videos.filter((v) => v.category === activeCategory);
+
+  // The Obesity episodes are hosted here rather than on Instagram, so they play
+  // as full-length players instead of the 9:16 reel embed, and only appear
+  // under All Videos and Obesity.
+  const showEpisodes =
+    activeCategory === "all" || activeCategory === "obesity";
+  const filteredEpisodes = showEpisodes ? INSIGHT_VIDEOS : [];
 
   const extractShortcode = (url: string) => {
     const match = url.match(/(?:reel|reels|p)\/([A-Za-z0-9_-]+)/);
@@ -177,13 +188,13 @@ export default function Videos() {
               </span>
             </div>
             <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
-              Newest Video — Health Insight by Dr. Darshana
+              Obesity &amp; Metabolic Health Series by Dr. Darshana
             </h3>
             <p className="text-sm text-muted-foreground mb-8 max-w-3xl">
-              Dr. Darshana Reddy's latest health awareness series — the Obesity
-              &amp; Metabolic Health episodes, plus our dengue awareness reel.
-              Watch now, then book the Obesity Clinic to turn it into a plan
-              built around your body.
+              Dr. Darshana Reddy's Obesity &amp; Metabolic Health series — how
+              obesity works as a disease, what GLP-1 medicines really do, and
+              how to set expectations that hold up. Watch now, then book the
+              Obesity Clinic to turn it into a plan built around your body.
             </p>
             <HealthInsightSlider />
           </div>
@@ -205,6 +216,84 @@ export default function Videos() {
               </button>
             ))}
           </div>
+
+          {/* Obesity & Metabolic Health Episodes — full-length players */}
+          {filteredEpisodes.length > 0 && (
+            <div className="mb-16">
+              <div className="flex flex-wrap items-center gap-3 mb-5">
+                <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold">
+                  Obesity &amp; Metabolic Health
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {filteredEpisodes.length} episodes · watch in full
+                </span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-primary mb-2">
+                Obesity Series by Dr. Darshana
+              </h3>
+              <p className="text-sm text-muted-foreground mb-6 max-w-3xl">
+                Each episode is played here in full — no reel cut-offs. Book the
+                Obesity Clinic afterwards to turn what you watch into a plan.
+              </p>
+
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                {filteredEpisodes.map((ep, idx) => (
+                  <div
+                    key={ep.id}
+                    className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 animate-slide-up"
+                    style={{ animationDelay: `${idx * 100}ms` }}
+                  >
+                    {/* The episodes are vertical reels, so they keep a 9:16 frame
+                        rather than being letterboxed into a landscape player. */}
+                    <video
+                      controls
+                      playsInline
+                      preload="metadata"
+                      poster={ep.poster || undefined}
+                      className="w-full aspect-[9/16] bg-gray-900 object-cover"
+                    >
+                      <source src={ep.src} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-3 text-xs font-bold uppercase tracking-wider">
+                        <span className="text-accent underline decoration-accent/30 underline-offset-4">
+                          {ep.episode} · Obesity
+                        </span>
+                        <span className="text-muted-foreground flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {ep.duration}
+                        </span>
+                      </div>
+                      <h4 className="text-lg font-bold text-primary group-hover:text-accent transition-colors leading-tight">
+                        {ep.title}
+                      </h4>
+                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                        {ep.description}
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {ep.topics.map((topic) => (
+                          <span
+                            key={topic}
+                            className="rounded-full bg-primary/5 px-2.5 py-1 text-[11px] font-semibold text-primary"
+                          >
+                            {topic}
+                          </span>
+                        ))}
+                      </div>
+                      <Link
+                        to={OBESITY_CLINIC.bookPath}
+                        className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-accent transition-colors"
+                      >
+                        Book the Obesity Clinic
+                        <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Video Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -255,7 +344,7 @@ export default function Videos() {
             ))}
           </div>
 
-          {filteredVideos.length === 0 && (
+          {filteredVideos.length === 0 && filteredEpisodes.length === 0 && (
             <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-100">
               <p className="text-muted-foreground text-lg">
                 No videos found in this category.
