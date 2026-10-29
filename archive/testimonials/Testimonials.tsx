@@ -1,3 +1,15 @@
+/*
+ * ARCHIVED — 2026-10-29. Not routed, not prerendered, not linked.
+ *
+ * The testimonials page was taken off the live site at the client's request
+ * ("I don't want it live, for now"). The component is kept verbatim below so
+ * it can be restored by re-adding the route in client/App.tsx, the nav entries
+ * in Header/Footer, and "/testimonials" to STATIC_ROUTES in client/ssr-entry.tsx.
+ *
+ * It also still carries the original testimonial copy and ratings, which were
+ * removed from client/pages/Home.tsx in the same commit.
+ */
+
 import { Layout } from "@/components/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { useState } from "react";

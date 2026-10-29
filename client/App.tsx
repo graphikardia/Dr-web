@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Videos from "./pages/Videos";
 import Articles from "./pages/Articles";
-import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import SpecialtyDetail from "./pages/SpecialtyDetail";
@@ -44,7 +43,6 @@ function AppShell() {
         <Route path="/videos" element={<Videos />} />
         <Route path="/specialties/:slug" element={<SpecialtyDetail />} />
         <Route path="/articles" element={<Articles />} />
-        <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />

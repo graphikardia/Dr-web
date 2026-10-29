@@ -13,7 +13,6 @@ const quickLinks = [
   { label: "About", href: "/about" },
   { label: "Videos", href: "/videos" },
   { label: "Articles", href: "/articles" },
-  { label: "Testimonials", href: "/testimonials" },
   { label: "Contact", href: "/contact" },
 ];
 

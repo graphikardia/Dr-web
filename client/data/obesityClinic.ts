@@ -73,4 +73,15 @@ export const INSIGHT_VIDEOS: InsightVideo[] = [
     duration: "0:59",
     topics: ["Dose titration", "Tolerance", "Weekly dosing"],
   },
+  {
+    id: 5,
+    episode: "Episode 5",
+    title: "5 Mistakes People Make on GLP-1 Medication",
+    description:
+      "\"I have to lose weight before my brother's wedding\" — urgency is where GLP-1 treatment usually goes wrong. Dr. Darshana counts the five mistakes she sees most: losing weight too fast and paying for it in muscle, hair, skin and collagen; doubling doses before the body tolerates them; expecting body composition to change in days when the scales move over weeks; switching to fad diets and punishing exercise; and changing the dose without telling the doctor.",
+    src: "/health-videos/obesity-metabolic-health-ep5.mp4",
+    poster: "/health-videos/obesity-metabolic-health-ep5.jpg",
+    duration: "1:01",
+    topics: ["GLP-1 mistakes", "Muscle loss", "Rapid titration", "Realistic goals"],
+  },
 ];

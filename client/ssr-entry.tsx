@@ -21,7 +21,6 @@ const STATIC_ROUTES = [
   "/about",
   "/videos",
   "/articles",
-  "/testimonials",
   "/contact",
   "/privacy-policy",
   "/terms-conditions",
