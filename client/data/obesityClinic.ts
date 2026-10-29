@@ -76,11 +76,22 @@ export const INSIGHT_VIDEOS: InsightVideo[] = [
   {
     id: 5,
     episode: "Episode 5",
+    title: "3 Unexpected Symptoms on Your GLP-1 Journey",
+    description:
+      "Cold hands, a different shoe size, a change in breast size — none of these are in the leaflet, and all three are normal on GLP-1 treatment. Dr. Darshana explains why: losing fat too fast strips away the insulating layer before the body adapts, weight loss changes the arch and padding of the foot (one patient changed shoes twice), and breast tissue carries fat that shrinks with the rest. Expect them, don't panic, and go slow with the dosing.",
+    src: "/health-videos/obesity-metabolic-health-ep5.mp4",
+    poster: "/health-videos/obesity-metabolic-health-ep5.jpg",
+    duration: "1:13",
+    topics: ["Cold intolerance", "Shoe size", "Breast size", "Slow titration"],
+  },
+  {
+    id: 6,
+    episode: "Episode 6",
     title: "5 Mistakes People Make on GLP-1 Medication",
     description:
       "\"I have to lose weight before my brother's wedding\" — urgency is where GLP-1 treatment usually goes wrong. Dr. Darshana counts the five mistakes she sees most: losing weight too fast and paying for it in muscle, hair, skin and collagen; doubling doses before the body tolerates them; expecting body composition to change in days when the scales move over weeks; switching to fad diets and punishing exercise; and changing the dose without telling the doctor.",
-    src: "/health-videos/obesity-metabolic-health-ep5.mp4",
-    poster: "/health-videos/obesity-metabolic-health-ep5.jpg",
+    src: "/health-videos/obesity-metabolic-health-ep6.mp4",
+    poster: "/health-videos/obesity-metabolic-health-ep6.jpg",
     duration: "1:01",
     topics: ["GLP-1 mistakes", "Muscle loss", "Rapid titration", "Realistic goals"],
   },
