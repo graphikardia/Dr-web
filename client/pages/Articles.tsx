@@ -19,9 +19,31 @@ interface ArticleData {
   publication: string;
   date: string;
   text: string;
+  url?: string;
 }
 
 const articleData: ArticleData[] = [
+  {
+    id: 23,
+    image: "/newspaper/article-23.png",
+    topic:
+      "Asbestos found in rangoli products abroad; Bengaluru doctors advise caution",
+    publication: "Times of India",
+    date: "November 2026",
+    url: "https://timesofindia.indiatimes.com/city/bengaluru/asbestos-found-in-rangoli-products-abroad-bengaluru-doctors-advise-caution/articleshow/135576024.cms",
+    text: `Asbestos found in rangoli products abroad; Bengaluru doctors advise caution
+Jahnavi T R / Nov 05, 2026
+
+Bengaluru: Ahead of Deepavali, concerns are being raised over the possible presence of cancer-causing asbestos in rangoli powders and children's play sand, after products sold in New Zealand and several other countries were found to be contaminated. Experts in Bengaluru have advised consumers to exercise caution while handling coloured powders, particularly around children, even as asbestos contamination in products sold in India remains unconfirmed.
+
+Since January, five rangoli products sold in New Zealand have been found to contain asbestos, while 24 coloured sand products have been recalled. Similar products have also been recalled in Australia, Japan, the US, the UK and parts of Europe. Research by Auckland University of Technology (AUT) found airborne asbestos in 90% of the play sand products tested.
+
+Doctors note that while a one-time, brief exposure is likely to carry a lower risk than repeated or prolonged exposure, the actual risk remains difficult to determine without knowing the extent of contamination and the circumstances of exposure. Asbestos exposure can cause asbestosis, lung cancer and mesothelioma, which may take decades to develop.
+
+Dr Darshana Reddy, senior consultant in internal medicine at Altius Hospitals, said children's play habits and longer life expectancy meant precautions were important. "Their longer remaining lifespan also provides more time for asbestos-related diseases, which typically develop decades after exposure, to manifest," she said. She advised parents to discourage children from blowing, throwing or vigorously scattering coloured powders and to keep them away from products suspected of contamination.
+
+Doctors also advised families to work in well-ventilated areas and keep children away while making rangoli to minimise airborne dust. They cautioned against dry sweeping or vacuuming leftover powder, as this disperses fine asbestos fibres into the air, and to seek appropriate guidance on cleaning if contamination is suspected.`,
+  },
   {
     id: 1,
     image: "/newspaper/article-1.jpeg",
@@ -339,11 +361,19 @@ const monthMap: Record<string, number> = {
   december: 11,
 };
 function sortVal(d: string) {
-  const p = d.split(" ");
-  if (p.length === 2) return +p[1] * 12 + (monthMap[p[0].toLowerCase()] ?? 0);
-  return +p[0] * 12 + 6;
+  const p = d.trim().split(/\s+/);
+  if (p.length === 2)
+    return +p[1] * 12 + (monthMap[p[0].toLowerCase()] ?? 0);
+  if (p.length === 1) {
+    const year = parseInt(p[0], 10);
+    return Number.isNaN(year) ? 0 : year * 12 + 6;
+  }
+  return 0;
 }
-articleData.sort((a, b) => sortVal(b.date) - sortVal(a.date));
+articleData.sort((a, b) => {
+  const diff = sortVal(b.date) - sortVal(a.date);
+  return diff !== 0 ? diff : b.id - a.id;
+});
 
 const articleImages = articleData.map((a) => ({
   src: a.image,
@@ -737,19 +767,32 @@ export default function Articles() {
                               ? "\n..."
                               : "")}
                       </pre>
-                      {article.text.split("\n").length > 12 && (
-                        <button
-                          onClick={() =>
-                            setExpanded((prev) => ({
-                              ...prev,
-                              [article.id]: !isExpanded,
-                            }))
-                          }
-                          className="mt-4 text-accent font-semibold text-sm hover:underline"
-                        >
-                          {isExpanded ? "Show less ▲" : "Read full article ▼"}
-                        </button>
-                      )}
+                      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4">
+                        {article.text.split("\n").length > 12 && (
+                          <button
+                            onClick={() =>
+                              setExpanded((prev) => ({
+                                ...prev,
+                                [article.id]: !isExpanded,
+                              }))
+                            }
+                            className="text-accent font-semibold text-sm hover:underline"
+                          >
+                            {isExpanded ? "Show less ▲" : "Read full article ▼"}
+                          </button>
+                        )}
+                        {article.url && (
+                          <a
+                            href={article.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-accent font-semibold text-sm hover:underline"
+                          >
+                            Read more on {article.publication}
+                            <span aria-hidden="true">↗</span>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

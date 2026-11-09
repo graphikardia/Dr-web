@@ -95,4 +95,15 @@ export const INSIGHT_VIDEOS: InsightVideo[] = [
     duration: "1:01",
     topics: ["GLP-1 mistakes", "Muscle loss", "Rapid titration", "Realistic goals"],
   },
+  {
+    id: 7,
+    episode: "Episode 7",
+    title: "Obesity Is a Chronic Disease — Why Treatment Isn't Temporary",
+    description:
+      "Obesity is a chronic, relapsing disease, not a temporary phase — so its treatment shouldn't be treated as temporary either. Dr. Darshana explains why we live in an obesogenic environment and why obesity needs long-term management like diabetes, hypertension or dyslipidemia. For weight gain tied to certain life stages or temporary circumstances — postpartum weight retention, medication-induced gain or temporary lifestyle changes — GLP-1 therapy may sometimes be used for a limited duration. GLP-1 medicines are evidence-based treatments, not simply weight-loss injections, and for many patients they must continue for years, sometimes lifelong, to maintain benefits and prevent weight regain. Stopping treatment doesn't mean the disease has disappeared; the goal is metabolic health for life.",
+    src: "/health-videos/obesity-metabolic-health-ep7.mp4",
+    poster: "/health-videos/obesity-metabolic-health-ep7.jpg",
+    duration: "1:01",
+    topics: ["Chronic disease", "GLP-1 therapy", "Weight regain", "Lifelong care"],
+  },
 ];
