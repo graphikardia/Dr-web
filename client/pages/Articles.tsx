@@ -45,6 +45,25 @@ Dr Darshana Reddy, senior consultant in internal medicine at Altius Hospitals, s
 Doctors also advised families to work in well-ventilated areas and keep children away while making rangoli to minimise airborne dust. They cautioned against dry sweeping or vacuuming leftover powder, as this disperses fine asbestos fibres into the air, and to seek appropriate guidance on cleaning if contamination is suspected.`,
   },
   {
+    id: 24,
+    image: "/newspaper/article-24.png",
+    topic:
+      "Chronic cough may not only be a symptom of TB disease, but also a sign of these 5 diseases!",
+    publication: "Vijaya Karnataka",
+    date: "August 2025",
+    url: "https://vijaykarnataka.com/vk-gallery/lifestyle/apart-from-tb-there-are-5-diseases-which-can-be-indicated-by-a-long-term-cough/photoshow/msid-123221698,picid-123221714.cms",
+    text: `Chronic cough may not only be a symptom of TB disease, but also a sign of these 5 diseases!
+Produced by: Manohar Shetti | Vijaya Karnataka Web · 11 Aug 2025
+
+If the same cough persists for 3 to 4 weeks without easing, do not take it lightly — it can be a sign of a serious disease. A cough is often dismissed as a seasonal problem that appears in winter or during the rains, and many people try home remedies instead of seeking care. But a cough that lasts for weeks and does not respond to medicine should not be ignored.
+
+1. Asthma — Asthma can present with shortness of breath, tightness in the chest and cough.
+2. Chronic bronchitis — In chronic bronchitis the airways become inflamed and produce excess mucus, so the cough can last for months.
+3. Gastroesophageal reflux disease (GERD) — Acid reflux may sound unrelated, but acidity can also trigger a persistent cough.
+4. Allergy — People allergic to dust, pollen, pollution or a particular substance can develop a long-term cough.
+5. Lung cancer — If there is blood in the cough, unexplained weight loss or constant fatigue, see a doctor and get tested immediately.`,
+  },
+  {
     id: 1,
     image: "/newspaper/article-1.jpeg",
     topic:
