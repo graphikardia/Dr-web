@@ -50,10 +50,10 @@ Doctors also advised families to work in well-ventilated areas and keep children
     topic:
       "Chronic cough may not only be a symptom of TB disease, but also a sign of these 5 diseases!",
     publication: "Vijaya Karnataka",
-    date: "August 2025",
+    date: "August 2026",
     url: "https://vijaykarnataka.com/vk-gallery/lifestyle/apart-from-tb-there-are-5-diseases-which-can-be-indicated-by-a-long-term-cough/photoshow/msid-123221698,picid-123221714.cms",
     text: `Chronic cough may not only be a symptom of TB disease, but also a sign of these 5 diseases!
-Produced by: Manohar Shetti | Vijaya Karnataka Web · 11 Aug 2025
+Produced by: Manohar Shetti | Vijaya Karnataka Web · 11 Aug 2026
 
 If the same cough persists for 3 to 4 weeks without easing, do not take it lightly — it can be a sign of a serious disease. A cough is often dismissed as a seasonal problem that appears in winter or during the rains, and many people try home remedies instead of seeking care. But a cough that lasts for weeks and does not respond to medicine should not be ignored.
 
